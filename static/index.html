@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <title>API Documentation</title>
+
+	<meta charset="utf-8">
+
+	<meta name="author" content="">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="language" content="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="menu">
+        <div class="logo">
+            <img src="img/logo.png" height="32"/>
+            <span>API Documentation</span>
+        </div>
+        <div class="navbar">
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#verify">Verify</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#forgotPassword">Forgot Password</a></li>
+                <li><a href="#resetPassword">Reset Password</a></li>
+                <li><a href="#getMe">Get Me</a></li>
+                <li><a href="#updateUser">Update User</a></li>
+                <li><a href="#updateUsername">Update Username</a></li>
+                <li><a href="#updatePassword">Update Password</a></li>
+                <li><a href="#updateAvatar">Update Avatar</a></li>
+                <li><a href="#delete">Delete</a></li>
+                <li><a href="#errors">Errors</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Introduction -->
+            <div id="introduction" class="content-section">
+                <h1>Introduction</h1>
+                <p>
+                    The Auth Server API provides user registration and authentication services.
+                </p>
+                <p>
+                    The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can log in with their credentials. Then the server responds with an <span class="highlight">access_token</span>.
+                </p>
+                <p>
+                    The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.
+                </p>
+                <p>
+                    <code>Authorization: Bearer access_token</code>
+                </p>
+            </div>
+
+            <!-- API -->
+            <div class="content-section">
+                <h2>API</h2>
+            </div>
+
+            <!-- Register -->
+            <div id="register" class="content-section">
+                <div class="post">/register</div>
+                <p>
+                    Register the user.<br>
+                </p>
+                <br>
+
+                <h3 class="public">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td class="required">The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td class="required">The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>password</td>
+                            <td>string</td>
+                            <td class="required">The user's password.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Verify -->
+            <div id="verify" class="content-section">
+                <div class="get">/verify/:token</div>
+                <p>
+                    Verify the user's email.<br>
+                </p>
+                <br>
+
+                <h3 class="public">Request</h3>
+                <p>
+                    This request doesn't have a body.
+                </p>
+                <br>
+
+                <h3 class="boolean">Response</h3>
+                <p>
+                    The response values are true or false.
+                </p>
+                <br>
+            </div>
+
+            <!-- Login -->
+            <div id="login" class="content-section">
+                <div class="post">/login</div>
+                <p>
+                    Log in the user.<br>
+                </p>
+                <br>
+
+                <h3 class="public">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td class="required">The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>password</td>
+                            <td>string</td>
+                            <td class="required">The user's password.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>access_token</td>
+                            <td>string</td>
+                            <td>The token used make protected requests.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Forgot Password -->
+            <div id="forgotPassword" class="content-section">
+                <div class="post">/forgot-password</div>
+                <p>
+                    Request the server a mail to reset the password.<br>
+                </p>
+                <br>
+
+                <h3 class="public">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td class="required">The user's email.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="boolean">Response</h3>
+                <p>
+                    The response values are true or false.
+                </p>
+                <br>
+            </div>
+
+            <!-- Reset Password -->
+            <div id="resetPassword" class="content-section">
+                <div class="post">/reset-password/:token</div>
+                <p>
+                    Reset the user's password.<br>
+                </p>
+                <br>
+
+                <h3 class="public">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>password</td>
+                            <td>string</td>
+                            <td class="required">The new user's password.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="boolean">Response</h3>
+                <p>
+                    The response values are true or false.
+                </p>
+                <br>
+            </div>
+
+            <!-- Get Me -->
+            <div id="getMe" class="content-section">
+                <div class="get">/users/me</div>
+                <p>
+                    Get the user's data.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <p>
+                    This request doesn't have a body.
+                </p>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update User -->
+            <div id="updateUser" class="content-section">
+                <div class="put">/users/update</div>
+                <p>
+                    Change the user's data.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update Username -->
+            <div id="updateUsername" class="content-section">
+                <div class="put">/users/update/username</div>
+                <p>
+                    Change the user's username.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td class="required">The new user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>password</td>
+                            <td>string</td>
+                            <td class="required">The user's password.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update Password -->
+            <div id="updatePassword" class="content-section">
+                <div class="put">/users/update/password</div>
+                <p>
+                    Change the user's password.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>currentPassword</td>
+                            <td>string</td>
+                            <td class="required">The user's password.</td>
+                        </tr>
+                        <tr>
+                            <td>newPassword</td>
+                            <td>string</td>
+                            <td class="required">The new user's password.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update Avatar -->
+            <div id="updateAvatar" class="content-section">
+                <div class="put">/users/update/avatar</div>
+                <p>
+                    Change the user's avatar.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td class="required">The new user's avatar URL.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Delete -->
+            <div id="delete" class="content-section">
+                <div class="delete">/delete</div>
+                <p>
+                    Delete the user's data.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>password</td>
+                            <td>string</td>
+                            <td class="required">The user's password.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="boolean">Response</h3>
+                <p>
+                    The response values are true or false.
+                </p>
+                <br>
+            </div>
+
+            <!-- Errors -->
+            <div id="errors" class="content-section">
+                <h2>Errors</h2>
+                <p>
+                    The API uses the following error codes:
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Error Code</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>400</td>
+                            <td>
+                                The request is not processed due to a malformed syntax or the resource update is unavailable.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>
+                                The authentication has failed or has not been provided.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>
+                                The requested resource could not be found.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    For more information check the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">list of HTTP status codes</a>.
+                </p>
+                <br>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
