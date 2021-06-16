@@ -34,10 +34,12 @@
                 <li><a href="#forgotPassword">Forgot Password</a></li>
                 <li><a href="#resetPassword">Reset Password</a></li>
                 <li><a href="#getMe">Get Me</a></li>
-                <li><a href="#updateUser">Update User</a></li>
                 <li><a href="#updateUsername">Update Username</a></li>
                 <li><a href="#updatePassword">Update Password</a></li>
                 <li><a href="#updateAvatar">Update Avatar</a></li>
+                <li><a href="#updateName">Update Name</a></li>
+                <li><a href="#updateSurname">Update Surname</a></li>
+                <li><a href="#update Birthdate">Update Birthdate</a></li>
                 <li><a href="#delete">Delete</a></li>
                 <li><a href="#errors">Errors</a></li>
             </ul>
@@ -406,108 +408,6 @@
                 <br>
             </div>
 
-            <!-- Update User -->
-            <div id="updateUser" class="content-section">
-                <div class="put">/users/update</div>
-                <p>
-                    Change the user's data.<br>
-                </p>
-                <br>
-
-                <h3 class="protected">Request</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>role</td>
-                            <td>number</td>
-                            <td>The user's role.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>The user's ID.</td>
-                        </tr>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>role</td>
-                            <td>number</td>
-                            <td>The user's role.</td>
-                        </tr>
-                        <tr>
-                            <td>verified</td>
-                            <td>boolean</td>
-                            <td>Is the user's email verified?</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
             <!-- Update Username -->
             <div id="updateUsername" class="content-section">
                 <div class="put">/users/update/username</div>
@@ -714,6 +614,267 @@
                             <td>avatar</td>
                             <td>string</td>
                             <td class="required">The new user's avatar URL.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update Name -->
+            <div id="updateName" class="content-section">
+                <div class="put">/users/update/name</div>
+                <p>
+                    Change the user's name.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td class="required">The new user's name.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update Surname -->
+            <div id="updateSurname" class="content-section">
+                <div class="put">/users/update/surname</div>
+                <p>
+                    Change the user's surname.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td class="required">The new user's surname.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The user's ID.</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Update Birthdate -->
+            <div id="updateBirthdate" class="content-section">
+                <div class="put">/users/update/birthdate</div>
+                <p>
+                    Change the user's birthdate.<br>
+                </p>
+                <br>
+
+                <h3 class="protected">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td class="required">The new user's birthdate (yyyy-MM-dd).</td>
                         </tr>
                     </tbody>
                 </table>

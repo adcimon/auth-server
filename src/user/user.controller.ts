@@ -6,7 +6,7 @@ import { User } from './user.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 import { ValidationPipe } from '../validation/validation.pipe';
-import { UpdateSchema, UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema } from '../validation/validation.schema';
+import { UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema, UpdateNameSchema, UpdateSurnameSchema, UpdateBirthdateSchema } from '../validation/validation.schema';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -16,7 +16,7 @@ export class UserController
     {
     }
 
-    @Get('/')
+    //@Get('/')
     getAll(): Promise<User[]>
     {
         return this.userService.getAll();
@@ -29,37 +29,45 @@ export class UserController
         return this.userService.getById(request.user.id);
     }
 
-    @Put('/update')
-    @UseGuards(JwtAuthGuard)
-    update( @Request() request, @Body(new ValidationPipe(UpdateSchema)) body: any ): Promise<User>
-    {
-        return this.userService.update(
-            request.user.id,
-            body.name,
-            body.surname,
-            body.birthdate,
-            body.role,
-        );
-    }
-
     @Put('/update/username')
     @UseGuards(JwtAuthGuard)
-    changeUsername( @Request() request, @Body(new ValidationPipe(UpdateUsernameSchema)) body: any ): Promise<User>
+    updateUsername( @Request() request, @Body(new ValidationPipe(UpdateUsernameSchema)) body: any ): Promise<User>
     {
         return this.userService.updateUsernameSecure(request.user.id, body.username, body.password);
     }
 
     @Put('/update/password')
     @UseGuards(JwtAuthGuard)
-    changePassword( @Request() request, @Body(new ValidationPipe(UpdatePasswordSchema)) body: any ): Promise<User>
+    updatePassword( @Request() request, @Body(new ValidationPipe(UpdatePasswordSchema)) body: any ): Promise<User>
     {
         return this.userService.updatePasswordSecure(request.user.id, body.currentPassword, body.newPassword);
     }
 
     @Put('/update/avatar')
     @UseGuards(JwtAuthGuard)
-    changeAvatar( @Request() request, @Body(new ValidationPipe(UpdateAvatarSchema)) body: any ): Promise<User>
+    updateAvatar( @Request() request, @Body(new ValidationPipe(UpdateAvatarSchema)) body: any ): Promise<User>
     {
         return this.userService.updateAvatar(request.user.id, body.avatar);
+    }
+
+    @Put('/update/name')
+    @UseGuards(JwtAuthGuard)
+    updateName( @Request() request, @Body(new ValidationPipe(UpdateNameSchema)) body: any ): Promise<User>
+    {
+        return this.userService.updateName(request.user.id, body.name);
+    }
+
+    @Put('/update/surname')
+    @UseGuards(JwtAuthGuard)
+    updateSurname( @Request() request, @Body(new ValidationPipe(UpdateSurnameSchema)) body: any ): Promise<User>
+    {
+        return this.userService.updateSurname(request.user.id, body.surname);
+    }
+
+    @Put('/update/birthdate')
+    @UseGuards(JwtAuthGuard)
+    updateBirthdate( @Request() request, @Body(new ValidationPipe(UpdateBirthdateSchema)) body: any ): Promise<User>
+    {
+        return this.userService.updateBirthdate(request.user.id, body.birthdate);
     }
 }

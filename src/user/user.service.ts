@@ -85,7 +85,6 @@ export class UserService
      * @param name
      * @param surname
      * @param birthdate
-     * @param role
      * @returns User
      */
     async create(
@@ -94,8 +93,7 @@ export class UserService
         email: string,
         name: string,
         surname: string,
-        birthdate: Date,
-        role: number
+        birthdate: Date
     ): Promise<User>
     {
         const usernameTaken = await this.usersRepository.findOne({ where: { username } });
@@ -116,57 +114,10 @@ export class UserService
             email: email,
             name: name,
             surname: surname,
-            birthdate: birthdate,
-            role: role
+            birthdate: birthdate
         });
 
         return this.usersRepository.save(user);
-    }
-
-    /**
-     * Update the user's data.
-     * @param id
-     * @param name
-     * @param surname
-     * @param birthdate
-     * @param role
-     * @returns User
-     */
-    async update(
-        id: number,
-        name: string,
-        surname: string,
-        birthdate: Date,
-        role: number,
-    ): Promise<User>
-    {
-        const user = await this.getById(id);
-        if( !user )
-        {
-            throw new NotFoundException();
-        }
-
-        if( name )
-        {
-            user.name = name;
-        }
-
-        if( surname )
-        {
-            user.surname = surname;
-        }
-
-        if( birthdate )
-        {
-            user.birthdate = birthdate;
-        }
-
-        if( role )
-        {
-            user.role = role;
-        }
-
-        return this.usersRepository.save(user); 
     }
 
     /**
@@ -301,7 +252,97 @@ export class UserService
             throw new NotFoundException();
         }
 
-        user.avatar = avatar;
+        if( avatar )
+        {
+            user.avatar = avatar;
+        }
+        else
+        {
+            user.avatar = '';
+        }
+
+        return this.usersRepository.save(user);
+    }
+
+    /**
+     * Update the user's name.
+     * @param id
+     * @param name
+     * @returns User
+     */
+    async updateName(
+        id: number,
+        name: string
+    ): Promise<User>
+    {
+        const user = await this.getById(id);
+        if( !user )
+        {
+            throw new NotFoundException();
+        }
+
+        if( name )
+        {
+            user.name = name;
+        }
+        else
+        {
+            user.name = '';
+        }
+
+        return this.usersRepository.save(user);
+    }
+
+    /**
+     * Update the user's surname.
+     * @param id
+     * @param surname
+     * @returns User
+     */
+    async updateSurname(
+        id: number,
+        surname: string
+    ): Promise<User>
+    {
+        const user = await this.getById(id);
+        if( !user )
+        {
+            throw new NotFoundException();
+        }
+
+        if( surname )
+        {
+            user.surname = surname;
+        }
+        else
+        {
+            user.surname = '';
+        }
+
+        return this.usersRepository.save(user);
+    }
+
+    /**
+     * Update the user's birthdate.
+     * @param id
+     * @param birthdate
+     * @returns User
+     */
+    async updateBirthdate(
+        id: number,
+        birthdate: Date
+    ): Promise<User>
+    {
+        const user = await this.getById(id);
+        if( !user )
+        {
+            throw new NotFoundException();
+        }
+
+        if( birthdate )
+        {
+            user.birthdate = birthdate;
+        }
 
         return this.usersRepository.save(user);
     }
