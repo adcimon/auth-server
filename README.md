@@ -1,10 +1,10 @@
 # Auth Server
 
-`Auth Server` is an HTTP-based back-end that provides user registration and authentication services. The project is built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
+User registration and authentication HTTP-based backend. The project is built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
 
 ## API
 
-The [API documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
+The [API Documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
 
 ## Installation
 
