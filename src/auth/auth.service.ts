@@ -1,10 +1,15 @@
-import { Injectable, HttpException, NotFoundException, UnauthorizedException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { ConfigService } from '../config/config.service';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 
 import { User } from '../user/user.entity';
+
+import { UserNotFoundException } from '../exception/user-not-found.exception';
+import { InvalidPasswordException } from '../exception/invalid-password.exception';
+import { NotVerifiedException } from '../exception/not-verified.exception';
+import { InvalidTokenException } from '../exception/invalid-token.exception';
 
 import * as argon2 from 'argon2';
 
@@ -26,13 +31,13 @@ export class AuthService
         const user = await this.userService.getByEmail(email);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         const valid = await argon2.verify(user.password, password);
         if( !valid )
         {
-            throw new UnauthorizedException();
+            throw new InvalidPasswordException();
         }
 
         return user;
@@ -47,7 +52,7 @@ export class AuthService
     {
         if( !user.verified )
         {
-            throw new HttpException({ statusCode: HttpStatus.BAD_REQUEST, message: 'Email is not verified', error: 'Bad Request' }, HttpStatus.BAD_REQUEST);
+            throw new NotVerifiedException();
         }
 
         const payload =
@@ -84,28 +89,21 @@ export class AuthService
      */
     async verify( token: string ): Promise<boolean>
     {
-        try
+        const payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET_KEY'));
+        if( !payload )
         {
-            const payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET_KEY'));
-            if( !payload )
-            {
-                throw new UnauthorizedException();
-            }
-
-            const user = await this.userService.getById(payload.sub);
-            if( user.verified )
-            {
-                return false;
-            }
-
-            await this.userService.updateVerified(user.id, true);
-
-            return true;
+            throw new InvalidTokenException();
         }
-        catch( exception )
+
+        const user = await this.userService.getById(payload.sub);
+        if( user.verified )
         {
-            throw new UnauthorizedException();
+            throw new NotVerifiedException();
         }
+
+        await this.userService.updateVerified(user.id, true);
+
+        return true;
     }
 
     /**
@@ -138,27 +136,30 @@ export class AuthService
      */
     async resetPassword( token: string, password: string ): Promise<boolean>
     {
-        try
+        // Get the user's current password's hash.
+        let payload = this.jwtService.decode(token);
+        const user = await this.userService.getById(payload.sub);
+        if( !user )
         {
-            const payload = this.jwtService.decode(token);
-            const user = await this.userService.getById(payload.sub);
-
-            // The token is signed with the user's current password's hash.
-            // A successful password change will invalidate the token.
-            this.jwtService.verify(token, { secret: user.password });
-
-            if( !user.verified )
-            {
-                return false;
-            }
-
-            await this.userService.updatePassword(user.id, password);
-
-            return true;
+            throw new UserNotFoundException();
         }
-        catch( exception )
+
+        // The token is signed with the user's current password's hash.
+        // A successful password change will invalidate the token.
+        payload = null;
+        payload = this.jwtService.verify(token, { secret: user.password });
+        if( !payload )
         {
-            throw new UnauthorizedException();
+            throw new InvalidTokenException();
         }
+
+        if( !user.verified )
+        {
+            throw new NotVerifiedException();
+        }
+
+        await this.userService.updatePassword(user.id, password);
+
+        return true;
     }
 }

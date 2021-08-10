@@ -1,9 +1,14 @@
-import { Injectable, HttpException, NotFoundException, UnauthorizedException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './user.entity';
+
+import { UsernameTakenException } from '../exception/username-taken.exception';
+import { EmailTakenException } from '../exception/email-taken.exception';
+import { UserNotFoundException } from '../exception/user-not-found.exception';
+import { InvalidPasswordException } from '../exception/invalid-password.exception';
 
 import * as argon2 from 'argon2';
 
@@ -35,7 +40,7 @@ export class UserService
         const user = await this.usersRepository.findOne(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         return user;
@@ -53,7 +58,7 @@ export class UserService
         const user = this.usersRepository.findOne({ where: { username } });
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         return user;
@@ -71,7 +76,7 @@ export class UserService
         const user = this.usersRepository.findOne({ where: { email } });
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         return user;
@@ -99,13 +104,13 @@ export class UserService
         const usernameTaken = await this.usersRepository.findOne({ where: { username } });
         if( usernameTaken )
         {
-            throw new HttpException({ statusCode: HttpStatus.BAD_REQUEST, message: 'Username is already being used', error: 'Bad Request' }, HttpStatus.BAD_REQUEST);
+            throw new UsernameTakenException();
         }
 
         const emailTaken = await this.usersRepository.findOne({ where: { email } });
         if( emailTaken )
         {
-            throw new HttpException({ statusCode: HttpStatus.BAD_REQUEST, message: 'Email is already being used', error: 'Bad Request' }, HttpStatus.BAD_REQUEST);
+            throw new EmailTakenException();
         }
 
         const user = this.usersRepository.create({
@@ -134,13 +139,13 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         const usernameTaken = await this.getByUsername(username);
         if( usernameTaken )
         {
-            throw new HttpException({ statusCode: HttpStatus.BAD_REQUEST, message: 'Username is already being used', error: 'Bad Request' }, HttpStatus.BAD_REQUEST);
+            throw new UsernameTakenException();
         }
 
         user.username = username;
@@ -164,19 +169,19 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         const valid = await argon2.verify(user.password, password);
         if( !valid )
         {
-            throw new UnauthorizedException();
+            throw new InvalidPasswordException();
         }
 
         const usernameTaken = await this.getByUsername(username);
         if( usernameTaken )
         {
-            throw new HttpException({ statusCode: HttpStatus.BAD_REQUEST, message: 'Username is already being used', error: 'Bad Request' }, HttpStatus.BAD_REQUEST);
+            throw new UsernameTakenException();
         }
 
         user.username = username;
@@ -198,7 +203,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         user.password = await argon2.hash(password);
@@ -222,13 +227,13 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         const valid = await argon2.verify(user.password, currentPassword);
         if( !valid )
         {
-            throw new UnauthorizedException();
+            throw new InvalidPasswordException();
         }
 
         user.password = await argon2.hash(newPassword);
@@ -249,7 +254,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         if( avatar )
@@ -278,7 +283,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         if( name )
@@ -307,7 +312,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         if( surname )
@@ -336,7 +341,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         if( birthdate )
@@ -360,7 +365,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         user.verified = verified;
@@ -380,7 +385,7 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         return this.usersRepository.remove(user);
@@ -400,13 +405,13 @@ export class UserService
         const user = await this.getById(id);
         if( !user )
         {
-            throw new NotFoundException();
+            throw new UserNotFoundException();
         }
 
         const valid = await argon2.verify(user.password, password);
         if( !valid )
         {
-            throw new UnauthorizedException();
+            throw new InvalidPasswordException();
         }
 
         return this.usersRepository.remove(user);

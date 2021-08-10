@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
@@ -22,9 +22,7 @@ export class LocalStrategy extends PassportStrategy(Strategy)
         try
         {
             const user = await this.authService.validate(email, password);
-
-            // Passport saves the user in the request.
-            return user;
+            return user; // Passport saves the user in the request.
         }
         catch( exception )
         {

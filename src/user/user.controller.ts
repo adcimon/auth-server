@@ -16,7 +16,7 @@ export class UserController
     {
     }
 
-    //@Get('/')
+    @Get('/')
     getAll(): Promise<User[]>
     {
         return this.userService.getAll();
