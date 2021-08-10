@@ -4,7 +4,7 @@
 
 ## API
 
-The [API documentation](https://adcimon.github.io/auth-server/) can be found inside the `docs` folder.
+The [API documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
 
 ## Installation
 
