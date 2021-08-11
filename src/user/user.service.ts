@@ -1,21 +1,25 @@
-import { Injectable } from '@nestjs/common';
-
+import { Injectable, Logger } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
+import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
-import { User } from './user.entity';
-
+import { ConfigService } from '../config/config.service';
 import { UsernameTakenException } from '../exception/username-taken.exception';
 import { EmailTakenException } from '../exception/email-taken.exception';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { InvalidPasswordException } from '../exception/invalid-password.exception';
-
 import * as argon2 from 'argon2';
+import * as ms from 'ms';
 
 @Injectable()
 export class UserService
 {
-    constructor( @InjectRepository(User) private usersRepository: Repository<User> )
+    private readonly cronLogger = new Logger("CRON");
+
+    constructor(
+        @InjectRepository(User) private usersRepository: Repository<User>,
+        private readonly configService: ConfigService,
+    )
     {
     }
 
@@ -26,6 +30,15 @@ export class UserService
     async getAll(): Promise<User[]>
     {
         return await this.usersRepository.find();
+    }
+
+    /**
+     * Get all the not verified users.
+     * @returns User[]
+     */
+    async getNotVerified(): Promise<User[]>
+    {
+        return await this.usersRepository.createQueryBuilder("user").select("*").where("verified = false").execute();
     }
 
     /**
@@ -51,7 +64,7 @@ export class UserService
      * @param username
      * @returns User
      */
-     async getByUsername(
+    async getByUsername(
         username: string
     ): Promise<User>
     {
@@ -415,5 +428,37 @@ export class UserService
         }
 
         return this.usersRepository.remove(user);
+    }
+
+    /**
+     * Deletes the expired not verified users.
+     */
+    @Cron('0 1 * * * *') // Every hour, at the start of the 1st minute.
+    async deleteExpiredNotVerifiedUsers()
+    {
+        this.cronLogger.log('Delete expired not verified users');
+
+        const now = new Date();
+        const expirationTime = this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
+
+        const users = await this.getNotVerified();
+        for( let i = 0; i < users.length; i++ )
+        {
+            const user = users[i];
+            const createDate = new Date(user.createdate);
+            const expirationDate = new Date(createDate.getTime() + ms(expirationTime));
+
+            if( now > expirationDate )
+            {
+                try
+                {
+                    this.delete(user.id);
+                    this.cronLogger.log('User ' + user.username + ' deleted');
+                }
+                catch( exception )
+                {
+                }
+            }
+        }
     }
 }

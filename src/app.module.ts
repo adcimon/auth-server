@@ -1,18 +1,12 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { LoggerMiddleware } from './middleware/logger.middleware';
-
-// Imports.
 import { ConfigModule } from './config/config.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-
 import { ConfigService } from './config/config.service';
-
-// Controllers.
-
-// Providers.
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
     imports: [
@@ -25,6 +19,7 @@ import { ConfigService } from './config/config.service';
                 return [{ rootPath: configService.getStaticPath() }];
             }
         }),
+        ScheduleModule.forRoot(), // Initializes the scheduler and registers any declarative cron jobs, timeouts and intervals that exist within the app.
         TypeOrmModule.forRootAsync(
         {
             inject: [ConfigService],

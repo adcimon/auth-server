@@ -4,6 +4,6 @@ export class InvalidPasswordException extends HttpException
 {
     constructor()
     {
-        super({ statusCode: HttpStatus.UNAUTHORIZED, message: 'Invalid password' }, HttpStatus.UNAUTHORIZED);
+        super({ errorCode: 102, statusCode: HttpStatus.UNAUTHORIZED, message: 'Invalid password' }, HttpStatus.UNAUTHORIZED);
     }
 }

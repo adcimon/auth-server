@@ -1,12 +1,9 @@
 import { Controller, Get, Put, Request, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
-
-import { UserService } from './user.service';
 import { User } from './user.entity';
-
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-
+import { UserService } from './user.service';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema, UpdateNameSchema, UpdateSurnameSchema, UpdateBirthdateSchema } from '../validation/validation.schema';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)

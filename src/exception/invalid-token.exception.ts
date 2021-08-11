@@ -4,6 +4,6 @@ export class InvalidTokenException extends HttpException
 {
     constructor()
     {
-        super({ statusCode: HttpStatus.UNAUTHORIZED, message: 'Invalid token' }, HttpStatus.UNAUTHORIZED);
+        super({ errorCode: 104, statusCode: HttpStatus.UNAUTHORIZED, message: 'Invalid token' }, HttpStatus.UNAUTHORIZED);
     }
 }

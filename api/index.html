@@ -53,7 +53,7 @@
             <div id="introduction" class="content-section">
                 <h1>Introduction</h1>
                 <p>
-                    The Auth Server API provides user registration and authentication services.
+                    The Auth Server API provides user registration and authentication features.
                 </p>
                 <p>
                     The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can log in with their credentials. Then the server responds with an <span class="highlight">access_token</span>.
@@ -978,32 +978,64 @@
             <div id="errors" class="content-section">
                 <h2>Errors</h2>
                 <p>
-                    The API uses the following error codes:
+                    The API uses the following errors:
                 </p>
                 <table>
                     <thead>
                         <tr>
                             <th>Error Code</th>
+                            <th>Status Code</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>400</td>
+                            <td>100</td>
+                            <td>409</td>
                             <td>
-                                The request is not processed due to a malformed syntax or the resource update is unavailable.
+                                Username is already being used.
                             </td>
                         </tr>
                         <tr>
+                            <td>101</td>
+                            <td>409</td>
+                            <td>
+                                Email is already being used.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>102</td>
                             <td>401</td>
                             <td>
-                                The authentication has failed or has not been provided.
+                                Invalid password.
                             </td>
                         </tr>
                         <tr>
+                            <td>103</td>
+                            <td>401</td>
+                            <td>
+                                Email not verified.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>104</td>
+                            <td>401</td>
+                            <td>
+                                Invalid token.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>105</td>
                             <td>404</td>
                             <td>
-                                The requested resource could not be found.
+                                User not found.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>106</td>
+                            <td>503</td>
+                            <td>
+                                Mail service error.
                             </td>
                         </tr>
                     </tbody>

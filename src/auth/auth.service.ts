@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
-
 import { ConfigService } from '../config/config.service';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-
 import { User } from '../user/user.entity';
-
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { InvalidPasswordException } from '../exception/invalid-password.exception';
 import { NotVerifiedException } from '../exception/not-verified.exception';
 import { InvalidTokenException } from '../exception/invalid-token.exception';
-
 import * as argon2 from 'argon2';
 
 @Injectable()
 export class AuthService
 {
-    constructor( private readonly configService: ConfigService, private readonly userService: UserService, private readonly jwtService: JwtService )
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly userService: UserService,
+        private readonly jwtService: JwtService
+    )
     {
     }
 

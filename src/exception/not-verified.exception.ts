@@ -4,6 +4,6 @@ export class NotVerifiedException extends HttpException
 {
     constructor()
     {
-        super({ statusCode: HttpStatus.UNAUTHORIZED, message: 'Email not verified' }, HttpStatus.UNAUTHORIZED);
+        super({ errorCode: 103, statusCode: HttpStatus.UNAUTHORIZED, message: 'Email not verified' }, HttpStatus.UNAUTHORIZED);
     }
 }

@@ -1,10 +1,4 @@
 import { Module } from '@nestjs/common';
-
-// Imports.
-
-// Controllers.
-
-// Providers.
 import { MailService } from './mail.service';
 
 @Module({

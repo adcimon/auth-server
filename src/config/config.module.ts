@@ -1,10 +1,4 @@
 import { Module, Global } from '@nestjs/common';
-
-// Imports.
-
-// Controllers.
-
-// Providers.
 import { ConfigService } from './config.service';
 
 @Global()

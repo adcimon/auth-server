@@ -1,18 +1,13 @@
 import { Controller, Get, Post, Delete, Request, Param, Headers, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
-
 import { ConfigService } from '../config/config.service';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
-
 import { User } from '../user/user.entity';
-
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
-
 import { ValidationPipe } from '../validation/validation.pipe';
 import { RegisterSchema, ForgotPasswordSchema, ResetPasswordSchema, DeleteSchema } from '../validation/validation.schema';
-
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';
 
@@ -20,7 +15,12 @@ import { MailServiceErrorException } from '../exception/mail-service-error.excep
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController
 {
-    constructor( private readonly configService: ConfigService, private readonly authService: AuthService, private readonly userService: UserService, private readonly mailService: MailService )
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly authService: AuthService,
+        private readonly userService: UserService,
+        private readonly mailService: MailService
+    )
     {
     }
 
@@ -103,7 +103,6 @@ export class AuthController
     async delete( @Request() request, @Body(new ValidationPipe(DeleteSchema)) body: any ): Promise<boolean>
     {
         const user = await this.userService.deleteSecure(request.user.id, body.password);
-
         return true;
     }
 }
