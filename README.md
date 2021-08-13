@@ -1,6 +1,6 @@
 # Auth Server
 
-User registration and authentication HTTP-based backend. The project is built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
+General-purpose HTTP-based authentication and authorization server. The project is built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
 
 ## API
 
