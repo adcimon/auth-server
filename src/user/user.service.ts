@@ -19,9 +19,7 @@ export class UserService
     constructor(
         @InjectRepository(User) private usersRepository: Repository<User>,
         private readonly configService: ConfigService,
-    )
-    {
-    }
+    ) { }
 
     /**
      * Get all users.

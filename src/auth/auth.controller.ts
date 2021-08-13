@@ -20,9 +20,7 @@ export class AuthController
         private readonly authService: AuthService,
         private readonly userService: UserService,
         private readonly mailService: MailService
-    )
-    {
-    }
+    ) { }
 
     @Post('/register')
     async register( @Headers() headers, @Body(new ValidationPipe(RegisterSchema)) body: any ): Promise<User>

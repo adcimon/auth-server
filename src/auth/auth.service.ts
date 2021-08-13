@@ -16,9 +16,7 @@ export class AuthService
         private readonly configService: ConfigService,
         private readonly userService: UserService,
         private readonly jwtService: JwtService
-    )
-    {
-    }
+    ) { }
 
     /**
      * Validate the email and password.
