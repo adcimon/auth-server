@@ -51,7 +51,7 @@ export class AuthController
     @Get('/verify/:token')
     verify( @Param('token') token: string ): Promise<boolean>
     {
-        return this.authService.verify(token);
+        return this.authService.verifyEmail(token);
     }
 
     @Post('/login')

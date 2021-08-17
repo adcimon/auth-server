@@ -82,10 +82,10 @@ export class AuthService
     }
 
     /**
-     * Verify the user.
+     * Verify the user's email.
      * @param token
      */
-    async verify( token: string ): Promise<boolean>
+    async verifyEmail( token: string ): Promise<boolean>
     {
         let payload;
         try
@@ -100,7 +100,7 @@ export class AuthService
         const user = await this.userService.getById(payload.sub);
         if( user.verified )
         {
-            throw new NotVerifiedException();
+            return false;
         }
 
         await this.userService.updateVerified(user.id, true);
