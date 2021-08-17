@@ -4,6 +4,11 @@ export class UsernameTakenException extends HttpException
 {
     constructor()
     {
-        super({ errorCode: 100, statusCode: HttpStatus.CONFLICT, message: 'Username is already being used' }, HttpStatus.CONFLICT);
+        super(
+        {
+            error: 103,
+            status: HttpStatus.CONFLICT,
+            message: 'Username is already being used'
+        }, HttpStatus.CONFLICT);
     }
 }

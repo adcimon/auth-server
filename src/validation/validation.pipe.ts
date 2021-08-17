@@ -1,4 +1,5 @@
-import { Injectable, PipeTransform, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import { Injectable, PipeTransform, ArgumentMetadata } from '@nestjs/common';
+import { ValidationErrorException } from '../exception/validation-error.exception';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform
@@ -14,9 +15,9 @@ export class ValidationPipe implements PipeTransform
             await this.schema.validate(value, { abortEarly: false });
             return value;
         }
-        catch( err )
+        catch( exception )
         {
-            throw new BadRequestException(err.message);
+            throw new ValidationErrorException(exception.message);
         }
     }
 }

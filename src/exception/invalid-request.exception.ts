@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export class UserNotFoundException extends HttpException
+export class InvalidRequestException extends HttpException
 {
     constructor()
     {
         super(
         {
-            error: 108,
+            error: 101,
             status: HttpStatus.NOT_FOUND,
-            message: 'User not found'
+            message: 'Invalid request'
         }, HttpStatus.NOT_FOUND);
     }
 }

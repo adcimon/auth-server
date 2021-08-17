@@ -87,8 +87,12 @@ export class AuthService
      */
     async verify( token: string ): Promise<boolean>
     {
-        const payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET_KEY'));
-        if( !payload )
+        let payload;
+        try
+        {
+            payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET_KEY'));
+        }
+        catch( exception )
         {
             throw new InvalidTokenException();
         }
@@ -145,8 +149,11 @@ export class AuthService
         // The token is signed with the user's current password's hash.
         // A successful password change will invalidate the token.
         payload = null;
-        payload = this.jwtService.verify(token, { secret: user.password });
-        if( !payload )
+        try
+        {
+            payload = this.jwtService.verify(token, { secret: user.password });
+        }
+        catch( exception )
         {
             throw new InvalidTokenException();
         }

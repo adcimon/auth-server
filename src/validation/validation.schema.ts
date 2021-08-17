@@ -30,7 +30,7 @@ export const ForgotPasswordSchema = yup.object().shape(
 
 export const ResetPasswordSchema = yup.object().shape(
 {
-    password: yup.string().min(8).max(50).required().typeError('Invalid password'),
+    password: yup.string().min(8).max(50).required().typeError('Invalid password')
 });
 
 export const UpdateUsernameSchema = yup.object().shape(

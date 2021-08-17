@@ -4,6 +4,11 @@ export class EmailTakenException extends HttpException
 {
     constructor()
     {
-        super({ errorCode: 101, statusCode: HttpStatus.CONFLICT, message: 'Email is already being used' }, HttpStatus.CONFLICT);
+        super(
+        {
+            error: 104,
+            status: HttpStatus.CONFLICT,
+            message: 'Email is already being used'
+        }, HttpStatus.CONFLICT);
     }
 }
