@@ -22,7 +22,7 @@ export class UserService
     ) { }
 
     /**
-     * Get all users.
+     * Get all the users.
      * @returns User[]
      */
     async getAll(): Promise<User[]>
