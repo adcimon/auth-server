@@ -6,6 +6,35 @@ General-purpose HTTP-based authentication and authorization server. The project 
 
 The [API Documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
 
+## Environment
+
+The `.env` files have the environment variables used by the server.
+
+| Variables |
+| ----- |
+| NODE_ENV |
+| PORT |
+| STATIC_PATH |
+| APP_NAME |
+| RESET_PASSWORD_LINK |
+| TOKEN_SECRET_KEY |
+| TOKEN_EXPIRATION_TIME |
+| TOKEN_VERIFICATION_EXPIRATION_TIME |
+| TOKEN_RESET_PASSWORD_EXPIRATION_TIME |
+| DATABASE_TYPE |
+| DATABASE_HOST |
+| DATABASE_PORT |
+| DATABASE_USERNAME |
+| DATABASE_PASSWORD |
+| DATABASE_NAME |
+| DATABASE_ENTITIES |
+| MAIL_HOST |
+| MAIL_PORT |
+| MAIL_SECURE |
+| MAIL_USER |
+| MAIL_PASSWORD |
+| MAIL_NOREPLY_FROM |
+
 ## Installation
 
 ```
@@ -13,15 +42,25 @@ cd auth-server
 npm install
 ```
 
-## Environment
-
-The `.env` files have the environment variables used by the back-end.
-
 ## Run
 
+Run the server for development, debug or production.
 ```
 cd auth-server
 npm run start:dev
 npm run start:debug
 npm run start:prod
+```
+
+## Build and Deploy
+
+Build the project, compiling it to JavaScript.
+```
+cd auth-server
+npm run build
+```
+
+Once the `dist` folder is created start the application.
+```
+node dist/main.js
 ```
