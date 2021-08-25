@@ -54,11 +54,12 @@ export class AuthController
         return this.authService.verifyEmail(token);
     }
 
-    @Post('/login')
+    @Post('/auth/basic')
     @UseGuards(LocalAuthGuard)
-    async login( @Request() request ): Promise<any>
+    async basic( @Request() request ): Promise<any>
     {
-        return await this.authService.login(request.user);
+        const token = await this.authService.createAccessToken(request.user);
+        return { access_token: token };
     }
 
     @Post('/forgot-password')

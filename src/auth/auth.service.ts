@@ -42,11 +42,11 @@ export class AuthService
     }
 
     /**
-     * Log in the user.
+     * Create an access token for the user.
      * @param user
-     * @returns any
+     * @returns string
      */
-    async login( user: User ): Promise<any>
+    async createAccessToken( user: User ): Promise<any>
     {
         if( !user.verified )
         {
@@ -60,9 +60,7 @@ export class AuthService
             role: user.role
         };
 
-        return {
-            access_token: this.jwtService.sign(payload)
-        };
+        return this.jwtService.sign(payload);
     }
 
     /**
