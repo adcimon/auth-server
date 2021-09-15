@@ -56,7 +56,7 @@
                     The Auth Server API provides user registration and authentication features.
                 </p>
                 <p>
-                    The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can log in with their credentials. Then the server responds with an <span class="highlight">access_token</span>.
+                    The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an <span class="highlight">access_token</span>.
                 </p>
                 <p>
                     The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.

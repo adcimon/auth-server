@@ -2,9 +2,14 @@
 
 General-purpose HTTP-based authentication and authorization server. The project is built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
 
-## API
+**Features**
+- User registration and verification via email.
+- Basic authentication using email and password.
+- Authorization using [JSON Web Tokens](https://jwt.io/).
+- Delete not verified users after the verification token expires.
+- Reset password via email.
 
-The [API Documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
+The [API documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
 
 ## Environment
 
