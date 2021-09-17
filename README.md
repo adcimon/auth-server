@@ -11,8 +11,6 @@ General-purpose HTTP-based authentication and authorization server. The project 
 
 The [API documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
 
-## Environment
-
 The `.env` files have the environment variables used by the server.
 
 | Variables |
