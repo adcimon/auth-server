@@ -29,9 +29,11 @@ export class AuthController
             body.username,
             body.password,
             body.email,
+            body.avatar,
             body.name,
             body.surname,
-            body.birthdate
+            body.birthdate,
+            body.role
         );
 
         const token = await this.authService.createVerificationToken(user);
