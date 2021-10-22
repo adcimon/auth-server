@@ -19,6 +19,7 @@ The `.env` files have the environment variables used by the server.
 | PORT |
 | STATIC_PATH |
 | APP_NAME |
+| VERIFY_EMAIL_LINK |
 | RESET_PASSWORD_LINK |
 | TOKEN_SECRET_KEY |
 | TOKEN_EXPIRATION_TIME |
