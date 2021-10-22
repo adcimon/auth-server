@@ -2,7 +2,7 @@ import { Controller, Get, Put, Request, Body, UseGuards, UseInterceptors, ClassS
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { ValidationPipe } from '../validation/validation.pipe';
-import { UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema, UpdateNameSchema, UpdateSurnameSchema, UpdateBirthdateSchema } from '../validation/validation.schema';
+import { GetAvatarSchema, UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema, UpdateNameSchema, UpdateSurnameSchema, UpdateBirthdateSchema } from '../validation/validation.schema';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
@@ -24,6 +24,13 @@ export class UserController
     getMe( @Request() request ): Promise<User>
     {
         return this.userService.getById(request.user.id);
+    }
+
+    @Get('/get/avatar')
+    async getAvatar( @Body(new ValidationPipe(GetAvatarSchema)) body: any ): Promise<object>
+    {
+        const avatar = await this.userService.getAvatar(body.username);
+        return { avatar: avatar };
     }
 
     @Put('/update/username')

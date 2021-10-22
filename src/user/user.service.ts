@@ -30,6 +30,46 @@ export class UserService implements OnModuleInit
     }
 
     /**
+     * Create a user.
+     */
+    async create(
+        username:   string,
+        password:   string,
+        email:      string,
+        avatar:     string,
+        name:       string,
+        surname:    string,
+        birthdate:  Date,
+        role:       number
+    ): Promise<User>
+    {
+        const usernameTaken = await this.usersRepository.findOne({ where: { username } });
+        if( usernameTaken )
+        {
+            throw new UsernameTakenException();
+        }
+
+        const emailTaken = await this.usersRepository.findOne({ where: { email } });
+        if( emailTaken )
+        {
+            throw new EmailTakenException();
+        }
+
+        const user = this.usersRepository.create({
+            username:   username,
+            password:   await argon2.hash(password),
+            email:      email,
+            avatar:     avatar,
+            name:       name,
+            surname:    surname,
+            birthdate:  birthdate,
+            role:       role
+        });
+
+        return this.usersRepository.save(user);
+    }
+
+    /**
      * Get all the users.
      */
     async getAll(): Promise<User[]>
@@ -94,43 +134,19 @@ export class UserService implements OnModuleInit
     }
 
     /**
-     * Create a user.
+     * Get the user's avatar.
      */
-    async create(
-        username:   string,
-        password:   string,
-        email:      string,
-        avatar:     string,
-        name:       string,
-        surname:    string,
-        birthdate:  Date,
-        role:       number
-    ): Promise<User>
+    async getAvatar(
+        username: string
+    ): Promise<string>
     {
-        const usernameTaken = await this.usersRepository.findOne({ where: { username } });
-        if( usernameTaken )
+        const user = await this.getByUsername(username);
+        if( !user )
         {
-            throw new UsernameTakenException();
+            throw new UserNotFoundException();
         }
 
-        const emailTaken = await this.usersRepository.findOne({ where: { email } });
-        if( emailTaken )
-        {
-            throw new EmailTakenException();
-        }
-
-        const user = this.usersRepository.create({
-            username:   username,
-            password:   await argon2.hash(password),
-            email:      email,
-            avatar:     avatar,
-            name:       name,
-            surname:    surname,
-            birthdate:  birthdate,
-            role:       role
-        });
-
-        return this.usersRepository.save(user);
+        return user.avatar;
     }
 
     /**

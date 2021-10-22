@@ -34,6 +34,7 @@
                 <li><a href="#forgotPassword">Forgot Password</a></li>
                 <li><a href="#resetPassword">Reset Password</a></li>
                 <li><a href="#getMe">Get Me</a></li>
+                <li><a href="#getAvatar">Get Avatar</a></li>
                 <li><a href="#updateUsername">Update Username</a></li>
                 <li><a href="#updatePassword">Update Password</a></li>
                 <li><a href="#updateAvatar">Update Avatar</a></li>
@@ -207,10 +208,23 @@
                 </p>
                 <br>
 
-                <h3 class="boolean">Response</h3>
-                <p>
-                    The response values are true or false.
-                </p>
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>status</td>
+                            <td>boolean</td>
+                            <td>The response status.</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <br>
             </div>
 
@@ -293,10 +307,23 @@
                 </table>
                 <br>
 
-                <h3 class="boolean">Response</h3>
-                <p>
-                    The response values are true or false.
-                </p>
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>status</td>
+                            <td>boolean</td>
+                            <td>The response status.</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <br>
             </div>
 
@@ -327,10 +354,23 @@
                 </table>
                 <br>
 
-                <h3 class="boolean">Response</h3>
-                <p>
-                    The response values are true or false.
-                </p>
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>status</td>
+                            <td>boolean</td>
+                            <td>The response status.</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <br>
             </div>
 
@@ -402,6 +442,53 @@
                             <td>verified</td>
                             <td>boolean</td>
                             <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <!-- Get Avatar -->
+            <div id="getAvatar" class="content-section">
+                <div class="get">/users/get/avatar</div>
+                <p>
+                    Get the user's avatar.<br>
+                </p>
+                <br>
+
+                <h3 class="public">Request</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td class="required">The user's username.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -967,10 +1054,58 @@
                 </table>
                 <br>
 
-                <h3 class="boolean">Response</h3>
-                <p>
-                    The response values are true or false.
-                </p>
+                <h3 class="json">Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>username</td>
+                            <td>string</td>
+                            <td>The user's username.</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>string</td>
+                            <td>The user's email.</td>
+                        </tr>
+                        <tr>
+                            <td>avatar</td>
+                            <td>string</td>
+                            <td>The user's avatar URL.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>The user's name.</td>
+                        </tr>
+                        <tr>
+                            <td>surname</td>
+                            <td>string</td>
+                            <td>The user's surname.</td>
+                        </tr>
+                        <tr>
+                            <td>birthdate</td>
+                            <td>string</td>
+                            <td>The user's birthdate (yyyy-MM-dd).</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>number</td>
+                            <td>The user's role.</td>
+                        </tr>
+                        <tr>
+                            <td>verified</td>
+                            <td>boolean</td>
+                            <td>Is the user's email verified?</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <br>
             </div>
 

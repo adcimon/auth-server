@@ -573,28 +573,6 @@ pre
     content: "json";
 }
 
-.boolean::after
-{
-    /* Space */
-    margin-left: 10px;
-    padding: 5px 5px;
-
-    /* Text */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    text-align: center;
-    text-shadow: 0 1px 0 hsla(0, 0%, 0%, 0.1);
-
-    /* Style */
-    background-color: hsla(204, 95%, 50%, 0.6);
-    border: 1px solid;
-    border-color: hsla(199, 82%, 46%, 1);
-    border-radius: 3px;
-    color: var(--font-color);
-    content: "boolean";
-}
-
 .required::after
 {
     /* Space */

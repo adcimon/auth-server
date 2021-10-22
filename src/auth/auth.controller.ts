@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Request, Param, Headers, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Request, Response, Param, Headers, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
@@ -51,21 +51,32 @@ export class AuthController
     }
 
     @Get('/verify/:token')
-    verify( @Param('token') token: string ): Promise<boolean>
+    async verify( @Response() response, @Param('token') token: string )
     {
-        return this.authService.verifyEmail(token);
+        const verified = await this.authService.verifyEmail(token);
+
+        let link = this.configService.get('VERIFY_EMAIL_LINK');
+        if( !link || link === '' )
+        {
+            response.send({ status: verified });
+        }
+        else
+        {
+            response.redirect(link);
+        }
     }
 
     @Post('/auth/basic')
     @UseGuards(LocalAuthGuard)
-    async basic( @Request() request ): Promise<any>
+    async basic( @Request() request ): Promise<object>
     {
         const token = await this.authService.createAccessToken(request.user);
+
         return { access_token: token };
     }
 
     @Post('/forgot-password')
-    async forgotPassword( @Headers() headers, @Body(new ValidationPipe(ForgotPasswordSchema)) body: any ): Promise<boolean>
+    async forgotPassword( @Headers() headers, @Body(new ValidationPipe(ForgotPasswordSchema)) body: any ): Promise<object>
     {
         const user = await this.userService.getByEmail(body.email);
         if( !user )
@@ -90,20 +101,27 @@ export class AuthController
             throw new MailServiceErrorException();
         }
 
-        return true;
+        return { status: sent };
     }
 
     @Post('/reset-password/:token')
-    async resetPassword( @Param('token') token: string, @Body(new ValidationPipe(ResetPasswordSchema)) body: any ): Promise<boolean>
+    async resetPassword( @Param('token') token: string, @Body(new ValidationPipe(ResetPasswordSchema)) body: any ): Promise<object>
     {
-        return await this.authService.resetPassword(token, body.password);
+        const reset = await this.authService.resetPassword(token, body.password);
+
+        return { status: reset };
     }
 
     @Delete('/delete')
     @UseGuards(JwtAuthGuard)
-    async delete( @Request() request, @Body(new ValidationPipe(DeleteSchema)) body: any ): Promise<boolean>
+    async delete( @Request() request, @Body(new ValidationPipe(DeleteSchema)) body: any ): Promise<User>
     {
         const user = await this.userService.deleteSecure(request.user.id, body.password);
-        return true;
+        if( !user )
+        {
+            throw new UserNotFoundException();
+        }
+
+        return user;
     }
 }

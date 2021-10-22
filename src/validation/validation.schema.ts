@@ -38,6 +38,11 @@ export const ResetPasswordSchema = yup.object().shape(
     password:           yup.string().min(8).max(50).required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
 });
 
+export const GetAvatarSchema = yup.object().shape(
+{
+    username:           yup.string().min(3).max(15).required('Username is required').typeError('Invalid username')
+});
+
 export const UpdateUsernameSchema = yup.object().shape(
 {
     username:           yup.string().min(3).max(15).required('Username is required').typeError('Invalid username'),
