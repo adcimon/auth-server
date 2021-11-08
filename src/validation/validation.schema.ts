@@ -23,8 +23,8 @@ function parseDateString( value, originalValue )
 
 export const RegisterSchema = yup.object().shape(
 {
-    username:           yup.string().min(3).max(15).required('Username is required').typeError('Invalid username'),
-    password:           yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password'),
+    username:           yup.string().required('Username is required').min(3).max(15).typeError('Invalid username'),
+    password:           yup.string().required('Password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password'),
     email:              yup.string().email().required('Email is required').typeError('Invalid email'),
     avatar:             yup.string().min(8).max(100).typeError('Invalid avatar'),
     name:               yup.string().max(15).typeError('Invalid name'),
@@ -36,7 +36,7 @@ export const RegisterSchema = yup.object().shape(
 export const LoginSchema = yup.object().shape(
 {
     email:              yup.string().email().required('Email is required').typeError('Invalid email'),
-    password:           yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
+    password:           yup.string().required('Password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
 });
 
 export const ForgotPasswordSchema = yup.object().shape(
@@ -46,47 +46,47 @@ export const ForgotPasswordSchema = yup.object().shape(
 
 export const ResetPasswordSchema = yup.object().shape(
 {
-    password:           yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
+    password:           yup.string().required('Password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
 });
 
 export const GetAvatarSchema = yup.object().shape(
 {
-    username:           yup.string().min(3).max(15).required('Username is required').typeError('Invalid username')
+    username:           yup.string().required('Username is required').min(3).max(15).typeError('Invalid username')
 });
 
 export const UpdateUsernameSchema = yup.object().shape(
 {
-    username:           yup.string().min(3).max(15).required('Username is required').typeError('Invalid username'),
-    password:           yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
+    username:           yup.string().required('Username is required').min(3).max(15).typeError('Invalid username'),
+    password:           yup.string().required('Password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
 });
 
 export const UpdatePasswordSchema = yup.object().shape(
 {
-    currentPassword:    yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('Current password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid current password'),
-    newPassword:        yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('New password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid new password')
+    currentPassword:    yup.string().required('Current password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid current password'),
+    newPassword:        yup.string().required('New password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid new password')
 });
 
 export const UpdateAvatarSchema = yup.object().shape(
 {
-    avatar:             yup.string().min(8).max(100).required('Avatar is required').typeError('Invalid avatar')
+    avatar:             yup.string().required('Avatar is required').min(8).max(100).typeError('Invalid avatar')
 });
 
 export const UpdateNameSchema = yup.object().shape(
 {
-    name:               yup.string().max(15).required('Name is required').typeError('Invalid name')
+    name:               yup.string().required('Name is required').max(15).typeError('Invalid name')
 });
 
 export const UpdateSurnameSchema = yup.object().shape(
 {
-    surname:            yup.string().max(15).required('Surname is required').typeError('Invalid surname')
+    surname:            yup.string().required('Surname is required').max(15).typeError('Invalid surname')
 });
 
 export const UpdateBirthdateSchema = yup.object().shape(
 {
-    birthdate:          yup.date().transform(parseDateString).required('Birthdate is required').typeError('Invalid birthdate')
+    birthdate:          yup.date().required('Birthdate is required').transform(parseDateString).typeError('Invalid birthdate')
 });
 
 export const DeleteSchema = yup.object().shape(
 {
-    password:           yup.string().min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
+    password:           yup.string().required('Password is required').min(PASSWORD_MIN_CHARS).max(PASSWORD_MAX_CHARS).matches(PASSWORD_REGEXP, PASSWORD_MESSAGE).typeError('Invalid password')
 });
