@@ -10,9 +10,6 @@ export class ConfigService
 
     /**
      * Get a configuration value.
-     * @param key
-     * @param defaultValue
-     * @returns any
      */
     get( key: string, defaultValue: any = null ): any
     {
@@ -35,7 +32,6 @@ export class ConfigService
 
     /**
      * Get the application name.
-     * @returns string
      */
     getAppName(): string
     {
@@ -52,7 +48,6 @@ export class ConfigService
 
     /**
      * Get the static path.
-     * @returns string
      */
     getStaticPath(): string
     {
@@ -61,7 +56,6 @@ export class ConfigService
 
     /**
      * Is a production environment?
-     * @returns boolean
      */
     isProduction(): boolean
     {
