@@ -365,6 +365,13 @@ pre
     line-height: 1.6;
 }
 
+.subtable
+{
+    /* Space */
+    margin-top: 0 !important;
+    padding: 0 !important;
+}
+
 /* 4. Tags */
 
 .post
@@ -505,6 +512,41 @@ pre
     border-radius: 3px;
     color: var(--font-color);
     content: "DELETE";
+}
+
+.websocket
+{
+    /* Space */
+    margin: 10px;
+    padding: 10px;
+
+    /* Text */
+    font-family: Source Code Pro, monospace;
+
+    /* Style */
+    background-color: hsla(24, 100%, 50%, 0.3);
+    border: 1px solid;
+    border-color: hsla(24, 100%, 50%, 1);
+}
+
+.websocket::before
+{
+    /* Space */
+    margin-right: 10px;
+    padding: 6px 15px;
+
+    /* Text */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 1px 0 hsla(0, 0%, 0%, 0.1);
+
+    /* Style */
+    background-color: hsla(24, 100%, 50%, 1);
+    border-radius: 3px;
+    color: var(--font-color);
+    content: "WEBSOCKET";
 }
 
 .public::after

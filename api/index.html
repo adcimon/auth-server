@@ -53,18 +53,10 @@
             <!-- Introduction -->
             <div id="introduction" class="content-section">
                 <h1>Introduction</h1>
-                <p>
-                    The Auth Server API provides user registration and authentication features.
-                </p>
-                <p>
-                    The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an <span class="highlight">access_token</span>.
-                </p>
-                <p>
-                    The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.
-                </p>
-                <p>
-                    <code>Authorization: Bearer access_token</code>
-                </p>
+                <p>Auth Server is a general-purpose HTTP-based authentication and authorization server.</p>
+                <p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an <span class="highlight">access_token</span>.</p>
+                <p>The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.</p>
+                <p><code>Authorization: Bearer access_token</code></p>
             </div>
 
             <!-- API -->
@@ -75,9 +67,7 @@
             <!-- Register -->
             <div id="register" class="content-section">
                 <div class="post">/register</div>
-                <p>
-                    Register the user.<br>
-                </p>
+                <p>Register the user.<br></p>
                 <br>
 
                 <h3 class="public">Request</h3>
@@ -197,15 +187,11 @@
             <!-- Verify -->
             <div id="verify" class="content-section">
                 <div class="get">/verify/:token</div>
-                <p>
-                    Verify the user's email.<br>
-                </p>
+                <p>Verify the user's email.<br></p>
                 <br>
 
                 <h3 class="public">Request</h3>
-                <p>
-                    This request doesn't have a body.
-                </p>
+                <p>This request doesn't have a body.</p>
                 <br>
 
                 <h3 class="json">Response</h3>
@@ -231,9 +217,7 @@
             <!-- Auth Basic -->
             <div id="authBasic" class="content-section">
                 <div class="post">/auth/basic</div>
-                <p>
-                    Basic user authentication with email and password.<br>
-                </p>
+                <p>Basic user authentication with email and password.<br></p>
                 <br>
 
                 <h3 class="public">Request</h3>
@@ -283,9 +267,7 @@
             <!-- Forgot Password -->
             <div id="forgotPassword" class="content-section">
                 <div class="post">/forgot-password</div>
-                <p>
-                    Request the server an email to reset the password.<br>
-                </p>
+                <p>Request the server an email to reset the password.<br></p>
                 <br>
 
                 <h3 class="public">Request</h3>
@@ -330,9 +312,7 @@
             <!-- Reset Password -->
             <div id="resetPassword" class="content-section">
                 <div class="post">/reset-password/:token</div>
-                <p>
-                    Reset the user's password.<br>
-                </p>
+                <p>Reset the user's password.<br></p>
                 <br>
 
                 <h3 class="public">Request</h3>
@@ -377,15 +357,11 @@
             <!-- Get Me -->
             <div id="getMe" class="content-section">
                 <div class="get">/users/me</div>
-                <p>
-                    Get the user's data.<br>
-                </p>
+                <p>Get the user's data.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
-                <p>
-                    This request doesn't have a body.
-                </p>
+                <p>This request doesn't have a body.</p>
                 <br>
 
                 <h3 class="json">Response</h3>
@@ -451,9 +427,7 @@
             <!-- Get Avatar -->
             <div id="getAvatar" class="content-section">
                 <div class="get">/users/get/avatar</div>
-                <p>
-                    Get the user's avatar.<br>
-                </p>
+                <p>Get the user's avatar.<br></p>
                 <br>
 
                 <h3 class="public">Request</h3>
@@ -498,9 +472,7 @@
             <!-- Update Username -->
             <div id="updateUsername" class="content-section">
                 <div class="put">/users/update/username</div>
-                <p>
-                    Change the user's username.<br>
-                </p>
+                <p>Change the user's username.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -590,9 +562,7 @@
             <!-- Update Password -->
             <div id="updatePassword" class="content-section">
                 <div class="put">/users/update/password</div>
-                <p>
-                    Change the user's password.<br>
-                </p>
+                <p>Change the user's password.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -682,9 +652,7 @@
             <!-- Update Avatar -->
             <div id="updateAvatar" class="content-section">
                 <div class="put">/users/update/avatar</div>
-                <p>
-                    Change the user's avatar.<br>
-                </p>
+                <p>Change the user's avatar.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -769,9 +737,7 @@
             <!-- Update Name -->
             <div id="updateName" class="content-section">
                 <div class="put">/users/update/name</div>
-                <p>
-                    Change the user's name.<br>
-                </p>
+                <p>Change the user's name.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -856,9 +822,7 @@
             <!-- Update Surname -->
             <div id="updateSurname" class="content-section">
                 <div class="put">/users/update/surname</div>
-                <p>
-                    Change the user's surname.<br>
-                </p>
+                <p>Change the user's surname.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -943,9 +907,7 @@
             <!-- Update Birthdate -->
             <div id="updateBirthdate" class="content-section">
                 <div class="put">/users/update/birthdate</div>
-                <p>
-                    Change the user's birthdate.<br>
-                </p>
+                <p>Change the user's birthdate.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -1030,9 +992,7 @@
             <!-- Delete -->
             <div id="delete" class="content-section">
                 <div class="delete">/delete</div>
-                <p>
-                    Delete the user's data.<br>
-                </p>
+                <p>Delete the user's data.<br></p>
                 <br>
 
                 <h3 class="protected">Request</h3>
@@ -1112,9 +1072,7 @@
             <!-- Errors -->
             <div id="errors" class="content-section">
                 <h2>Errors</h2>
-                <p>
-                    The API uses the following errors:
-                </p>
+                <p>The server returns the following errors:</p>
                 <table>
                     <thead>
                         <tr>
@@ -1127,78 +1085,56 @@
                         <tr>
                             <td>100</td>
                             <td>500</td>
-                            <td>
-                                Generic error.
-                            </td>
+                            <td>Generic error.</td>
                         </tr>
                         <tr>
                             <td>101</td>
                             <td>404</td>
-                            <td>
-                                Invalid request.
-                            </td>
+                            <td>Invalid request.</td>
                         </tr>
                         <tr>
                             <td>102</td>
                             <td>400</td>
-                            <td>
-                                Validation error.
-                            </td>
+                            <td>Validation error.</td>
                         </tr>
                         <tr>
                             <td>103</td>
                             <td>409</td>
-                            <td>
-                                Username is already being used.
-                            </td>
+                            <td>Username is already being used.</td>
                         </tr>
                         <tr>
                             <td>104</td>
                             <td>409</td>
-                            <td>
-                                Email is already being used.
-                            </td>
+                            <td>Email is already being used.</td>
                         </tr>
                         <tr>
                             <td>105</td>
                             <td>401</td>
-                            <td>
-                                Email not verified.
-                            </td>
+                            <td>Email not verified.</td>
                         </tr>
                         <tr>
                             <td>106</td>
                             <td>401</td>
-                            <td>
-                                Invalid password.
-                            </td>
+                            <td>Invalid password.</td>
                         </tr>
                         <tr>
                             <td>107</td>
                             <td>401</td>
-                            <td>
-                                Invalid token.
-                            </td>
+                            <td>Invalid token.</td>
                         </tr>
                         <tr>
                             <td>108</td>
                             <td>404</td>
-                            <td>
-                                User not found.
-                            </td>
+                            <td>User not found.</td>
                         </tr>
                         <tr>
                             <td>109</td>
                             <td>503</td>
-                            <td>
-                                Mail service error.
-                            </td>
+                            <td>Mail service error.</td>
                         </tr>
                     </tbody>
                 </table>
-                <p>
-                    For more information check the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">list of HTTP status codes</a>.
-                </p>
+                <p>For more information check the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">list of HTTP status codes</a>.</p>
                 <br>
             </div>
 
