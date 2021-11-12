@@ -54,9 +54,9 @@
             <div id="introduction" class="content-section">
                 <h1>Introduction</h1>
                 <p>Auth Server is a general-purpose HTTP-based authentication and authorization server.</p>
-                <p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an <span class="highlight">access_token</span>.</p>
+                <p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an access token.</p>
                 <p>The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.</p>
-                <p><code>Authorization: Bearer access_token</code></p>
+                <p><code>Authorization: Bearer token</code></p>
             </div>
 
             <!-- API -->
@@ -1072,7 +1072,30 @@
             <!-- Errors -->
             <div id="errors" class="content-section">
                 <h2>Errors</h2>
-                <p>The server returns the following errors:</p>
+                <p>The server uses the following error schema:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>error</td>
+                            <td>number</td>
+                        </tr>
+                        <tr>
+                            <td>status</td>
+                            <td>number</td>
+                        </tr>
+                        <tr>
+                            <td>message</td>
+                            <td>string</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <table>
                     <thead>
                         <tr>
