@@ -62,6 +62,7 @@ export class AuthController
         }
         else
         {
+            link += ((link.endsWith('/')) ? '' : '/') + token;
             response.redirect(link);
         }
     }
