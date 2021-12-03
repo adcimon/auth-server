@@ -18,7 +18,7 @@ export const RegisterSchema = yup.object().shape(
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
     email:              yup.string().email().required('Email is required'),
-    avatar:             yup.string().url().max(200),
+    avatar:             yup.string().url().max(500),
     name:               yup.string().max(15),
     surname:            yup.string().max(15),
     birthdate:          yup.date().transform(parseDateString).typeError('Invalid birthdate format YYYY/MM/DD'),
@@ -60,7 +60,7 @@ export const UpdatePasswordSchema = yup.object().shape(
 
 export const UpdateAvatarSchema = yup.object().shape(
 {
-    avatar:             yup.string().url().required('Avatar is required').max(200)
+    avatar:             yup.string().url().required('Avatar is required').max(500)
 });
 
 export const UpdateNameSchema = yup.object().shape(
