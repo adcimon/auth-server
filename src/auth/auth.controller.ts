@@ -51,7 +51,7 @@ export class AuthController
     }
 
     @Get('/verify/:token')
-    async verify( @Response() response, @Param('token') token: string )
+    async verify( @Param('token') token: string, @Response() response )
     {
         const verified = await this.authService.verifyEmail(token);
 

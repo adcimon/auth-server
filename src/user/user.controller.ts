@@ -1,8 +1,8 @@
-import { Controller, Get, Put, Request, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Get, Put, Request, Param, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { ValidationPipe } from '../validation/validation.pipe';
-import { GetAvatarSchema, UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema, UpdateNameSchema, UpdateSurnameSchema, UpdateBirthdateSchema } from '../validation/validation.schema';
+import { UpdateUsernameSchema, UpdatePasswordSchema, UpdateAvatarSchema, UpdateNameSchema, UpdateSurnameSchema, UpdateBirthdateSchema } from '../validation/validation.schema';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
@@ -26,10 +26,11 @@ export class UserController
         return this.userService.getById(request.user.id);
     }
 
-    @Get('/get/avatar')
-    async getAvatar( @Body(new ValidationPipe(GetAvatarSchema)) body: any ): Promise<object>
+    @Get('/:username/avatar')
+    @UseGuards(JwtAuthGuard)
+    async getAvatar( @Param('username') username: string ): Promise<object>
     {
-        const avatar = await this.userService.getAvatar(body.username);
+        const avatar = await this.userService.getAvatar(username);
         return { avatar: avatar };
     }
 

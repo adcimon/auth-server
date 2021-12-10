@@ -41,11 +41,6 @@ export const ResetPasswordSchema = yup.object().shape(
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
-export const GetAvatarSchema = yup.object().shape(
-{
-    username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE)
-});
-
 export const UpdateUsernameSchema = yup.object().shape(
 {
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),

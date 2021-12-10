@@ -426,27 +426,12 @@
 
             <!-- Get Avatar -->
             <div id="getAvatar" class="content-section">
-                <div class="get">/users/get/avatar</div>
+                <div class="get">/users/:username/avatar</div>
                 <p>Get the user's avatar.<br></p>
                 <br>
 
-                <h3 class="public">Request</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td class="required">The user's username.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3 class="protected">Request</h3>
+                <p>This request doesn't have a body.</p>
                 <br>
 
                 <h3 class="json">Response</h3>
