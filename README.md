@@ -17,6 +17,7 @@ The `.env` files have the environment variables used by the server.
 | ----- |
 | NODE_ENV |
 | PORT |
+| ENABLE_CORS |
 | STATIC_PATH |
 | APP_NAME |
 | VERIFY_EMAIL_LINK |
