@@ -21,9 +21,10 @@ export class UserController
 
     @Get('/me')
     @UseGuards(JwtAuthGuard)
-    getMe( @Request() request ): Promise<User>
+    async getMe( @Request() request ): Promise<User>
     {
-        return this.userService.getById(request.user.id);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.getById(user.id);
     }
 
     @Get('/:username/avatar')
@@ -36,43 +37,49 @@ export class UserController
 
     @Put('/update/username')
     @UseGuards(JwtAuthGuard)
-    updateUsername( @Request() request, @Body(new ValidationPipe(UpdateUsernameSchema)) body: any ): Promise<User>
+    async updateUsername( @Request() request, @Body(new ValidationPipe(UpdateUsernameSchema)) body: any ): Promise<User>
     {
-        return this.userService.updateUsernameSecure(request.user.id, body.username, body.password);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.updateUsernameSecure(user.id, body.username, body.password);
     }
 
     @Put('/update/password')
     @UseGuards(JwtAuthGuard)
-    updatePassword( @Request() request, @Body(new ValidationPipe(UpdatePasswordSchema)) body: any ): Promise<User>
+    async updatePassword( @Request() request, @Body(new ValidationPipe(UpdatePasswordSchema)) body: any ): Promise<User>
     {
-        return this.userService.updatePasswordSecure(request.user.id, body.currentPassword, body.newPassword);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.updatePasswordSecure(user.id, body.currentPassword, body.newPassword);
     }
 
     @Put('/update/avatar')
     @UseGuards(JwtAuthGuard)
-    updateAvatar( @Request() request, @Body(new ValidationPipe(UpdateAvatarSchema)) body: any ): Promise<User>
+    async updateAvatar( @Request() request, @Body(new ValidationPipe(UpdateAvatarSchema)) body: any ): Promise<User>
     {
-        return this.userService.updateAvatar(request.user.id, body.avatar);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.updateAvatar(user.id, body.avatar);
     }
 
     @Put('/update/name')
     @UseGuards(JwtAuthGuard)
-    updateName( @Request() request, @Body(new ValidationPipe(UpdateNameSchema)) body: any ): Promise<User>
+    async updateName( @Request() request, @Body(new ValidationPipe(UpdateNameSchema)) body: any ): Promise<User>
     {
-        return this.userService.updateName(request.user.id, body.name);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.updateName(user.id, body.name);
     }
 
     @Put('/update/surname')
     @UseGuards(JwtAuthGuard)
-    updateSurname( @Request() request, @Body(new ValidationPipe(UpdateSurnameSchema)) body: any ): Promise<User>
+    async updateSurname( @Request() request, @Body(new ValidationPipe(UpdateSurnameSchema)) body: any ): Promise<User>
     {
-        return this.userService.updateSurname(request.user.id, body.surname);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.updateSurname(user.id, body.surname);
     }
 
     @Put('/update/birthdate')
     @UseGuards(JwtAuthGuard)
-    updateBirthdate( @Request() request, @Body(new ValidationPipe(UpdateBirthdateSchema)) body: any ): Promise<User>
+    async updateBirthdate( @Request() request, @Body(new ValidationPipe(UpdateBirthdateSchema)) body: any ): Promise<User>
     {
-        return this.userService.updateBirthdate(request.user.id, body.birthdate);
+        const user = await this.userService.getByUsername(request.user.username);
+        return this.userService.updateBirthdate(user.id, body.birthdate);
     }
 }

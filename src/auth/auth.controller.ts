@@ -73,7 +73,7 @@ export class AuthController
     {
         const token = await this.authService.createAccessToken(request.user);
 
-        return { access_token: token };
+        return { token: token };
     }
 
     @Post('/forgot-password')

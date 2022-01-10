@@ -24,8 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy)
     {
         // This value is saved in the request.
         return {
-            id: payload.sub,
-            username: payload.username
+            username: payload.sub
         };
     }
 }

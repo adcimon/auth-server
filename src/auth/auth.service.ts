@@ -55,8 +55,7 @@ export class AuthService
 
         const payload =
         {
-            sub: user.id,
-            username: user.username,
+            sub: user.username,
             role: user.role
         };
 
@@ -72,8 +71,7 @@ export class AuthService
     {
         const payload =
         {
-            sub: user.id,
-            username: user.username
+            sub: user.username
         };
 
         return this.jwtService.sign(payload, { expiresIn: this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME') });
@@ -95,7 +93,7 @@ export class AuthService
             throw new InvalidTokenException();
         }
 
-        const user = await this.userService.getById(payload.sub);
+        const user = await this.userService.getByUsername(payload.sub);
         if( user.verified )
         {
             return false;
@@ -115,8 +113,7 @@ export class AuthService
     {
         const payload =
         {
-            sub: user.id,
-            username: user.username
+            sub: user.username
         };
 
         // Use the user's current password's hash for signing the token.
@@ -138,7 +135,7 @@ export class AuthService
     {
         // Get the user's current password's hash.
         let payload = this.jwtService.decode(token);
-        const user = await this.userService.getById(payload.sub);
+        const user = await this.userService.getByUsername(payload.sub);
         if( !user )
         {
             throw new UserNotFoundException();
