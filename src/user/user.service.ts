@@ -10,6 +10,7 @@ import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { InvalidPasswordException } from '../exception/invalid-password.exception';
 import * as argon2 from 'argon2';
 import * as ms from 'ms';
+const fs = require('fs');
 
 @Injectable()
 export class UserService implements OnModuleInit
@@ -463,141 +464,34 @@ export class UserService implements OnModuleInit
      */
     async populateDummyUsers()
     {
-        // The Fellowship of the Ring.
-
-        // Frodo.
-        try {
-            let frodo = await this.create(
-                'Frodo',
-                'frodo9000',
-                'frodo@fellowship.lotr',
-                '',
-                'Frodo',
-                'Baggins',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(frodo.id, true);
-        } catch( exception ) { }
-
-        // Sam.
-        try {
-            let sam = await this.create(
-                'Sam',
-                'sam9000',
-                'sam@fellowship.lotr',
-                '',
-                'Samwise',
-                'Gamgee',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(sam.id, true);
-        } catch( exception ) { }
-
-        // Merry.
-        try {
-            let merry = await this.create(
-                'Merry',
-                'merry9000',
-                'merry@fellowship.lotr',
-                '',
-                'Meriadoc',
-                'Brandigamo',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(merry.id, true);
-        } catch( exception ) { }
-
-        // Pippin.
-        try {
-            let pippin = await this.create(
-                'Pippin',
-                'pippin9000',
-                'pippin@fellowship.lotr',
-                '',
-                'Peregrin',
-                'Took',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(pippin.id, true);
-        } catch( exception ) { }
-
-        // Gandalf.
-        try {
-            let gandalf = await this.create(
-                'Gandalf',
-                'gandalf9000',
-                'gandalf@fellowship.lotr',
-                '',
-                'Gandalf',
-                'The Grey',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(gandalf.id, true);
-        } catch( exception ) { }
-
-        // Aragorn.
-        try {
-            let aragorn = await this.create(
-                'Aragorn',
-                'aragorn9000',
-                'aragorn@fellowship.lotr',
-                '',
-                'Aragorn',
-                '',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(aragorn.id, true);
-        } catch( exception ) { }
-
-        // Legolas.
-        try {
-            let legolas = await this.create(
-                'Legolas',
-                'legolas9000',
-                'legolas@fellowship.lotr',
-                '',
-                'Legolas',
-                '',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(legolas.id, true);
-        } catch( exception ) { }
-
-        // Gimli.
-        try {
-            let gimli = await this.create(
-                'Gimli',
-                'gimli9000',
-                'gimli@fellowship.lotr',
-                '',
-                'Gimli',
-                '',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(gimli.id, true);
-        } catch( exception ) { }
-
-        // Boromir.
-        try {
-            let boromir = await this.create(
-                'Boromir',
-                'boromir9000',
-                'boromir@fellowship.lotr',
-                '',
-                'Boromir',
-                '',
-                new Date('2001-12-10'),
-                0
-            );
-            await this.updateVerified(boromir.id, true);
-        } catch( exception ) { }
+        fs.readFile('./users.json', 'utf8', (error, data) =>
+        {
+            if( error )
+            {
+                return
+            }
+        
+            const users = JSON.parse(data);
+            users.records.forEach(async record =>
+            {
+                try
+                {
+                    let user = await this.create(
+                        record.username,
+                        record.password,
+                        record.email,
+                        record.avatar,
+                        record.name,
+                        record.surname,
+                        record.birthdate,
+                        record.role
+                    );
+                    await this.updateVerified(user.id, true);
+                }
+                catch( exception )
+                {
+                }
+            });
+        });
     }
 }

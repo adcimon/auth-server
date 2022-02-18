@@ -13,7 +13,7 @@ export class UserController
     {
     }
 
-    //@Get('/')
+    //@Get('/all')
     getAll(): Promise<User[]>
     {
         return this.userService.getAll();
