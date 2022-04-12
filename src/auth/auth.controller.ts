@@ -1,17 +1,22 @@
-import { Controller, Get, Post, Delete, Request, Response, Param, Headers, Body, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import
+{
+    Controller,
+    Get, Post, Request, Response, Param, Headers, Body,
+    UseGuards, UseInterceptors, ClassSerializerInterceptor
+} from '@nestjs/common';
+
 import { ConfigService } from '../config/config.service';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import { User } from '../user/user.entity';
 import { LocalAuthGuard } from './local-auth.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { RegisterSchema, ForgotPasswordSchema, ResetPasswordSchema } from '../validation/validation.schema';
 import { ValidationPipe } from '../validation/validation.pipe';
-import { RegisterSchema, ForgotPasswordSchema, ResetPasswordSchema, DeleteSchema } from '../validation/validation.schema';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';
 
-@Controller('')
+@Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController
 {
@@ -23,7 +28,10 @@ export class AuthController
     ) { }
 
     @Post('/register')
-    async register( @Headers() headers, @Body(new ValidationPipe(RegisterSchema)) body: any ): Promise<User>
+    async register(
+        @Headers() headers,
+        @Body(new ValidationPipe(RegisterSchema)) body: any
+    ): Promise<User>
     {
         const user = await this.userService.create(
             body.username,
@@ -32,8 +40,7 @@ export class AuthController
             body.avatar,
             body.name,
             body.surname,
-            body.birthdate,
-            body.role
+            body.birthdate
         );
 
         const token = await this.authService.createVerificationToken(user);
@@ -51,7 +58,10 @@ export class AuthController
     }
 
     @Get('/verify/:token')
-    async verify( @Param('token') token: string, @Response() response )
+    async verify(
+        @Param('token') token: string,
+        @Response() response
+    ): Promise<any>
     {
         const verified = await this.authService.verifyEmail(token);
 
@@ -67,9 +77,11 @@ export class AuthController
         }
     }
 
-    @Post('/auth/basic')
+    @Post('/basic')
     @UseGuards(LocalAuthGuard)
-    async basic( @Request() request ): Promise<object>
+    async basic(
+        @Request() request
+    ): Promise<object>
     {
         const token = await this.authService.createAccessToken(request.user);
 
@@ -77,7 +89,10 @@ export class AuthController
     }
 
     @Post('/forgot-password')
-    async forgotPassword( @Headers() headers, @Body(new ValidationPipe(ForgotPasswordSchema)) body: any ): Promise<object>
+    async forgotPassword(
+        @Headers() headers,
+        @Body(new ValidationPipe(ForgotPasswordSchema)) body: any
+    ): Promise<object>
     {
         const user = await this.userService.getByEmail(body.email);
         if( !user )
@@ -106,23 +121,13 @@ export class AuthController
     }
 
     @Post('/reset-password/:token')
-    async resetPassword( @Param('token') token: string, @Body(new ValidationPipe(ResetPasswordSchema)) body: any ): Promise<object>
+    async resetPassword(
+        @Param('token') token: string,
+        @Body(new ValidationPipe(ResetPasswordSchema)) body: any
+    ): Promise<object>
     {
         const reset = await this.authService.resetPassword(token, body.password);
 
         return { status: reset };
-    }
-
-    @Delete('/delete')
-    @UseGuards(JwtAuthGuard)
-    async delete( @Request() request, @Body(new ValidationPipe(DeleteSchema)) body: any ): Promise<User>
-    {
-        const user = await this.userService.deleteSecure(request.user.id, body.password);
-        if( !user )
-        {
-            throw new UserNotFoundException();
-        }
-
-        return user;
     }
 }

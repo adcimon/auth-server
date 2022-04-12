@@ -24,6 +24,9 @@ export class MailService
         });
     }
 
+    /**
+     * Send a mail.
+     */
     async sendMail( options: any ): Promise<boolean>
     {
         return new Promise( (resolve, reject) =>
@@ -44,6 +47,9 @@ export class MailService
         });
     }
 
+    /**
+     * Send a verification mail.
+     */
     async sendVerificationMail( user: User, link: string ): Promise<boolean>
     {
         let html = `
@@ -77,6 +83,9 @@ export class MailService
         return await this.sendMail(options);
     }
 
+    /**
+     * Send a reset password mail.
+     */
     async sendResetPasswordMail( user: User, link: string ): Promise<boolean>
     {
         let html = `

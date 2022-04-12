@@ -1,21 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Exclude, Transform } from 'class-transformer'; // Used with ClassSerializerInterceptor to exclude from responses.
+import { Role } from '../role/role.entity';
 
 @Entity()
 export class User
 {
     @PrimaryGeneratedColumn()
+    @Exclude() // Exclude from responses.
     id: number;
 
     @CreateDateColumn()
-    @Exclude() // Used with class serializer interceptor to exclude from responses.
+    @Exclude() // Exclude from responses.
     createdate: Date;
 
     @Column({ unique: true, nullable: false })
     username: string;
 
     @Column({ nullable: false })
-    @Exclude() // Used with class serializer interceptor to exclude from responses.
+    @Exclude() // Exclude from responses.
     password: string;
 
     @Column({ unique: true, nullable: false })
@@ -33,9 +35,12 @@ export class User
     @Column({ type: 'date', default: '1900-01-01' })
     birthdate: Date;
 
-    @Column({ type: 'int', default: 0 })
-    role: number;
+    @ManyToMany(() => Role)
+    @JoinTable()
+    @Transform(({ value }) => value.map(x => x.name)) // Return the array of names.
+    roles: Role[];
 
     @Column({ default: false })
+    @Exclude() // Exclude from responses.
     verified: boolean;
 }

@@ -3,6 +3,7 @@ import { ConfigModule } from './config/config.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigService } from './config/config.service';
@@ -37,6 +38,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
                 };
             },
         }),
+        RoleModule,
         UserModule,
         AuthModule
     ],

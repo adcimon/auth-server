@@ -45,6 +45,9 @@ The `.env` files have the environment variables used by the server.
 
 ## Installation
 
+1. Install `Node 16`.
+
+2. Install packages.
 ```
 cd auth-server
 npm install

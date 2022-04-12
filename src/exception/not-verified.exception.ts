@@ -6,7 +6,7 @@ export class NotVerifiedException extends HttpException
     {
         super(
         {
-            error: 105,
+            error: 106,
             status: HttpStatus.UNAUTHORIZED,
             message: 'Email not verified'
         }, HttpStatus.UNAUTHORIZED);

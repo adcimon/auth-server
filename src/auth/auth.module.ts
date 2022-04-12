@@ -9,7 +9,8 @@ import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 
-@Module({
+@Module(
+{
     imports:
     [
         UserModule,

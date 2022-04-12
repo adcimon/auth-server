@@ -1,9 +1,10 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
-import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Cron } from '@nestjs/schedule';
+import { User } from './user.entity';
 import { ConfigService } from '../config/config.service';
+import { RoleService } from '../role/role.service';
 import { UsernameTakenException } from '../exception/username-taken.exception';
 import { EmailTakenException } from '../exception/email-taken.exception';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
@@ -20,6 +21,7 @@ export class UserService implements OnModuleInit
     constructor(
         @InjectRepository(User) private usersRepository: Repository<User>,
         private readonly configService: ConfigService,
+        private readonly roleService: RoleService
     ) { }
 
     async onModuleInit()
@@ -41,7 +43,7 @@ export class UserService implements OnModuleInit
         name:       string,
         surname:    string,
         birthdate:  Date,
-        role:       number
+        roles:      string[] = []
     ): Promise<User>
     {
         const usernameTaken = await this.usersRepository.findOne({ where: { username } });
@@ -56,6 +58,16 @@ export class UserService implements OnModuleInit
             throw new EmailTakenException();
         }
 
+        let userRoles = [];
+        for( let i in roles )
+        {
+            let role = await this.roleService.getByName(roles[i]);
+            if( role )
+            {
+                userRoles.push(role);
+            }
+        }
+
         const user = this.usersRepository.create({
             username:   username,
             password:   await argon2.hash(password),
@@ -64,7 +76,7 @@ export class UserService implements OnModuleInit
             name:       name,
             surname:    surname,
             birthdate:  birthdate,
-            role:       role
+            roles:      userRoles
         });
 
         return this.usersRepository.save(user);
@@ -75,15 +87,16 @@ export class UserService implements OnModuleInit
      */
     async getAll(): Promise<User[]>
     {
-        return await this.usersRepository.find();
+        return await this.usersRepository.find({ relations: ['roles'] });
     }
 
     /**
      * Get all the not verified users.
+     * Roles relation is not returned.
      */
     async getNotVerified(): Promise<User[]>
     {
-        return await this.usersRepository.createQueryBuilder("user").select("*").where("verified = false").execute();
+        return await this.usersRepository.createQueryBuilder('user').select('*').where('verified = false').execute();
     }
 
     /**
@@ -93,7 +106,7 @@ export class UserService implements OnModuleInit
         id: number
     ): Promise<User>
     {
-        const user = await this.usersRepository.findOne(id);
+        const user = await this.usersRepository.findOne(id, { relations: ['roles'] });
         if( !user )
         {
             throw new UserNotFoundException();
@@ -109,7 +122,7 @@ export class UserService implements OnModuleInit
         username: string
     ): Promise<User>
     {
-        const user = this.usersRepository.findOne({ where: { username } });
+        const user = await this.usersRepository.findOne({ where: { username }, relations: ['roles'] });
         if( !user )
         {
             throw new UserNotFoundException();
@@ -125,7 +138,7 @@ export class UserService implements OnModuleInit
         email: string
     ): Promise<User>
     {
-        const user = this.usersRepository.findOne({ where: { email } });
+        const user = await this.usersRepository.findOne({ where: { email }, relations: ['roles'] });
         if( !user )
         {
             throw new UserNotFoundException();
@@ -160,9 +173,7 @@ export class UserService implements OnModuleInit
         avatar:     string,
         name:       string,
         surname:    string,
-        birthdate:  Date,
-        role:       number,
-        verified:   boolean
+        birthdate:  Date
     ): Promise<User>
     {
         const user = await this.getById(id);
@@ -173,22 +184,20 @@ export class UserService implements OnModuleInit
 
         if( username )
         {
-            this.updateUsername(id, username);
+            await this.updateUsername(id, username);
         }
 
         if( password )
         {
-            this.updatePassword(id, password);
+            await this.updatePassword(id, password);
         }
 
         user.avatar = avatar || user.avatar;
         user.name = name || user.name;
         user.surname = surname || user.surname;
         user.birthdate = birthdate || user.birthdate;
-        user.role = role || user.role;
-        user.verified = verified || user.verified;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -213,7 +222,7 @@ export class UserService implements OnModuleInit
 
         user.username = username;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -245,7 +254,7 @@ export class UserService implements OnModuleInit
 
         user.username = username;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -264,7 +273,7 @@ export class UserService implements OnModuleInit
 
         user.password = await argon2.hash(password);
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -290,7 +299,7 @@ export class UserService implements OnModuleInit
 
         user.password = await argon2.hash(newPassword);
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -298,7 +307,7 @@ export class UserService implements OnModuleInit
      */
     async updateAvatar(
         id:         number,
-        avatar:     string
+        avatar:     string = ''
     ): Promise<User>
     {
         const user = await this.getById(id);
@@ -307,9 +316,9 @@ export class UserService implements OnModuleInit
             throw new UserNotFoundException();
         }
 
-        user.avatar = avatar || user.avatar;
+        user.avatar = avatar;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -317,7 +326,7 @@ export class UserService implements OnModuleInit
      */
     async updateName(
         id:     number,
-        name:   string
+        name:   string = ''
     ): Promise<User>
     {
         const user = await this.getById(id);
@@ -326,9 +335,9 @@ export class UserService implements OnModuleInit
             throw new UserNotFoundException();
         }
 
-        user.name = name || user.name;
+        user.name = name;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -336,7 +345,7 @@ export class UserService implements OnModuleInit
      */
     async updateSurname(
         id:         number,
-        surname:    string
+        surname:    string = ''
     ): Promise<User>
     {
         const user = await this.getById(id);
@@ -345,9 +354,9 @@ export class UserService implements OnModuleInit
             throw new UserNotFoundException();
         }
 
-        user.surname = surname || user.surname;
+        user.surname = surname;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -355,7 +364,7 @@ export class UserService implements OnModuleInit
      */
     async updateBirthdate(
         id:         number,
-        birthdate:  Date
+        birthdate:  Date = new Date('1900-01-01')
     ): Promise<User>
     {
         const user = await this.getById(id);
@@ -364,9 +373,9 @@ export class UserService implements OnModuleInit
             throw new UserNotFoundException();
         }
 
-        user.birthdate = birthdate || user.birthdate;
+        user.birthdate = birthdate;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -383,9 +392,9 @@ export class UserService implements OnModuleInit
             throw new UserNotFoundException();
         }
 
-        user.verified = verified || user.verified;
+        user.verified = verified;
 
-        return this.usersRepository.save(user);
+        return await this.usersRepository.save(user);
     }
 
     /**
@@ -401,7 +410,7 @@ export class UserService implements OnModuleInit
             throw new UserNotFoundException();
         }
 
-        return this.usersRepository.remove(user);
+        return await this.usersRepository.remove(user);
     }
 
     /**
@@ -424,7 +433,7 @@ export class UserService implements OnModuleInit
             throw new InvalidPasswordException();
         }
 
-        return this.usersRepository.remove(user);
+        return await this.usersRepository.remove(user);
     }
 
     /**
@@ -484,12 +493,14 @@ export class UserService implements OnModuleInit
                         record.name,
                         record.surname,
                         record.birthdate,
-                        record.role
+                        record.roles
                     );
+
                     await this.updateVerified(user.id, true);
                 }
                 catch( exception )
                 {
+                    // Catch user already created.
                 }
             });
         });

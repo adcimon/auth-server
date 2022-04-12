@@ -20,9 +20,6 @@ export class AuthService
 
     /**
      * Validate the email and password.
-     * @param email
-     * @param password
-     * @returns User
      */
     async validate( email: string, password: string ): Promise<User>
     {
@@ -43,8 +40,6 @@ export class AuthService
 
     /**
      * Create an access token for the user.
-     * @param user
-     * @returns string
      */
     async createAccessToken( user: User ): Promise<any>
     {
@@ -55,8 +50,7 @@ export class AuthService
 
         const payload =
         {
-            sub: user.username,
-            role: user.role
+            sub: user.username
         };
 
         return this.jwtService.sign(payload);
@@ -64,8 +58,6 @@ export class AuthService
 
     /**
      * Create a verification token for the user.
-     * @param user
-     * @returns string
      */
     async createVerificationToken( user: User ): Promise<string>
     {
@@ -79,7 +71,6 @@ export class AuthService
 
     /**
      * Verify the user's email.
-     * @param token
      */
     async verifyEmail( token: string ): Promise<boolean>
     {
@@ -106,8 +97,6 @@ export class AuthService
 
     /**
      * Create a reset password token for the user.
-     * @param user
-     * @returns string
      */
     async createResetPasswordToken( user: User ): Promise<string>
     {
@@ -127,9 +116,6 @@ export class AuthService
 
     /**
      * Reset the user's password.
-     * @param token
-     * @param password
-     * @returns boolean
      */
     async resetPassword( token: string, password: string ): Promise<boolean>
     {
