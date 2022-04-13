@@ -6,24 +6,14 @@ import
     UseGuards, UseInterceptors, ClassSerializerInterceptor
 } from '@nestjs/common';
 
-import
-{
-    UpdateMyUsernameSchema,     UpdateUsernameSchema,
-    UpdateMyPasswordSchema,
-    UpdateMyAvatarSchema,       UpdateAvatarSchema,
-    UpdateMyNameSchema,         UpdateNameSchema,
-    UpdateMySurnameSchema,      UpdateSurnameSchema,
-    UpdateMyBirthdateSchema,    UpdateBirthdateSchema,
-    DeleteMyUserSchema,         DeleteUserSchema
-} from '../validation/validation.schema';
-import { ValidationPipe } from '../validation/validation.pipe';
-
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../role/roles.decorator';
 import { RoleEnum } from '../role/role.enum';
 import { RolesGuard } from '../role/roles.guard';
+import { ValidationPipe } from '../validation/validation.pipe';
+import { ValidationSchema } from '../validation/validation.schema';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 
 @Controller('users')
@@ -95,7 +85,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async updateMyUsername(
         @Request() request,
-        @Body(new ValidationPipe(UpdateMyUsernameSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateMyUsernameSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(request.user.username);
@@ -108,7 +98,7 @@ export class UserController
     @Roles(RoleEnum.ADMIN)
     async updateUsername(
         @Param('username') username: string,
-        @Body(new ValidationPipe(UpdateUsernameSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateUsernameSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(username);
@@ -121,7 +111,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async updateMyPassword(
         @Request() request,
-        @Body(new ValidationPipe(UpdateMyPasswordSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateMyPasswordSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(request.user.username);
@@ -134,7 +124,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async updateMyAvatar(
         @Request() request,
-        @Body(new ValidationPipe(UpdateMyAvatarSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateMyAvatarSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(request.user.username);
@@ -147,7 +137,7 @@ export class UserController
     @Roles(RoleEnum.ADMIN)
     async updateAvatar(
         @Param('username') username: string,
-        @Body(new ValidationPipe(UpdateAvatarSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateAvatarSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(username);
@@ -160,7 +150,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async updateMyName(
         @Request() request,
-        @Body(new ValidationPipe(UpdateMyNameSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateMyNameSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(request.user.username);
@@ -173,7 +163,7 @@ export class UserController
     @Roles(RoleEnum.ADMIN)
     async updateName(
         @Param('username') username: string,
-        @Body(new ValidationPipe(UpdateNameSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateNameSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(username);
@@ -186,7 +176,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async updateMySurname(
         @Request() request,
-        @Body(new ValidationPipe(UpdateMySurnameSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateMySurnameSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(request.user.username);
@@ -199,7 +189,7 @@ export class UserController
     @Roles(RoleEnum.ADMIN)
     async updateSurname(
         @Param('username') username: string,
-        @Body(new ValidationPipe(UpdateSurnameSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateSurnameSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(username);
@@ -212,7 +202,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async updateMyBirthdate(
         @Request() request,
-        @Body(new ValidationPipe(UpdateMyBirthdateSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateMyBirthdateSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(request.user.username);
@@ -225,7 +215,7 @@ export class UserController
     @Roles(RoleEnum.ADMIN)
     async updateBirthdate(
         @Param('username') username: string,
-        @Body(new ValidationPipe(UpdateBirthdateSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.UpdateBirthdateSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(username);
@@ -238,7 +228,7 @@ export class UserController
     @Roles(RoleEnum.USER)
     async deleteMyUser(
         @Request() request,
-        @Body(new ValidationPipe(DeleteMyUserSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.DeleteMyUserSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.deleteSecure(request.user.id, body.password);
@@ -255,7 +245,7 @@ export class UserController
     @Roles(RoleEnum.ADMIN)
     async deleteUser(
         @Param('username') username: string,
-        @Body(new ValidationPipe(DeleteUserSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.DeleteUserSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.getByUsername(username);

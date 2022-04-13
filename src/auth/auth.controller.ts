@@ -5,14 +5,14 @@ import
     UseGuards, UseInterceptors, ClassSerializerInterceptor
 } from '@nestjs/common';
 
+import { User } from '../user/user.entity';
 import { ConfigService } from '../config/config.service';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
-import { User } from '../user/user.entity';
 import { LocalAuthGuard } from './local-auth.guard';
-import { RegisterSchema, ForgotPasswordSchema, ResetPasswordSchema } from '../validation/validation.schema';
 import { ValidationPipe } from '../validation/validation.pipe';
+import { ValidationSchema } from '../validation/validation.schema';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';
 
@@ -30,7 +30,7 @@ export class AuthController
     @Post('/register')
     async register(
         @Headers() headers,
-        @Body(new ValidationPipe(RegisterSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.RegisterSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.create(
@@ -91,7 +91,7 @@ export class AuthController
     @Post('/forgot-password')
     async forgotPassword(
         @Headers() headers,
-        @Body(new ValidationPipe(ForgotPasswordSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.ForgotPasswordSchema)) body: any
     ): Promise<object>
     {
         const user = await this.userService.getByEmail(body.email);
@@ -123,7 +123,7 @@ export class AuthController
     @Post('/reset-password/:token')
     async resetPassword(
         @Param('token') token: string,
-        @Body(new ValidationPipe(ResetPasswordSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.ResetPasswordSchema)) body: any
     ): Promise<object>
     {
         const reset = await this.authService.resetPassword(token, body.password);

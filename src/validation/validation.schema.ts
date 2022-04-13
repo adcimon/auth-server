@@ -18,7 +18,7 @@ function parseDateString( value, originalValue )
     return parsedDate;
 }
 
-export const RegisterSchema = yup.object().shape(
+const RegisterSchema = yup.object().shape(
 {
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
@@ -29,85 +29,106 @@ export const RegisterSchema = yup.object().shape(
     birthdate:          yup.date().transform(parseDateString).typeError('Invalid birthdate format YYYY/MM/DD')
 });
 
-export const LoginSchema = yup.object().shape(
+const LoginSchema = yup.object().shape(
 {
     email:              yup.string().email().required('Email is required'),
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
-export const ForgotPasswordSchema = yup.object().shape(
+const ForgotPasswordSchema = yup.object().shape(
 {
     email:              yup.string().email().required('Email is required')
 });
 
-export const ResetPasswordSchema = yup.object().shape(
+const ResetPasswordSchema = yup.object().shape(
 {
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
-export const UpdateMyUsernameSchema = yup.object().shape(
+const UpdateMyUsernameSchema = yup.object().shape(
 {
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
-export const UpdateUsernameSchema = yup.object().shape(
+const UpdateUsernameSchema = yup.object().shape(
 {
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE)
 });
 
-export const UpdateMyPasswordSchema = yup.object().shape(
+const UpdateMyPasswordSchema = yup.object().shape(
 {
     currentPassword:    yup.string().required('Current password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
     newPassword:        yup.string().required('New password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
-export const UpdateMyAvatarSchema = yup.object().shape(
+const UpdateMyAvatarSchema = yup.object().shape(
 {
     avatar:             yup.string().defined('Avatar is required').url().max(500)
 });
 
-export const UpdateAvatarSchema = yup.object().shape(
+const UpdateAvatarSchema = yup.object().shape(
 {
     avatar:             yup.string().defined('Avatar is required').url().max(500)
 });
 
-export const UpdateMyNameSchema = yup.object().shape(
+const UpdateMyNameSchema = yup.object().shape(
 {
     name:               yup.string().defined('Name is required').max(15)
 });
 
-export const UpdateNameSchema = yup.object().shape(
+const UpdateNameSchema = yup.object().shape(
 {
     name:               yup.string().defined('Name is required').max(15)
 });
 
-export const UpdateMySurnameSchema = yup.object().shape(
+const UpdateMySurnameSchema = yup.object().shape(
 {
     surname:            yup.string().defined('Name is required').max(15)
 });
 
-export const UpdateSurnameSchema = yup.object().shape(
+const UpdateSurnameSchema = yup.object().shape(
 {
     surname:            yup.string().defined('Name is required').max(15)
 });
 
-export const UpdateMyBirthdateSchema = yup.object().shape(
+const UpdateMyBirthdateSchema = yup.object().shape(
 {
     birthdate:          yup.date().required('Birthdate is required').transform(parseDateString).typeError('Invalid birthdate format YY/MM/DD')
 });
 
-export const UpdateBirthdateSchema = yup.object().shape(
+const UpdateBirthdateSchema = yup.object().shape(
 {
     birthdate:          yup.date().required('Birthdate is required').transform(parseDateString).typeError('Invalid birthdate format YY/MM/DD')
 });
 
-export const DeleteMyUserSchema = yup.object().shape(
+const DeleteMyUserSchema = yup.object().shape(
 {
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
-export const DeleteUserSchema = yup.object().shape(
+const DeleteUserSchema = yup.object().shape(
 {
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
+
+export const ValidationSchema =
+{
+    RegisterSchema,
+    LoginSchema,
+    ForgotPasswordSchema,
+    ResetPasswordSchema,
+    UpdateMyUsernameSchema,
+    UpdateUsernameSchema,
+    UpdateMyPasswordSchema,
+    UpdateMyAvatarSchema,
+    UpdateAvatarSchema,
+    UpdateMyNameSchema,
+    UpdateNameSchema,
+    UpdateMySurnameSchema,
+    UpdateSurnameSchema,
+    UpdateMyBirthdateSchema,
+    UpdateBirthdateSchema,
+    DeleteMyUserSchema,
+    DeleteUserSchema
+};
