@@ -9,7 +9,7 @@
             "name": "Administrator",
             "surname": "",
             "birthdate": "2000-01-01",
-            "roles": ["admin"]
+            "roles": ["user", "admin"]
         },
         {
             "username": "Frodo",
