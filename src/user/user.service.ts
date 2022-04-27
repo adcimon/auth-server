@@ -43,7 +43,7 @@ export class UserService implements OnModuleInit
         name:       string,
         surname:    string,
         birthdate:  Date,
-        roles:      string[] = []
+        roles:      string[] = ['user']
     ): Promise<User>
     {
         const usernameTaken = await this.usersRepository.findOne({ where: { username } });
