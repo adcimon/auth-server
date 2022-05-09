@@ -8,6 +8,7 @@ General-purpose HTTP-based authentication and authorization server. The project 
 - Authorization using [JSON Web Tokens](https://jwt.io/).
 - Delete not verified users after the verification token expires.
 - Reset password via email.
+- Change email address via email.
 
 The [API documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
 
