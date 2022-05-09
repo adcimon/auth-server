@@ -128,7 +128,7 @@ export class UserController
 
         const link = 'https://' + headers.host + '/change-email/' + token;
 
-        const sent = await this.mailService.sendChangeEmailMail(user, link);
+        const sent = await this.mailService.sendChangeEmailMail(body.email, link);
         if( !sent )
         {
             throw new MailServiceErrorException();

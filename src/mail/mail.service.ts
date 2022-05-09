@@ -132,7 +132,7 @@ export class MailService
         return await this.sendMail(options);
     }
 
-    async sendChangeEmailMail( user: User, link: string ): Promise<boolean>
+    async sendChangeEmailMail( email: string, link: string ): Promise<boolean>
     {
         const appName = await this.configService.getAppName();
         const expirationTime = await this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME');
@@ -141,7 +141,7 @@ export class MailService
         let html =
         `
         <p style="font-size: 25px">
-            Hi ${user.name},
+            Hi,
         </p>
         <p style="font-size: 15px">
             You have requested an email change on ${appName}. Please confirm your email address change.
@@ -162,7 +162,7 @@ export class MailService
         const options =
         {
             from: from,
-            to: user.email,
+            to: email,
             subject: `Change your email on ${appName}`,
             html: html
         };
