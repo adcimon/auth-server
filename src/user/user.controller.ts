@@ -2,12 +2,15 @@ import
 {
     Controller,
     Get, Patch, Delete,
-    Request, Param, Body,
+    Request, Param, Headers, Body,
     UseGuards, UseInterceptors, ClassSerializerInterceptor
 } from '@nestjs/common';
 
 import { User } from './user.entity';
+import { ConfigService } from '../config/config.service';
 import { UserService } from './user.service';
+import { AuthService } from '../auth/auth.service';
+import { MailService } from '../mail/mail.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../role/roles.decorator';
 import { RoleEnum } from '../role/role.enum';
@@ -15,13 +18,17 @@ import { RolesGuard } from '../role/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
+import { MailServiceErrorException } from '../exception/mail-service-error.exception';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
 export class UserController
 {
     constructor(
-        private readonly userService: UserService
+        private readonly configService: ConfigService,
+        private readonly userService: UserService,
+        private readonly authService: AuthService,
+        private readonly mailService: MailService
     ) { }
 
     @Get('/me')
@@ -104,6 +111,30 @@ export class UserController
         const user = await this.userService.getByUsername(username);
 
         return this.userService.updateUsername(user.id, body.username);
+    }
+
+    @Patch('/me/email')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(RoleEnum.USER, RoleEnum.ADMIN)
+    async updateMyEmail(
+        @Request() request,
+        @Headers() headers,
+        @Body(new ValidationPipe(ValidationSchema.UpdateMyEmailSchema)) body: any
+    ): Promise<object>
+    {
+        const user = await this.userService.getByUsername(request.user.username);
+
+        const token = await this.authService.createChangeEmailToken(user, body.email);
+
+        const link = 'https://' + headers.host + '/change-email/' + token;
+
+        const sent = await this.mailService.sendChangeEmailMail(user, link);
+        if( !sent )
+        {
+            throw new MailServiceErrorException();
+        }
+
+        return { status: sent };
     }
 
     @Patch('/me/password')

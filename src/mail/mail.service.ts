@@ -52,12 +52,17 @@ export class MailService
      */
     async sendVerificationMail( user: User, link: string ): Promise<boolean>
     {
-        let html = `
+        const appName = await this.configService.getAppName();
+        const expirationTime = await this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
+        const from = await this.configService.get('MAIL_NOREPLY_FROM');
+
+        let html =
+        `
         <p style="font-size: 25px">
             Hi ${user.name},
         </p>
         <p style="font-size: 15px">
-            Welcome! We are happy you signed up for ${this.configService.getAppName()}. Please confirm your email address.
+            Welcome! We are happy you signed up on ${appName}. Please verify your email address.
         </p>
         <p style="margin: 50px 0px 50px 10px">
             <a href="${link}" style="background-color: hsla(195, 100%, 36%, 1); border: none; border-radius: 25px; color: white; cursor: pointer; font-size: 16px; margin: 4px 2px; padding: 15px 32px; text-align: center; text-decoration: none;">
@@ -65,18 +70,18 @@ export class MailService
             </a>
         </p>
         <p style="font-size: 20px">
-            The ${this.configService.getAppName()} Team.
+            The ${appName} Team.
         </p>
         <p>
-            Ignore this email if you didn't signed up. This verification link will expire in ${this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME')}.
+            Ignore this email if you didn't signed up. This verification link will expire in ${expirationTime}.
         </p>
         `;
 
         const options =
         {
-            from: this.configService.get('MAIL_NOREPLY_FROM'),
+            from: from,
             to: user.email,
-            subject: `Thank you for signing up for ${this.configService.getAppName()}`,
+            subject: `Thank you for signing up for ${appName}`,
             html: html
         };
 
@@ -88,7 +93,12 @@ export class MailService
      */
     async sendResetPasswordMail( user: User, link: string ): Promise<boolean>
     {
-        let html = `
+        const appName = await this.configService.getAppName();
+        const expirationTime = await this.configService.get('TOKEN_RESET_PASSWORD_EXPIRATION_TIME');
+        const from = await this.configService.get('MAIL_NOREPLY_FROM');
+
+        let html =
+        `
         <p style="font-size: 25px">
             Hi ${user.name},
         </p>
@@ -101,10 +111,10 @@ export class MailService
             </a>
         </p>
         <p style="font-size: 15px">
-            Just so you know: You have ${this.configService.get('TOKEN_RESET_PASSWORD_EXPIRATION_TIME')} to pick your password. After that, you'll have to ask for a new one.
+            Just so you know: You have ${expirationTime} to pick your password. After that, you'll have to ask for a new one.
         </p>
         <p style="font-size: 20px">
-            The ${this.configService.getAppName()} Team.
+            The ${appName} Team.
         </p>
         <p>
             Didn't ask for a new password? You can ignore this email.
@@ -113,9 +123,47 @@ export class MailService
 
         const options =
         {
-            from: this.configService.get('MAIL_NOREPLY_FROM'),
+            from: from,
             to: user.email,
-            subject: `Reset your password on ${this.configService.getAppName()}`,
+            subject: `Reset your password on ${appName}`,
+            html: html
+        };
+
+        return await this.sendMail(options);
+    }
+
+    async sendChangeEmailMail( user: User, link: string ): Promise<boolean>
+    {
+        const appName = await this.configService.getAppName();
+        const expirationTime = await this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME');
+        const from = await this.configService.get('MAIL_NOREPLY_FROM');
+
+        let html =
+        `
+        <p style="font-size: 25px">
+            Hi ${user.name},
+        </p>
+        <p style="font-size: 15px">
+            You have requested an email change on ${appName}. Please confirm your email address change.
+        </p>
+        <p style="margin: 50px 0px 50px 10px">
+            <a href="${link}" style="background-color: hsla(195, 100%, 36%, 1); border: none; border-radius: 25px; color: white; cursor: pointer; font-size: 16px; margin: 4px 2px; padding: 15px 32px; text-align: center; text-decoration: none;">
+                Confirm
+            </a>
+        </p>
+        <p style="font-size: 20px">
+            The ${appName} Team.
+        </p>
+        <p>
+            Ignore this email if you haven't requested an email change on ${appName}. This verification link will expire in ${expirationTime}.
+        </p>
+        `;
+
+        const options =
+        {
+            from: from,
+            to: user.email,
+            subject: `Change your email on ${appName}`,
             html: html
         };
 

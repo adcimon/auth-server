@@ -258,6 +258,25 @@ export class UserService implements OnModuleInit
     }
 
     /**
+     * Update the user's email.
+     */
+    async updateEmail(
+        id:         number,
+        email:      string
+    ): Promise<User>
+    {
+        const user = await this.getById(id);
+        if( !user )
+        {
+            throw new UserNotFoundException();
+        }
+
+        user.email = email;
+
+        return await this.usersRepository.save(user);
+    }
+
+    /**
      * Update the user's password.
      */
     async updatePassword(

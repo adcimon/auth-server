@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -13,8 +13,15 @@ import { JwtStrategy } from './jwt.strategy';
 {
     imports:
     [
-        UserModule,
+        // * User module.
+        // Circular dependency resolved.
+        forwardRef(() => UserModule),
+
+        // * Passport module.
         PassportModule,
+
+        // * Jwt module.
+        // Get the configuration settings from the config service asynchronously.
         JwtModule.registerAsync(
         {
             inject: [ConfigService],
@@ -26,6 +33,8 @@ import { JwtStrategy } from './jwt.strategy';
                 };
             }
         }),
+
+        // * Mail module.
         MailModule
     ],
     controllers: [AuthController],

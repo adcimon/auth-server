@@ -119,7 +119,7 @@ export class AuthService
      */
     async resetPassword( token: string, password: string ): Promise<boolean>
     {
-        // Get the user's current password's hash.
+        // Get the user.
         let payload = this.jwtService.decode(token);
         const user = await this.userService.getByUsername(payload.sub);
         if( !user )
@@ -145,6 +145,56 @@ export class AuthService
         }
 
         await this.userService.updatePassword(user.id, password);
+
+        return true;
+    }
+
+    /**
+     * Create a change email token for the user.
+     */
+    async createChangeEmailToken( user: User, email: string ): Promise<string>
+    {
+        const payload =
+        {
+            sub: user.username,
+            email: email
+        };
+
+        // Use the user's current email for signing the token.
+        // All tokens generated before a successful email change would get invalidated.
+        return this.jwtService.sign(payload,
+        {
+            secret: user.email,
+            expiresIn: this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME')
+        });
+    }
+
+    /**
+     * Confirm the user's email change.
+     */
+    async confirmEmailChange( token: string ): Promise<boolean>
+    {
+        // Get the user.
+        let payload = this.jwtService.decode(token);
+        const user = await this.userService.getByUsername(payload.sub);
+        if( !user )
+        {
+            throw new UserNotFoundException();
+        }
+
+        // The token is signed with the user's current email.
+        // A successful email change will invalidate the token.
+        payload = null;
+        try
+        {
+            payload = this.jwtService.verify(token, { secret: user.email });
+        }
+        catch( exception )
+        {
+            throw new InvalidTokenException();
+        }
+
+        await this.userService.updateEmail(user.id, payload.email);
 
         return true;
     }

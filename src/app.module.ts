@@ -11,7 +11,10 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
     imports: [
+        // * Config module.
         ConfigModule,
+
+        // * Serve static module.
         ServeStaticModule.forRootAsync(
         {
             inject: [ConfigService],
@@ -20,7 +23,13 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
                 return [{ rootPath: configService.getStaticPath() }];
             }
         }),
-        ScheduleModule.forRoot(), // Initializes the scheduler and registers any declarative cron jobs, timeouts and intervals that exist within the app.
+
+        // * Schedule module.
+        // Initializes the scheduler and registers any declarative cron jobs, timeouts and intervals that exist within the app.
+        ScheduleModule.forRoot(),
+
+        // * Type ORM module.
+        // Get the configuration settings from the config service asynchronously.
         TypeOrmModule.forRootAsync(
         {
             inject: [ConfigService],
@@ -38,8 +47,14 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
                 };
             },
         }),
+
+        // * Role module.
         RoleModule,
+
+        // * User module.
         UserModule,
+
+        // * Auth module.
         AuthModule
     ],
     controllers: [],

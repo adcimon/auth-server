@@ -8,8 +8,12 @@ import { RoleService } from './role.service';
 {
     imports:
     [
+        // * Role ORM module.
         TypeOrmModule.forFeature([Role]),
-        forwardRef(() => UserModule) // Resolve circular dependency.
+
+        // * User module.
+        // Circular dependency resolved.
+        forwardRef(() => UserModule)
     ],
     controllers: [],
     providers: [RoleService],

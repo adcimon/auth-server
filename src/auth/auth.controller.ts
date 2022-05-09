@@ -1,7 +1,8 @@
 import
 {
     Controller,
-    Get, Post, Request, Response, Param, Headers, Body,
+    Get, Post,
+    Request, Response, Param, Headers, Body,
     UseGuards, UseInterceptors, ClassSerializerInterceptor
 } from '@nestjs/common';
 
@@ -13,10 +14,9 @@ import { MailService } from '../mail/mail.service';
 import { LocalAuthGuard } from './local-auth.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
-import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';
 
-@Controller('auth')
+@Controller('')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController
 {
@@ -44,6 +44,7 @@ export class AuthController
         );
 
         const token = await this.authService.createVerificationToken(user);
+
         const link = 'https://' + headers.host + '/verify/' + token;
 
         const sent = await this.mailService.sendVerificationMail(user, link);
@@ -77,7 +78,7 @@ export class AuthController
         }
     }
 
-    @Post('/basic')
+    @Post('auth/basic')
     @UseGuards(LocalAuthGuard)
     async basic(
         @Request() request
@@ -95,12 +96,9 @@ export class AuthController
     ): Promise<object>
     {
         const user = await this.userService.getByEmail(body.email);
-        if( !user )
-        {
-            throw new UserNotFoundException();
-        }
 
         const token = await this.authService.createResetPasswordToken(user);
+
         let link = this.configService.get('RESET_PASSWORD_LINK');
         if( !link || link === '' )
         {
@@ -129,5 +127,24 @@ export class AuthController
         const reset = await this.authService.resetPassword(token, body.password);
 
         return { status: reset };
+    }
+
+    @Get('/change-email/:token')
+    async changeEmail(
+        @Param('token') token: string,
+        @Response() response
+    ): Promise<any>
+    {
+        const confirmed = await this.authService.confirmEmailChange(token);
+
+        let link = this.configService.get('CHANGE_EMAIL_LINK');
+        if( !link || link === '' )
+        {
+            response.send({ status: confirmed });
+        }
+        else
+        {
+            response.redirect(link);
+        }
     }
 }

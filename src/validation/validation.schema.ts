@@ -56,6 +56,11 @@ const UpdateUsernameSchema = yup.object().shape(
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE)
 });
 
+const UpdateMyEmailSchema = yup.object().shape(
+{
+    email:              yup.string().email().required('Email is required')
+});
+
 const UpdateMyPasswordSchema = yup.object().shape(
 {
     currentPassword:    yup.string().required('Current password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
@@ -120,6 +125,7 @@ export const ValidationSchema =
     ResetPasswordSchema,
     UpdateMyUsernameSchema,
     UpdateUsernameSchema,
+    UpdateMyEmailSchema,
     UpdateMyPasswordSchema,
     UpdateMyAvatarSchema,
     UpdateAvatarSchema,
