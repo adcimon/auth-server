@@ -114,7 +114,6 @@ const DeleteMyUserSchema = yup.object().shape(
 
 const DeleteUserSchema = yup.object().shape(
 {
-    password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
 
 export const ValidationSchema =
