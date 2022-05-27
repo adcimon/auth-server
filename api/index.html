@@ -4,7 +4,7 @@
 
 <head>
 
-    <title>API Documentation</title>
+    <title>Auth Server</title>
 
 	<meta charset="utf-8">
 
@@ -21,13 +21,11 @@
 <body>
 
     <div class="menu">
-        <div class="logo">
-            <span>API Documentation</span>
+        <div class="title">
+            <span>Auth Server</span>
         </div>
         <div class="navbar">
             <ul>
-                <li><a href="#introduction">Introduction</a></li>
-                <li><a href="#api">API</a></li>
                 <li><a href="#register">Register</a></li>
                 <li><a href="#verify">Verify</a></li>
                 <li><a href="#authBasic">Auth Basic</a></li>
@@ -61,19 +59,15 @@
     <div class="content-page">
         <div class="content">
 
-            <!-- Introduction -->
-            <div id="introduction" class="content-section">
-                <h1>🚀 Introduction</h1>
+            <!-- API -->
+            <div id="api" class="content-section">
+                <h1>🌐 API</h1>
                 <p>Auth Server is a general-purpose HTTP-based authentication and authorization server.</p>
                 <p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an access token.</p>
                 <p><code>{<br>&nbsp;&nbsp;&nbsp;sub: username<br>}</code></p>
                 <p>The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.</p>
                 <p><code>Authorization: Bearer token</code></p>
-            </div>
-
-            <!-- API -->
-            <div id="api" class="content-section">
-                <h2>🌐 API</h2>
+                <br>
             </div>
 
             <!-- Register -->
@@ -1750,7 +1744,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <br>
             </div>
 
             <!-- Errors -->
