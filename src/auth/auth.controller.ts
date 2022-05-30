@@ -12,6 +12,10 @@ import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import { LocalAuthGuard } from './local-auth.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { Roles } from '../role/roles.decorator';
+import { RoleEnum } from '../role/role.enum';
+import { RolesGuard } from '../role/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';
@@ -27,10 +31,10 @@ export class AuthController
         private readonly mailService: MailService
     ) { }
 
-    @Post('/register')
-    async register(
+    @Post('/signup')
+    async signup(
         @Headers() headers,
-        @Body(new ValidationPipe(ValidationSchema.RegisterSchema)) body: any
+        @Body(new ValidationPipe(ValidationSchema.SignUpSchema)) body: any
     ): Promise<User>
     {
         const user = await this.userService.create(
@@ -58,6 +62,31 @@ export class AuthController
         return user;
     }
 
+    @Post('/signdown')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(RoleEnum.USER)
+    async signdown(
+        @Request() request,
+        @Body(new ValidationPipe(ValidationSchema.SignDownSchema)) body: any
+    ): Promise<User>
+    {
+        const user = await this.userService.deleteSecure(request.user.id, body.password);
+
+        return user;
+    }
+
+    @Post('/signin')
+    @UseGuards(LocalAuthGuard)
+    async signin(
+        @Request() request,
+        @Body(new ValidationPipe(ValidationSchema.SignInSchema)) body: any
+    ): Promise<object>
+    {
+        const token = await this.authService.createAccessToken(request.user);
+
+        return { token: token };
+    }
+
     @Get('/verify/:token')
     async verify(
         @Param('token') token: string,
@@ -76,17 +105,6 @@ export class AuthController
             link += ((link.endsWith('/')) ? '' : '/') + token;
             response.redirect(link);
         }
-    }
-
-    @Post('auth/basic')
-    @UseGuards(LocalAuthGuard)
-    async basic(
-        @Request() request
-    ): Promise<object>
-    {
-        const token = await this.authService.createAccessToken(request.user);
-
-        return { token: token };
     }
 
     @Post('/forgot-password')

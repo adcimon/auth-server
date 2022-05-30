@@ -7,7 +7,6 @@ import
 } from '@nestjs/common';
 
 import { User } from './user.entity';
-import { ConfigService } from '../config/config.service';
 import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service';
 import { MailService } from '../mail/mail.service';
@@ -17,7 +16,6 @@ import { RoleEnum } from '../role/role.enum';
 import { RolesGuard } from '../role/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
-import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';
 
 @Controller('users')
@@ -25,7 +23,6 @@ import { MailServiceErrorException } from '../exception/mail-service-error.excep
 export class UserController
 {
     constructor(
-        private readonly configService: ConfigService,
         private readonly userService: UserService,
         private readonly authService: AuthService,
         private readonly mailService: MailService
@@ -252,23 +249,6 @@ export class UserController
         const user = await this.userService.getByUsername(username);
 
         return this.userService.updateBirthdate(user.id, body.birthdate);
-    }
-
-    @Delete('/me/delete')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(RoleEnum.USER)
-    async deleteMyUser(
-        @Request() request,
-        @Body(new ValidationPipe(ValidationSchema.DeleteMyUserSchema)) body: any
-    ): Promise<User>
-    {
-        const user = await this.userService.deleteSecure(request.user.id, body.password);
-        if( !user )
-        {
-            throw new UserNotFoundException();
-        }
-
-        return user;
     }
 
     @Delete('/:username/delete')

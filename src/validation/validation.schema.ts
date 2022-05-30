@@ -18,7 +18,7 @@ function parseDateString( value, originalValue )
     return parsedDate;
 }
 
-const RegisterSchema = yup.object().shape(
+const SignUpSchema = yup.object().shape(
 {
     username:           yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
@@ -29,7 +29,12 @@ const RegisterSchema = yup.object().shape(
     birthdate:          yup.date().transform(parseDateString).typeError('Invalid birthdate format YYYY/MM/DD')
 });
 
-const LoginSchema = yup.object().shape(
+const SignDownSchema = yup.object().shape(
+{
+    password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
+});
+
+const SignInSchema = yup.object().shape(
 {
     email:              yup.string().email().required('Email is required'),
     password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
@@ -107,19 +112,15 @@ const UpdateBirthdateSchema = yup.object().shape(
     birthdate:          yup.date().required('Birthdate is required').transform(parseDateString).typeError('Invalid birthdate format YY/MM/DD')
 });
 
-const DeleteMyUserSchema = yup.object().shape(
-{
-    password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
-});
-
 const DeleteUserSchema = yup.object().shape(
 {
 });
 
 export const ValidationSchema =
 {
-    RegisterSchema,
-    LoginSchema,
+    SignUpSchema,
+    SignDownSchema,
+    SignInSchema,
     ForgotPasswordSchema,
     ResetPasswordSchema,
     UpdateMyUsernameSchema,
@@ -134,6 +135,5 @@ export const ValidationSchema =
     UpdateSurnameSchema,
     UpdateMyBirthdateSchema,
     UpdateBirthdateSchema,
-    DeleteMyUserSchema,
     DeleteUserSchema
 };
