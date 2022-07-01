@@ -16,6 +16,7 @@ The `.env` files have the environment variables used by the server.
 
 | Variables |
 | ----- |
+| SERVICE_NAME |
 | NODE_ENV |
 | PORT |
 | ENABLE_CORS |
@@ -23,7 +24,6 @@ The `.env` files have the environment variables used by the server.
 | KEY_PATH |
 | CERT_PATH |
 | STATIC_PATH |
-| APP_NAME |
 | VERIFY_EMAIL_LINK |
 | RESET_PASSWORD_LINK |
 | TOKEN_SECRET_KEY |

@@ -57,18 +57,18 @@ export class ConfigService
     }
 
     /**
-     * Get the application name.
+     * Get the service name.
      */
-    getAppName(): string
+    getServiceName(): string
     {
-        const key = 'APP_NAME';
+        const key = 'Service_NAME';
         if( key in process.env )
         {
             return process.env[key];
         }
         else
         {
-            return 'Server';
+            return 'Auth Server';
         }
     }
 

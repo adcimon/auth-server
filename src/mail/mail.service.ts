@@ -52,7 +52,7 @@ export class MailService
      */
     async sendVerificationMail( user: User, link: string ): Promise<boolean>
     {
-        const appName = await this.configService.getAppName();
+        const serviceName = await this.configService.getServiceName();
         const expirationTime = await this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
         const from = await this.configService.get('MAIL_NOREPLY_FROM');
 
@@ -62,7 +62,7 @@ export class MailService
             Hi ${user.name},
         </p>
         <p style="font-size: 15px">
-            Welcome! We are happy you signed up on ${appName}. Please verify your email address.
+            Welcome! We are happy you signed up on ${serviceName}. Please verify your email address.
         </p>
         <p style="margin: 50px 0px 50px 10px">
             <a href="${link}" style="background-color: hsla(195, 100%, 36%, 1); border: none; border-radius: 25px; color: white; cursor: pointer; font-size: 16px; margin: 4px 2px; padding: 15px 32px; text-align: center; text-decoration: none;">
@@ -70,7 +70,7 @@ export class MailService
             </a>
         </p>
         <p style="font-size: 20px">
-            The ${appName} Team.
+            The ${serviceName} Team.
         </p>
         <p>
             Ignore this email if you didn't signed up. This verification link will expire in ${expirationTime}.
@@ -81,7 +81,7 @@ export class MailService
         {
             from: from,
             to: user.email,
-            subject: `Thank you for signing up for ${appName}`,
+            subject: `Thank you for signing up for ${serviceName}`,
             html: html
         };
 
@@ -93,7 +93,7 @@ export class MailService
      */
     async sendResetPasswordMail( user: User, link: string ): Promise<boolean>
     {
-        const appName = await this.configService.getAppName();
+        const serviceName = await this.configService.getServiceName();
         const expirationTime = await this.configService.get('TOKEN_RESET_PASSWORD_EXPIRATION_TIME');
         const from = await this.configService.get('MAIL_NOREPLY_FROM');
 
@@ -114,7 +114,7 @@ export class MailService
             Just so you know: You have ${expirationTime} to pick your password. After that, you'll have to ask for a new one.
         </p>
         <p style="font-size: 20px">
-            The ${appName} Team.
+            The ${serviceName} Team.
         </p>
         <p>
             Didn't ask for a new password? You can ignore this email.
@@ -125,7 +125,7 @@ export class MailService
         {
             from: from,
             to: user.email,
-            subject: `Reset your password on ${appName}`,
+            subject: `Reset your password on ${serviceName}`,
             html: html
         };
 
@@ -134,7 +134,7 @@ export class MailService
 
     async sendChangeEmailMail( email: string, link: string ): Promise<boolean>
     {
-        const appName = await this.configService.getAppName();
+        const serviceName = await this.configService.getServiceName();
         const expirationTime = await this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME');
         const from = await this.configService.get('MAIL_NOREPLY_FROM');
 
@@ -144,7 +144,7 @@ export class MailService
             Hi,
         </p>
         <p style="font-size: 15px">
-            You have requested an email change on ${appName}. Please confirm your email address change.
+            You have requested an email change on ${serviceName}. Please confirm your email address change.
         </p>
         <p style="margin: 50px 0px 50px 10px">
             <a href="${link}" style="background-color: hsla(195, 100%, 36%, 1); border: none; border-radius: 25px; color: white; cursor: pointer; font-size: 16px; margin: 4px 2px; padding: 15px 32px; text-align: center; text-decoration: none;">
@@ -152,10 +152,10 @@ export class MailService
             </a>
         </p>
         <p style="font-size: 20px">
-            The ${appName} Team.
+            The ${serviceName} Team.
         </p>
         <p>
-            Ignore this email if you haven't requested an email change on ${appName}. This verification link will expire in ${expirationTime}.
+            Ignore this email if you haven't requested an email change on ${serviceName}. This verification link will expire in ${expirationTime}.
         </p>
         `;
 
@@ -163,7 +163,7 @@ export class MailService
         {
             from: from,
             to: email,
-            subject: `Change your email on ${appName}`,
+            subject: `Change your email on ${serviceName}`,
             html: html
         };
 
