@@ -61,7 +61,7 @@ export class ConfigService
      */
     getServiceName(): string
     {
-        const key = 'Service_NAME';
+        const key = 'SERVICE_NAME';
         if( key in process.env )
         {
             return process.env[key];
