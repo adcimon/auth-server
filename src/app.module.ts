@@ -7,7 +7,7 @@ import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigService } from './config/config.service';
-import { LoggerMiddleware } from './middleware/logger.middleware';
+import { LoggerMiddleware } from './log/logger.middleware';
 
 @Module({
     imports: [
