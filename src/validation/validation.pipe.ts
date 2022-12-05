@@ -17,7 +17,7 @@ export class ValidationPipe implements PipeTransform
         }
         catch( exception )
         {
-            let message = (exception.errors.length == 1) ? exception.errors[0] : exception.errors;
+            let message = (exception.errors.length === 0) ? 'Validation error' : exception.errors[0];
             throw new ValidationErrorException(message);
         }
     }
