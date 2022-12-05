@@ -7,7 +7,6 @@ export class GenericErrorException extends HttpException
         super(
         {
             error: 100,
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
             message: message || 'Generic error'
         }, HttpStatus.INTERNAL_SERVER_ERROR);
     }

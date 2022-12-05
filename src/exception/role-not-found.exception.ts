@@ -7,7 +7,6 @@ export class RoleNotFoundException extends HttpException
         super(
         {
             error: 109,
-            status: HttpStatus.NOT_FOUND,
             message: 'Role not found'
         }, HttpStatus.NOT_FOUND);
     }

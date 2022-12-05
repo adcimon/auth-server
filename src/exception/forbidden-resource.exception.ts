@@ -7,7 +7,6 @@ export class ForbiddenResourceException extends HttpException
         super(
         {
             error: 103,
-            status: HttpStatus.FORBIDDEN,
             message: message || 'Forbidden resource'
         }, HttpStatus.FORBIDDEN);
     }

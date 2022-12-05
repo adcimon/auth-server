@@ -7,7 +7,6 @@ export class InvalidPasswordException extends HttpException
         super(
         {
             error: 107,
-            status: HttpStatus.UNAUTHORIZED,
             message: 'Invalid password'
         }, HttpStatus.UNAUTHORIZED);
     }

@@ -7,7 +7,6 @@ export class InvalidTokenException extends HttpException
         super(
         {
             error: 108,
-            status: HttpStatus.UNAUTHORIZED,
             message: 'Invalid token'
         }, HttpStatus.UNAUTHORIZED);
     }

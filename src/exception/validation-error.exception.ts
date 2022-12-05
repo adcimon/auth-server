@@ -7,7 +7,6 @@ export class ValidationErrorException extends HttpException
         super(
         {
             error: 102,
-            status: HttpStatus.BAD_REQUEST,
             message: message || 'Validation error'
         }, HttpStatus.BAD_REQUEST);
     }

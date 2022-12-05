@@ -7,7 +7,6 @@ export class UserNotFoundException extends HttpException
         super(
         {
             error: 110,
-            status: HttpStatus.NOT_FOUND,
             message: 'User not found'
         }, HttpStatus.NOT_FOUND);
     }
