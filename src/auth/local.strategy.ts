@@ -19,7 +19,7 @@ export class LocalStrategy extends PassportStrategy(Strategy)
         try
         {
             const user = await this.authService.validate(email, password);
-            return user; // Passport saves the user in the request.
+            return user; // Passport stores the user in the request.
         }
         catch( exception )
         {
