@@ -41,7 +41,7 @@ export class AuthService
     /**
      * Create an access token for the user.
      */
-    async createAccessToken( user: User ): Promise<any>
+    async createAccessToken( user: User ): Promise<string>
     {
         if( !user.verified )
         {
