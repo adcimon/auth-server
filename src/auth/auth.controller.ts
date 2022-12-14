@@ -6,16 +6,16 @@ import
     UseGuards, UseInterceptors, ClassSerializerInterceptor
 } from '@nestjs/common';
 
-import { User } from '../user/user.entity';
+import { User } from '../users/user.entity';
 import { ConfigService } from '../config/config.service';
 import { AuthService } from './auth.service';
-import { UsersService } from '../user/users.service';
+import { UsersService } from '../users/users.service';
 import { MailService } from '../mail/mail.service';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { Roles } from '../role/roles.decorator';
-import { RoleEnum } from '../role/role.enum';
-import { RolesGuard } from '../role/roles.guard';
+import { Roles } from '../roles/roles.decorator';
+import { RoleEnum } from '../roles/role.enum';
+import { RolesGuard } from '../roles/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
 import { MailServiceErrorException } from '../exception/mail-service-error.exception';

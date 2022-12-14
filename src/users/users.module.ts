@@ -1,7 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule } from '../config/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RolesModule } from '../role/roles.module';
+import { RolesModule } from '../roles/roles.module';
 import { AuthModule } from '../auth/auth.module';
 import { MailModule } from '../mail/mail.module';
 import { User } from './user.entity';

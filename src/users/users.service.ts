@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
 import { User } from './user.entity';
 import { ConfigService } from '../config/config.service';
-import { RolesService } from '../role/roles.service';
+import { RolesService } from '../roles/roles.service';
 import { UsernameTakenException } from '../exception/username-taken.exception';
 import { EmailTakenException } from '../exception/email-taken.exception';
 import { UserNotFoundException } from '../exception/user-not-found.exception';

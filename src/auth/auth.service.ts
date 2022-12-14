@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
-import { UsersService } from '../user/users.service';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../user/user.entity';
+import { User } from '../users/user.entity';
 import { UserNotFoundException } from '../exception/user-not-found.exception';
 import { InvalidCredentialsException } from '../exception/invalid-credentials.exception';
 import { NotVerifiedException } from '../exception/not-verified.exception';
