@@ -3,10 +3,10 @@ import { ConfigService } from '../config/config.service';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/user.entity';
-import { UserNotFoundException } from '../exception/user-not-found.exception';
-import { InvalidCredentialsException } from '../exception/invalid-credentials.exception';
-import { NotVerifiedException } from '../exception/not-verified.exception';
-import { InvalidTokenException } from '../exception/invalid-token.exception';
+import { UserNotFoundException } from '../exceptions/user-not-found.exception';
+import { InvalidCredentialsException } from '../exceptions/invalid-credentials.exception';
+import { NotVerifiedException } from '../exceptions/not-verified.exception';
+import { InvalidTokenException } from '../exceptions/invalid-token.exception';
 import * as argon2 from 'argon2';
 
 @Injectable()

@@ -16,7 +16,7 @@ import { RoleEnum } from '../roles/role.enum';
 import { RolesGuard } from '../roles/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
-import { MailServiceErrorException } from '../exception/mail-service-error.exception';
+import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)

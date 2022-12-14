@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from './role.entity';
 import { RoleEnum } from './role.enum';
-import { RoleNotFoundException } from '../exception/role-not-found.exception';
+import { RoleNotFoundException } from '../exceptions/role-not-found.exception';
 
 @Injectable()
 export class RolesService implements OnModuleInit

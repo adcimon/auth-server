@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './exception/http-exception.filter';
+import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 import { ConfigService } from './config/config.service';
 import * as express from 'express';
 import * as fs from 'fs';
