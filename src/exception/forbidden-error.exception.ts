@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { BackendError } from './backend-error.class';
 
-export class GenericErrorException extends HttpException
+export class ForbiddenErrorException extends HttpException
 {
 	constructor( message?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 100;
-		error.message = message || 'Generic error';
-		super(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		error.error = 103;
+		error.message = message || 'Forbidden';
+		super(error, HttpStatus.FORBIDDEN);
 	}
 }

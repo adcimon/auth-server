@@ -4,7 +4,7 @@
 
 <head>
 
-    <title>Auth Server</title>
+	<title>Auth Server</title>
 
 	<meta charset="utf-8">
 
@@ -14,1847 +14,1852 @@
 	<meta name="language" content="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link type="text/css" rel="stylesheet" href="style.css">
+	<link type="text/css" rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-    <div class="menu">
-        <div class="title">
-            <span>Auth Server</span>
-        </div>
-        <div class="navbar">
-            <ul>
-                <li><a href="#signup">Sign Up</a></li>
-                <li><a href="#signdown">Sign Down</a></li>
-                <li><a href="#signin">Sign In</a></li>
-                <li><a href="#verify">Verify</a></li>
-                <li><a href="#forgotPassword">Forgot Password</a></li>
-                <li><a href="#resetPassword">Reset Password</a></li>
-                <li><a href="#getMyUser">Get My User</a></li>
-                <li><a href="#getUser">Get User</a></li>
-                <li><a href="#getUsers">Get Users</a></li>
-                <li><a href="#getMyAvatar">Get My Avatar</a></li>
-                <li><a href="#getAvatar">Get Avatar</a></li>
-                <li><a href="#updateMyUsername">Update My Username</a></li>
-                <li><a href="#updateUsername">Update Username</a></li>
-                <li><a href="#updateMyEmail">Update My Email</a></li>
-                <li><a href="#changeEmail">Change Email</a></li>
-                <li><a href="#updateMyPassword">Update My Password</a></li>
-                <li><a href="#updateMyAvatar">Update My Avatar</a></li>
-                <li><a href="#updateAvatar">Update Avatar</a></li>
-                <li><a href="#updateMyName">Update My Name</a></li>
-                <li><a href="#updateName">Update Name</a></li>
-                <li><a href="#updateMySurname">Update My Surname</a></li>
-                <li><a href="#updateSurname">Update Surname</a></li>
-                <li><a href="#updateMyBirthdate">Update My Birthdate</a></li>
-                <li><a href="#updateBirthdate">Update Birthdate</a></li>
-                <li><a href="#deleteUser">Delete User</a></li>
-                <li><a href="#errors">Errors</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="content-page">
-        <div class="content">
-
-            <!-- API -->
-            <div id="api" class="content-section">
-                <h1>🌐 API</h1>
-                <p>Auth Server is a general-purpose HTTP-based authentication and authorization server.</p>
-                <p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an access token.</p>
-                <p><code>{<br>&nbsp;&nbsp;&nbsp;sub: username<br>}</code></p>
-                <p>The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.</p>
-                <p><code>Authorization: Bearer token</code></p>
-                <br>
-            </div>
-
-            <!-- Sign Up -->
-            <div id="signup" class="content-section">
-                <div class="post">/signup</div>
-                <p>Sign up to the server.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="public"></span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td class="required">The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td class="required">The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>password</td>
-                            <td>string</td>
-                            <td class="required">The user's password.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Sign Down -->
-            <div id="signdown" class="content-section">
-                <div class="post">/signdown</div>
-                <p>Sign down from the server.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>password</td>
-                            <td>string</td>
-                            <td class="required">The user's password.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Sign In -->
-            <div id="signin" class="content-section">
-                <div class="post">/signin</div>
-                <p>Sign in authenticating with email and password.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="public"></span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td class="required">The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>password</td>
-                            <td>string</td>
-                            <td class="required">The user's password.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>token</td>
-                            <td>string</td>
-                            <td class="key">The token used to make protected requests.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Verify -->
-            <div id="verify" class="content-section">
-                <div class="get">/verify/:token</div>
-                <p>Verify the user's email.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="public"></span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>status</td>
-                            <td>boolean</td>
-                            <td>The response status.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Forgot Password -->
-            <div id="forgotPassword" class="content-section">
-                <div class="post">/forgot-password</div>
-                <p>Request the server an email to reset the password.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="public"></span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td class="required">The user's email.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>status</td>
-                            <td>boolean</td>
-                            <td>The response status.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Reset Password -->
-            <div id="resetPassword" class="content-section">
-                <div class="post">/reset-password/:token</div>
-                <p>Reset the user's password.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="public"></span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>password</td>
-                            <td>string</td>
-                            <td class="required">The new user's password.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>status</td>
-                            <td>boolean</td>
-                            <td>The response status.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Get My User -->
-            <div id="getMyUser" class="content-section">
-                <div class="get">/users/me</div>
-                <p>Get my user's data.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Get User -->
-            <div id="getUser" class="content-section">
-                <div class="get">/users/:username</div>
-                <p>Get the user's data.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Get Users -->
-            <div id="getUsers" class="content-section">
-                <div class="get">/users/</div>
-                <p>Get all the users' data.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Get My Avatar -->
-            <div id="getMyAvatar" class="content-section">
-                <div class="get">/users/me/avatar</div>
-                <p>Get my user's avatar.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Get Avatar -->
-            <div id="getAvatar" class="content-section">
-                <div class="get">/users/:username/avatar</div>
-                <p>Get the user's avatar.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Username -->
-            <div id="updateMyUsername" class="content-section">
-                <div class="patch">/users/me/username</div>
-                <p>Change my user's username.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td class="required">The new user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>password</td>
-                            <td>string</td>
-                            <td class="required">The user's password.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update Username -->
-            <div id="updateUsername" class="content-section">
-                <div class="patch">/users/:username/username</div>
-                <p>Change the user's username.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td class="required">The new user's username.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Email -->
-            <div id="updateMyEmail" class="content-section">
-                <div class="patch">/users/me/email</div>
-                <p>Change my user's email.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td class="required">The new user's email.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>status</td>
-                            <td>boolean</td>
-                            <td>The response status.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Change Email -->
-            <div id="changeEmail" class="content-section">
-                <div class="get">/change-email/:token</div>
-                <p>Change the user's email.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="public"></span>
-                </h3>
-                <p>This request doesn't have a body.</p>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>status</td>
-                            <td>boolean</td>
-                            <td>The response status.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Password -->
-            <div id="updateMyPassword" class="content-section">
-                <div class="patch">/users/me/password</div>
-                <p>Change my user's password.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>currentPassword</td>
-                            <td>string</td>
-                            <td class="required">The user's password.</td>
-                        </tr>
-                        <tr>
-                            <td>newPassword</td>
-                            <td>string</td>
-                            <td class="required">The new user's password.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Avatar -->
-            <div id="updateMyAvatar" class="content-section">
-                <div class="patch">/users/me/avatar</div>
-                <p>Change my user's avatar.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td class="required">The new user's avatar URL.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update Avatar -->
-            <div id="updateAvatar" class="content-section">
-                <div class="patch">/users/:username/avatar</div>
-                <p>Change the user's avatar.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td class="required">The new user's avatar URL.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Name -->
-            <div id="updateMyName" class="content-section">
-                <div class="patch">/users/me/name</div>
-                <p>Change my user's name.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td class="required">The new user's name.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update Name -->
-            <div id="updateName" class="content-section">
-                <div class="patch">/users/:username/name</div>
-                <p>Change the user's name.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td class="required">The new user's name.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Surname -->
-            <div id="updateMySurname" class="content-section">
-                <div class="patch">/users/me/surname</div>
-                <p>Change my user's surname.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td class="required">The new user's surname.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update Surname -->
-            <div id="updateSurname" class="content-section">
-                <div class="patch">/users/:username/surname</div>
-                <p>Change the user's surname.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td class="required">The new user's surname.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update My Birthdate -->
-            <div id="updateMyBirthdate" class="content-section">
-                <div class="patch">/users/me/birthdate</div>
-                <p>Change my user's birthdate.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">user / admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td class="required">The new user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Update Birthdate -->
-            <div id="updateBirthdate" class="content-section">
-                <div class="patch">/users/:username/birthdate</div>
-                <p>Change the user's birthdate.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td class="required">The new user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <!-- Delete User -->
-            <div id="deleteUser" class="content-section">
-                <div class="delete">/users/:username/delete</div>
-                <p>Delete the user's data.<br></p>
-                <br>
-
-                <h3>
-                    Request
-                    <span class="json"></span>
-                    <span class="protected"></span>
-                    <span class="role">admin</span>
-                </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h3 class="json">Response</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td>string</td>
-                            <td>The user's username.</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>The user's email.</td>
-                        </tr>
-                        <tr>
-                            <td>avatar</td>
-                            <td>string</td>
-                            <td>The user's avatar URL.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>string</td>
-                            <td>The user's name.</td>
-                        </tr>
-                        <tr>
-                            <td>surname</td>
-                            <td>string</td>
-                            <td>The user's surname.</td>
-                        </tr>
-                        <tr>
-                            <td>birthdate</td>
-                            <td>string</td>
-                            <td>The user's birthdate (yyyy-MM-dd).</td>
-                        </tr>
-                        <tr>
-                            <td>roles</td>
-                            <td>string[]</td>
-                            <td>The user's roles.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Errors -->
-            <div id="errors" class="content-section">
-                <h2>❌ Errors</h2>
-                <p>The server uses the following error schema:</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>error</td>
-                            <td>number</td>
-                        </tr>
-                        <tr>
-                            <td>status</td>
-                            <td>number</td>
-                        </tr>
-                        <tr>
-                            <td>message</td>
-                            <td>string | string[]</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Error</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>100</td>
-                            <td>500</td>
-                            <td>Generic error.</td>
-                        </tr>
-                        <tr>
-                            <td>101</td>
-                            <td>404</td>
-                            <td>Invalid request.</td>
-                        </tr>
-                        <tr>
-                            <td>102</td>
-                            <td>400</td>
-                            <td>Validation error.</td>
-                        </tr>
-                        <tr>
-                            <td>103</td>
-                            <td>403</td>
-                            <td>Forbidden resource.</td>
-                        </tr>
-                        <tr>
-                            <td>104</td>
-                            <td>409</td>
-                            <td>Username is already being used.</td>
-                        </tr>
-                        <tr>
-                            <td>105</td>
-                            <td>409</td>
-                            <td>Email is already being used.</td>
-                        </tr>
-                        <tr>
-                            <td>106</td>
-                            <td>401</td>
-                            <td>Email not verified.</td>
-                        </tr>
-                        <tr>
-                            <td>107</td>
-                            <td>401</td>
-                            <td>Invalid password.</td>
-                        </tr>
-                        <tr>
-                            <td>108</td>
-                            <td>401</td>
-                            <td>Invalid token.</td>
-                        </tr>
-                        <tr>
-                            <td>109</td>
-                            <td>404</td>
-                            <td>Role not found.</td>
-                        </tr>
-                        <tr>
-                            <td>110</td>
-                            <td>404</td>
-                            <td>User not found.</td>
-                        </tr>
-                        <tr>
-                            <td>111</td>
-                            <td>503</td>
-                            <td>Mail service error.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-        </div>
-    </div>
+	<div class="menu">
+		<div class="title">
+			<span>Auth Server</span>
+		</div>
+		<div class="navbar">
+			<ul>
+				<li><a href="#signup">Sign Up</a></li>
+				<li><a href="#signdown">Sign Down</a></li>
+				<li><a href="#signin">Sign In</a></li>
+				<li><a href="#verify">Verify</a></li>
+				<li><a href="#forgotPassword">Forgot Password</a></li>
+				<li><a href="#resetPassword">Reset Password</a></li>
+				<li><a href="#getMyUser">Get My User</a></li>
+				<li><a href="#getUser">Get User</a></li>
+				<li><a href="#getUsers">Get Users</a></li>
+				<li><a href="#getMyAvatar">Get My Avatar</a></li>
+				<li><a href="#getAvatar">Get Avatar</a></li>
+				<li><a href="#updateMyUsername">Update My Username</a></li>
+				<li><a href="#updateUsername">Update Username</a></li>
+				<li><a href="#updateMyEmail">Update My Email</a></li>
+				<li><a href="#changeEmail">Change Email</a></li>
+				<li><a href="#updateMyPassword">Update My Password</a></li>
+				<li><a href="#updateMyAvatar">Update My Avatar</a></li>
+				<li><a href="#updateAvatar">Update Avatar</a></li>
+				<li><a href="#updateMyName">Update My Name</a></li>
+				<li><a href="#updateName">Update Name</a></li>
+				<li><a href="#updateMySurname">Update My Surname</a></li>
+				<li><a href="#updateSurname">Update Surname</a></li>
+				<li><a href="#updateMyBirthdate">Update My Birthdate</a></li>
+				<li><a href="#updateBirthdate">Update Birthdate</a></li>
+				<li><a href="#deleteUser">Delete User</a></li>
+				<li><a href="#errors">Errors</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="content-page">
+		<div class="content">
+
+			<!-- API -->
+			<div id="api" class="content-section">
+				<h1>🌐 API</h1>
+				<p>Auth Server is a general-purpose HTTP-based authentication and authorization server.</p>
+				<p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an access token.</p>
+				<p><code>{<br>&nbsp;&nbsp;&nbsp;sub: username<br>}</code></p>
+				<p>The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.</p>
+				<p><code>Authorization: Bearer token</code></p>
+				<br>
+			</div>
+
+			<!-- Sign Up -->
+			<div id="signup" class="content-section">
+				<div class="post">/signup</div>
+				<p>Sign up to the server.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="public"></span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td class="required">The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td class="required">The user's email.</td>
+						</tr>
+						<tr>
+							<td>password</td>
+							<td>string</td>
+							<td class="required">The user's password.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Sign Down -->
+			<div id="signdown" class="content-section">
+				<div class="post">/signdown</div>
+				<p>Sign down from the server.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>password</td>
+							<td>string</td>
+							<td class="required">The user's password.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Sign In -->
+			<div id="signin" class="content-section">
+				<div class="post">/signin</div>
+				<p>Sign in authenticating with email and password.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="public"></span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td class="required">The user's email.</td>
+						</tr>
+						<tr>
+							<td>password</td>
+							<td>string</td>
+							<td class="required">The user's password.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>token</td>
+							<td>string</td>
+							<td class="key">The token used to make protected requests.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Verify -->
+			<div id="verify" class="content-section">
+				<div class="get">/verify/:token</div>
+				<p>Verify the user's email.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="public"></span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>status</td>
+							<td>boolean</td>
+							<td>The response status.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Forgot Password -->
+			<div id="forgotPassword" class="content-section">
+				<div class="post">/forgot-password</div>
+				<p>Request the server an email to reset the password.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="public"></span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td class="required">The user's email.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>status</td>
+							<td>boolean</td>
+							<td>The response status.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Reset Password -->
+			<div id="resetPassword" class="content-section">
+				<div class="post">/reset-password/:token</div>
+				<p>Reset the user's password.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="public"></span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>password</td>
+							<td>string</td>
+							<td class="required">The new user's password.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>status</td>
+							<td>boolean</td>
+							<td>The response status.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Get My User -->
+			<div id="getMyUser" class="content-section">
+				<div class="get">/users/me</div>
+				<p>Get my user's data.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Get User -->
+			<div id="getUser" class="content-section">
+				<div class="get">/users/:username</div>
+				<p>Get the user's data.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Get Users -->
+			<div id="getUsers" class="content-section">
+				<div class="get">/users/</div>
+				<p>Get all the users' data.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Get My Avatar -->
+			<div id="getMyAvatar" class="content-section">
+				<div class="get">/users/me/avatar</div>
+				<p>Get my user's avatar.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Get Avatar -->
+			<div id="getAvatar" class="content-section">
+				<div class="get">/users/:username/avatar</div>
+				<p>Get the user's avatar.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Username -->
+			<div id="updateMyUsername" class="content-section">
+				<div class="patch">/users/me/username</div>
+				<p>Change my user's username.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td class="required">The new user's username.</td>
+						</tr>
+						<tr>
+							<td>password</td>
+							<td>string</td>
+							<td class="required">The user's password.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update Username -->
+			<div id="updateUsername" class="content-section">
+				<div class="patch">/users/:username/username</div>
+				<p>Change the user's username.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td class="required">The new user's username.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Email -->
+			<div id="updateMyEmail" class="content-section">
+				<div class="patch">/users/me/email</div>
+				<p>Change my user's email.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td class="required">The new user's email.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>status</td>
+							<td>boolean</td>
+							<td>The response status.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Change Email -->
+			<div id="changeEmail" class="content-section">
+				<div class="get">/change-email/:token</div>
+				<p>Change the user's email.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="public"></span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>status</td>
+							<td>boolean</td>
+							<td>The response status.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Password -->
+			<div id="updateMyPassword" class="content-section">
+				<div class="patch">/users/me/password</div>
+				<p>Change my user's password.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>currentPassword</td>
+							<td>string</td>
+							<td class="required">The user's password.</td>
+						</tr>
+						<tr>
+							<td>newPassword</td>
+							<td>string</td>
+							<td class="required">The new user's password.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Avatar -->
+			<div id="updateMyAvatar" class="content-section">
+				<div class="patch">/users/me/avatar</div>
+				<p>Change my user's avatar.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td class="required">The new user's avatar URL.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update Avatar -->
+			<div id="updateAvatar" class="content-section">
+				<div class="patch">/users/:username/avatar</div>
+				<p>Change the user's avatar.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td class="required">The new user's avatar URL.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Name -->
+			<div id="updateMyName" class="content-section">
+				<div class="patch">/users/me/name</div>
+				<p>Change my user's name.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td class="required">The new user's name.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update Name -->
+			<div id="updateName" class="content-section">
+				<div class="patch">/users/:username/name</div>
+				<p>Change the user's name.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td class="required">The new user's name.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Surname -->
+			<div id="updateMySurname" class="content-section">
+				<div class="patch">/users/me/surname</div>
+				<p>Change my user's surname.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td class="required">The new user's surname.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update Surname -->
+			<div id="updateSurname" class="content-section">
+				<div class="patch">/users/:username/surname</div>
+				<p>Change the user's surname.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td class="required">The new user's surname.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update My Birthdate -->
+			<div id="updateMyBirthdate" class="content-section">
+				<div class="patch">/users/me/birthdate</div>
+				<p>Change my user's birthdate.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">user / admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td class="required">The new user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Update Birthdate -->
+			<div id="updateBirthdate" class="content-section">
+				<div class="patch">/users/:username/birthdate</div>
+				<p>Change the user's birthdate.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td class="required">The new user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Delete User -->
+			<div id="deleteUser" class="content-section">
+				<div class="delete">/users/:username</div>
+				<p>Delete the user's data.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="json"></span>
+					<span class="protected"></span>
+					<span class="role">admin</span>
+				</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>username</td>
+							<td>string</td>
+							<td>The user's username.</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>string</td>
+							<td>The user's email.</td>
+						</tr>
+						<tr>
+							<td>avatar</td>
+							<td>string</td>
+							<td>The user's avatar URL.</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>string</td>
+							<td>The user's name.</td>
+						</tr>
+						<tr>
+							<td>surname</td>
+							<td>string</td>
+							<td>The user's surname.</td>
+						</tr>
+						<tr>
+							<td>birthdate</td>
+							<td>string</td>
+							<td>The user's birthdate (yyyy-MM-dd).</td>
+						</tr>
+						<tr>
+							<td>roles</td>
+							<td>string[]</td>
+							<td>The user's roles.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Errors -->
+			<div id="errors" class="content-section">
+				<h2>❌ Errors</h2>
+				<p>The server uses the following error schema:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>error</td>
+							<td>number</td>
+						</tr>
+						<tr>
+							<td>status</td>
+							<td>number</td>
+						</tr>
+						<tr>
+							<td>message</td>
+							<td>string | string[]</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+
+				<table>
+					<thead>
+						<tr>
+							<th>Error</th>
+							<th>Status</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>100</td>
+							<td>500</td>
+							<td>Generic error.</td>
+						</tr>
+						<tr>
+							<td>101</td>
+							<td>500</td>
+							<td>Unknown error.</td>
+						</tr>
+						<tr>
+							<td>102</td>
+							<td>404</td>
+							<td>Invalid request.</td>
+						</tr>
+						<tr>
+							<td>103</td>
+							<td>403</td>
+							<td>Forbidden error.</td>
+						</tr>
+						<tr>
+							<td>104</td>
+							<td>400</td>
+							<td>Validation error.</td>
+						</tr>
+						<tr>
+							<td>105</td>
+							<td>409</td>
+							<td>Username is already being used.</td>
+						</tr>
+						<tr>
+							<td>106</td>
+							<td>409</td>
+							<td>Email is already being used.</td>
+						</tr>
+						<tr>
+							<td>107</td>
+							<td>401</td>
+							<td>Email not verified.</td>
+						</tr>
+						<tr>
+							<td>108</td>
+							<td>401</td>
+							<td>Invalid credentials.</td>
+						</tr>
+						<tr>
+							<td>109</td>
+							<td>401</td>
+							<td>Invalid token.</td>
+						</tr>
+						<tr>
+							<td>110</td>
+							<td>404</td>
+							<td>Role not found.</td>
+						</tr>
+						<tr>
+							<td>111</td>
+							<td>404</td>
+							<td>User not found.</td>
+						</tr>
+						<tr>
+							<td>112</td>
+							<td>503</td>
+							<td>Mail service error.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+		</div>
+	</div>
 
 </body>
 

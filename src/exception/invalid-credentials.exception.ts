@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { BackendError } from './backend-error.class';
 
-export class GenericErrorException extends HttpException
+export class InvalidCredentialsException extends HttpException
 {
 	constructor( message?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 100;
-		error.message = message || 'Generic error';
-		super(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		error.error = 108;
+		error.message = message || 'Invalid credentials';
+		super(error, HttpStatus.UNAUTHORIZED);
 	}
 }

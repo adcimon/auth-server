@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { BackendError } from './backend-error.class';
 
 export class UsernameTakenException extends HttpException
 {
-    constructor()
-    {
-        super(
-        {
-            error: 104,
-            message: 'Username is already being used'
-        }, HttpStatus.CONFLICT);
-    }
+	constructor( message?: string )
+	{
+		const error : BackendError = new BackendError();
+		error.error = 105;
+		error.message = message || 'Username is already being used';
+		super(error, HttpStatus.CONFLICT);
+	}
 }

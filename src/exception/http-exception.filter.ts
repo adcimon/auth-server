@@ -1,59 +1,62 @@
 import { Catch, HttpException, HttpStatus, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { GenericErrorException } from './generic-error.exception';
+import { BackendError } from './backend-error.class';
+import { UnknownErrorException } from './unknown-error.exception';
 import { InvalidRequestException } from './invalid-request.exception';
-import { ForbiddenResourceException } from './forbidden-resource.exception';
+import { ForbiddenErrorException } from './forbidden-error.exception';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter
 {
-    catch( exception: HttpException, host: ArgumentsHost )
-    {
-        const context = host.switchToHttp();
-        const request = context.getRequest<Request>();
-        const response = context.getResponse<Response>();
-        let json = { };
+	// Exception may not be an HttpException.
+	catch( exception: HttpException, host: ArgumentsHost )
+	{
+		const context = host.switchToHttp();
+		const request = context.getRequest<Request>();
+		const response = context.getResponse<Response>();
+		let error = exception.getResponse();
 
-        if( !(exception instanceof HttpException) )
-        {
-            console.log(exception);
-            exception = new GenericErrorException((exception as Error)?.message);
-            json = exception.getResponse();
-        }
-        else
-        {
-            json = exception.getResponse();
-            if( json['statusCode'] !== undefined )
-            {
-                switch( json['statusCode'] )
-                {
-                    case HttpStatus.FORBIDDEN:
-                    {
-                        exception = new ForbiddenResourceException();
-                        json = exception.getResponse();
-                        break;
-                    }
-                    case HttpStatus.NOT_FOUND:
-                    {
-                        exception = new InvalidRequestException();
-                        json = exception.getResponse();
-                        break;
-                    }
-                    default:
-                    {
-                        exception = new GenericErrorException(exception.message);
-                        json = exception.getResponse();
-                        break;
-                    }
-                }
-            }
-        }
+		// Throwed http exception.
+		if( exception instanceof HttpException )
+		{
+			// Throwed unknown http exception.
+			if( !(error instanceof BackendError) )
+			{
+				const status = exception.getStatus();
+				switch( status )
+				{
+					case HttpStatus.NOT_FOUND:
+					{
+						exception = new InvalidRequestException();
+						break;
+					}
+					case HttpStatus.FORBIDDEN:
+					{
+						exception = new ForbiddenErrorException();
+						break;
+					}
+					default:
+					{
+						const message: string = exception.message;
+						exception = new UnknownErrorException(message);
+						break;
+					}
+				}
 
-        json['url'] = request.url;
-        json['timestamp'] = (new Date()).toISOString();
+			}
+		}
+		// Throwed unknown exception.
+		else
+		{
+			const message: string = (exception as Error)?.message;
+			exception = new UnknownErrorException(message);
+		}
 
-        response
-        .status(exception.getStatus())
-        .json(json);
-    }
+		error['url'] = request.url;
+		error['timestamp'] = (new Date()).toISOString();
+
+		response
+		.status(exception.getStatus())
+		.json(error);
+	}
 }
