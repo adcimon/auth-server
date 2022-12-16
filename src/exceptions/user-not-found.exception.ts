@@ -3,11 +3,12 @@ import { BackendError } from './backend-error.class';
 
 export class UserNotFoundException extends HttpException
 {
-	constructor( message?: string )
+	constructor( user?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 111;
-		error.message = message || 'User not found';
+		error.error = 'user_not_found';
+		error.message = 'User not found';
+		error.data = { user: user };
 		super(error, HttpStatus.NOT_FOUND);
 	}
 }

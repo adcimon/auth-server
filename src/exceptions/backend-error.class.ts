@@ -1,5 +1,5 @@
 export class BackendError {
-	error: number;
+	error: string;
 	message: string;
 	url?: string;
 	timestamp?: string;

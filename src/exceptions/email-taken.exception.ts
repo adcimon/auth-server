@@ -3,11 +3,12 @@ import { BackendError } from './backend-error.class';
 
 export class EmailTakenException extends HttpException
 {
-	constructor( message?: string )
+	constructor( email?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 106;
-		error.message = message || 'Email is already being used';
+		error.error = 'email_taken';
+		error.message = 'Email is already being used';
+		error.data = { email: email };
 		super(error, HttpStatus.CONFLICT);
 	}
 }

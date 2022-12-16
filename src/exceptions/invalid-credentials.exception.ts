@@ -6,7 +6,7 @@ export class InvalidCredentialsException extends HttpException
 	constructor( message?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 108;
+		error.error = 'invalid_credentials';
 		error.message = message || 'Invalid credentials';
 		super(error, HttpStatus.UNAUTHORIZED);
 	}

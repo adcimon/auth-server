@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { BackendError } from './backend-error.class';
 import { UnknownErrorException } from './unknown-error.exception';
 import { InvalidRequestException } from './invalid-request.exception';
-import { ForbiddenErrorException } from './forbidden-error.exception';
+import { ForbiddenException } from './forbidden.exception';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter
@@ -32,7 +32,7 @@ export class HttpExceptionFilter implements ExceptionFilter
 					}
 					case HttpStatus.FORBIDDEN:
 					{
-						exception = new ForbiddenErrorException();
+						exception = new ForbiddenException();
 						break;
 					}
 					default:

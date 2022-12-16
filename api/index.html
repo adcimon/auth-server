@@ -1765,15 +1765,23 @@
 					<tbody>
 						<tr>
 							<td>error</td>
-							<td>number</td>
-						</tr>
-						<tr>
-							<td>status</td>
-							<td>number</td>
+							<td>string</td>
 						</tr>
 						<tr>
 							<td>message</td>
-							<td>string | string[]</td>
+							<td>string</td>
+						</tr>
+						<tr>
+							<td>url</td>
+							<td>string</td>
+						</tr>
+						<tr>
+							<td>timestamp</td>
+							<td>string</td>
+						</tr>
+						<tr>
+							<td>data</td>
+							<td>object</td>
 						</tr>
 					</tbody>
 				</table>
@@ -1789,67 +1797,67 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>100</td>
+							<td>generic_error</td>
 							<td>500</td>
 							<td>Generic error.</td>
 						</tr>
 						<tr>
-							<td>101</td>
+							<td>unknown_error</td>
 							<td>500</td>
 							<td>Unknown error.</td>
 						</tr>
 						<tr>
-							<td>102</td>
+							<td>invalid_request</td>
 							<td>404</td>
 							<td>Invalid request.</td>
 						</tr>
 						<tr>
-							<td>103</td>
+							<td>forbidden</td>
 							<td>403</td>
-							<td>Forbidden error.</td>
+							<td>Forbidden.</td>
 						</tr>
 						<tr>
-							<td>104</td>
+							<td>validation_error</td>
 							<td>400</td>
 							<td>Validation error.</td>
 						</tr>
 						<tr>
-							<td>105</td>
+							<td>username_taken</td>
 							<td>409</td>
 							<td>Username is already being used.</td>
 						</tr>
 						<tr>
-							<td>106</td>
+							<td>email_taken</td>
 							<td>409</td>
 							<td>Email is already being used.</td>
 						</tr>
 						<tr>
-							<td>107</td>
+							<td>email_not_verified</td>
 							<td>401</td>
 							<td>Email not verified.</td>
 						</tr>
 						<tr>
-							<td>108</td>
+							<td>invalid_credentials</td>
 							<td>401</td>
 							<td>Invalid credentials.</td>
 						</tr>
 						<tr>
-							<td>109</td>
+							<td>invalid_token</td>
 							<td>401</td>
 							<td>Invalid token.</td>
 						</tr>
 						<tr>
-							<td>110</td>
+							<td>role_not_found</td>
 							<td>404</td>
 							<td>Role not found.</td>
 						</tr>
 						<tr>
-							<td>111</td>
+							<td>user_not_found</td>
 							<td>404</td>
 							<td>User not found.</td>
 						</tr>
 						<tr>
-							<td>112</td>
+							<td>mail_service_error</td>
 							<td>503</td>
 							<td>Mail service error.</td>
 						</tr>

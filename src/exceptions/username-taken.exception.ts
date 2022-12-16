@@ -3,11 +3,12 @@ import { BackendError } from './backend-error.class';
 
 export class UsernameTakenException extends HttpException
 {
-	constructor( message?: string )
+	constructor( username?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 105;
-		error.message = message || 'Username is already being used';
+		error.error = 'username_taken';
+		error.message = 'Username is already being used';
+		error.data = { username: username };
 		super(error, HttpStatus.CONFLICT);
 	}
 }

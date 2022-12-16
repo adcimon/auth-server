@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/user.entity';
 import { UserNotFoundException } from '../exceptions/user-not-found.exception';
 import { InvalidCredentialsException } from '../exceptions/invalid-credentials.exception';
-import { NotVerifiedException } from '../exceptions/not-verified.exception';
+import { EmailNotVerifiedException } from '../exceptions/email-not-verified.exception';
 import { InvalidTokenException } from '../exceptions/invalid-token.exception';
 import * as argon2 from 'argon2';
 
@@ -45,7 +45,7 @@ export class AuthService
 	{
 		if( !user.verified )
 		{
-			throw new NotVerifiedException();
+			throw new EmailNotVerifiedException();
 		}
 
 		const payload: object =
@@ -141,7 +141,7 @@ export class AuthService
 
 		if( !user.verified )
 		{
-			throw new NotVerifiedException();
+			throw new EmailNotVerifiedException();
 		}
 
 		await this.usersService.updatePassword(user.id, password);
