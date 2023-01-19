@@ -14,36 +14,6 @@ The [API documentation](https://adcimon.github.io/auth-server/api/) can be found
 
 The `.env` files have the environment variables used by the server.
 
-| Variables |
-| ----- |
-| SERVICE_NAME |
-| NODE_ENV |
-| PORT |
-| ENABLE_CORS |
-| ENABLE_HTTPS |
-| KEY_PATH |
-| CERT_PATH |
-| STATIC_PATH |
-| VERIFY_EMAIL_LINK |
-| RESET_PASSWORD_LINK |
-| TOKEN_SECRET_KEY |
-| TOKEN_EXPIRATION_TIME |
-| TOKEN_VERIFICATION_EXPIRATION_TIME |
-| TOKEN_RESET_PASSWORD_EXPIRATION_TIME |
-| DATABASE_TYPE |
-| DATABASE_HOST |
-| DATABASE_PORT |
-| DATABASE_USERNAME |
-| DATABASE_PASSWORD |
-| DATABASE_NAME |
-| DATABASE_ENTITIES |
-| MAIL_HOST |
-| MAIL_PORT |
-| MAIL_SECURE |
-| MAIL_USER |
-| MAIL_PASSWORD |
-| MAIL_NOREPLY_FROM |
-
 ## Installation
 
 1. Install `Node 16`.
