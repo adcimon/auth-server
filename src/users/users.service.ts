@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
@@ -21,7 +21,7 @@ export class UsersService implements OnModuleInit
 	constructor(
 		@InjectRepository(User) private usersRepository: Repository<User>,
 		private readonly configService: ConfigService,
-		private readonly roleService: RolesService
+		@Inject(forwardRef(() => RolesService)) private readonly rolesService: RolesService
 	) { }
 
 	async onModuleInit()
@@ -61,7 +61,7 @@ export class UsersService implements OnModuleInit
 		let userRoles: any[] = [];
 		for( let i in roles )
 		{
-			let role = await this.roleService.getByName(roles[i]);
+			let role = await this.rolesService.getByName(roles[i]);
 			if( role )
 			{
 				userRoles.push(role);
