@@ -77,7 +77,7 @@ export class AuthService
 		let payload: any;
 		try
 		{
-			payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET_KEY'));
+			payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET'));
 		}
 		catch( exception: any )
 		{
