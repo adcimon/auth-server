@@ -33,7 +33,7 @@ npm run start:debug
 npm run start:prod
 ```
 
-## Build and Deploy
+## Build
 
 Build the project, compiling it to JavaScript.
 ```
