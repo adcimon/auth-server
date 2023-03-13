@@ -1,6 +1,6 @@
 # Auth Server
 
-General-purpose HTTP-based authentication and authorization server. The project is built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
+General-purpose HTTP-based authentication and authorization server. Built with [Node.js](https://nodejs.org/) and [Nest.js](https://nestjs.com/).
 
 **Features**
 - User registration and verification via email.
@@ -9,16 +9,15 @@ General-purpose HTTP-based authentication and authorization server. The project 
 - Delete not verified users after the verification token expires.
 - Reset password via email.
 - Change email address via email.
-
-The [API documentation](https://adcimon.github.io/auth-server/api/) can be found inside the `api` folder.
-
-The `.env` files have the environment variables used by the server.
+- API [documentation](https://adcimon.github.io/auth-server/api/) available.
 
 ## Installation
 
-1. Install `Node 16`.
+1. Configure the `.env` file.
 
-2. Install packages.
+2. Install `Node 16`.
+
+3. Install packages.
 ```
 cd auth-server
 npm install

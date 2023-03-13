@@ -9,14 +9,11 @@ export class JwtStrategy extends PassportStrategy(Strategy)
 	constructor( private readonly configService: ConfigService )
 	{
 		// Pass a configuration object to change the strategy.
-		// Do NOT ignore the expiration.
-		// Look in the header of the request and get the bearer token from there.
-		// Use the secret key.
 		super(
 		{
-			ignoreExpiration: false,
-			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-			secretOrKey: configService.get('TOKEN_SECRET_KEY')
+			ignoreExpiration: false, // Do not ignore the expiration.
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Look in the header of the request and get the bearer token from there.
+			secretOrKey: configService.get('TOKEN_SECRET') // Use the secret key.
 		});
 	}
 
