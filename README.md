@@ -11,7 +11,7 @@ General-purpose HTTP-based authentication and authorization server. Built with [
 - Change email address via email.
 - API [documentation](https://adcimon.github.io/auth-server/api/) available.
 
-## Installation
+## Install
 
 1. Configure the `.env` file.
 
