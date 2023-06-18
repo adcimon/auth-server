@@ -1,4 +1,5 @@
-export class BackendError {
+export class BackendError
+{
 	error: string;
 	message: string;
 	url?: string;

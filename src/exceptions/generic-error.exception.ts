@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { BackendError } from './backend-error.class';
+import { BackendError } from './backend-error';
 
 export class GenericErrorException extends HttpException
 {
