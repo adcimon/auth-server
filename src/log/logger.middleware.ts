@@ -2,14 +2,14 @@ import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 const WHITE_COLOR: string = '\x1b[0m';
+const RED_COLOR: string = '\x1b[31m';
 const GREEN_COLOR: string = '\x1b[32m';
 const YELLOW_COLOR: string = '\x1b[33m';
-const RED_COLOR: string = '\x1b[31m';
-const BRIGHT_CYAN_COLOR: string = '\x1b[36m';
+const CYAN_COLOR: string = '\x1b[36m';
 
 const BASE_COLOR: string = WHITE_COLOR;
 const POST_COLOR: string = GREEN_COLOR;
-const GET_COLOR: string = BRIGHT_CYAN_COLOR;
+const GET_COLOR: string = CYAN_COLOR;
 const PUT_COLOR: string = YELLOW_COLOR;
 const PATCH_COLOR: string = YELLOW_COLOR;
 const DELETE_COLOR: string = RED_COLOR;
