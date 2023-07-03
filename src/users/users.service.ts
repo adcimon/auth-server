@@ -5,6 +5,7 @@ import { Cron } from '@nestjs/schedule';
 import { User } from './user.entity';
 import { ConfigService } from '../config/config.service';
 import { RolesService } from '../roles/roles.service';
+import { Role } from '../roles/role.entity';
 import { UsernameTakenException } from '../exceptions/username-taken.exception';
 import { EmailTakenException } from '../exceptions/email-taken.exception';
 import { UserNotFoundException } from '../exceptions/user-not-found.exception';
@@ -61,7 +62,7 @@ export class UsersService implements OnModuleInit
 		let userRoles: any[] = [];
 		for( let i in roles )
 		{
-			let role = await this.rolesService.getByName(roles[i]);
+			const role: Role = await this.rolesService.getByName(roles[i]);
 			if( role )
 			{
 				userRoles.push(role);
@@ -150,7 +151,23 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Get the user's avatar.
 	 */
-	async getAvatar(
+	async getAvatarById(
+		id: number
+	): Promise<string>
+	{
+		const user: User = await this.getById(id);
+		if( !user )
+		{
+			throw new UserNotFoundException();
+		}
+
+		return user.avatar;
+	}
+
+	/**
+	 * Get the user's avatar.
+	 */
+	async getAvatarByUsername(
 		username: string
 	): Promise<string>
 	{
@@ -480,7 +497,7 @@ export class UsersService implements OnModuleInit
 					this.delete(user.id);
 					this.cronLogger.log('User ' + user.username + ' deleted');
 				}
-				catch( exception )
+				catch( error: any )
 				{
 				}
 			}
@@ -517,7 +534,7 @@ export class UsersService implements OnModuleInit
 
 					await this.updateVerified(user.id, true);
 				}
-				catch( exception: any )
+				catch( error: any )
 				{
 					// Catch user already created.
 				}

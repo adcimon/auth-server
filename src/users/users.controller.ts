@@ -16,10 +16,11 @@ import { RoleEnum } from '../roles/role.enum';
 import { RolesGuard } from '../roles/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
+import { ResponseInterceptor } from '../response/response.interceptor';
 import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
 
 @Controller('users')
-@UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(ClassSerializerInterceptor, ResponseInterceptor)
 export class UsersController
 {
 	constructor(
@@ -33,10 +34,10 @@ export class UsersController
 	@Roles(RoleEnum.USER)
 	async getMyUser(
 		@Request() request
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.getById(user.id);
+		const user: User = await this.usersService.getById(request.user.id);
+		return { user };
 	}
 
 	@Get('/:username')
@@ -44,18 +45,19 @@ export class UsersController
 	@Roles(RoleEnum.ADMIN)
 	async getUser(
 		@Param('username') username: string
-	): Promise<User>
+	): Promise<object>
 	{
 		const user: User = await this.usersService.getByUsername(username);
-		return this.usersService.getById(user.id);
+		return { user };
 	}
 
 	@Get('')
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
-	async getUsers(): Promise<User[]>
+	async getUsers(): Promise<object>
 	{
-		return await this.usersService.getAll();
+		const users: User[] = await this.usersService.getAll();
+		return { users };
 	}
 
 	@Get('/me/avatar')
@@ -65,7 +67,7 @@ export class UsersController
 		@Request() request,
 	): Promise<object>
 	{
-		const avatar: string = await this.usersService.getAvatar(request.user.username);
+		const avatar: string = await this.usersService.getAvatarById(request.user.id);
 		return { avatar: avatar };
 	}
 
@@ -76,7 +78,7 @@ export class UsersController
 		@Param('username') username: string
 	): Promise<object>
 	{
-		const avatar: string = await this.usersService.getAvatar(username);
+		const avatar: string = await this.usersService.getAvatarByUsername(username);
 		return { avatar: avatar };
 	}
 
@@ -86,10 +88,10 @@ export class UsersController
 	async updateMyUsername(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.UpdateMyUsernameSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.updateUsernameSecure(user.id, body.username, body.password);
+		const user: User = await this.usersService.updateUsernameSecure(request.user.id, body.username, body.password);
+		return { user };
 	}
 
 	@Patch('/:username/username')
@@ -98,10 +100,11 @@ export class UsersController
 	async updateUsername(
 		@Param('username') username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateUsernameSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(username);
-		return this.usersService.updateUsername(user.id, body.username);
+		const userToUpdate: User = await this.usersService.getByUsername(username);
+		const user: User = await this.usersService.updateUsername(userToUpdate.id, body.username)
+		return { user };
 	}
 
 	@Patch('/me/email')
@@ -113,7 +116,7 @@ export class UsersController
 		@Body(new ValidationPipe(ValidationSchema.UpdateMyEmailSchema)) body: any
 	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
+		const user: User = await this.usersService.getById(request.user.id);
 		const token: string = await this.authService.createChangeEmailToken(user, body.email);
 		const link: string = 'https://' + headers.host + '/change-email/' + token;
 
@@ -132,10 +135,10 @@ export class UsersController
 	async updateMyPassword(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.UpdateMyPasswordSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.updatePasswordSecure(user.id, body.currentPassword, body.newPassword);
+		const user: User = await this.usersService.updatePasswordSecure(request.user.id, body.currentPassword, body.newPassword);
+		return { user };
 	}
 
 	@Patch('/me/avatar')
@@ -144,10 +147,10 @@ export class UsersController
 	async updateMyAvatar(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.UpdateMyAvatarSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.updateAvatar(user.id, body.avatar);
+		const user: User = await this.usersService.updateAvatar(request.user.id, body.avatar);
+		return { user };
 	}
 
 	@Patch('/:username/avatar')
@@ -156,10 +159,11 @@ export class UsersController
 	async updateAvatar(
 		@Param('username') username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateAvatarSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(username);
-		return this.usersService.updateAvatar(user.id, body.avatar);
+		const userToUpdate: User = await this.usersService.getByUsername(username);
+		const user: User = await this.usersService.updateAvatar(userToUpdate.id, body.avatar);
+		return { user };
 	}
 
 	@Patch('/me/name')
@@ -168,10 +172,10 @@ export class UsersController
 	async updateMyName(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.UpdateMyNameSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.updateName(user.id, body.name);
+		const user: User = await this.usersService.updateName(request.user.id, body.name);
+		return { user };
 	}
 
 	@Patch('/:username/name')
@@ -180,10 +184,11 @@ export class UsersController
 	async updateName(
 		@Param('username') username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateNameSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(username);
-		return this.usersService.updateName(user.id, body.name);
+		const userToUpdate: User = await this.usersService.getByUsername(username);
+		const user: User = await this.usersService.updateName(userToUpdate.id, body.name);
+		return { user };
 	}
 
 	@Patch('/me/surname')
@@ -192,10 +197,10 @@ export class UsersController
 	async updateMySurname(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.UpdateMySurnameSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.updateSurname(user.id, body.surname);
+		const user: User = await this.usersService.updateSurname(request.user.id, body.surname);
+		return { user };
 	}
 
 	@Patch('/:username/surname')
@@ -204,10 +209,11 @@ export class UsersController
 	async updateSurname(
 		@Param('username') username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateSurnameSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(username);
-		return this.usersService.updateSurname(user.id, body.surname);
+		const userToUpdate: User = await this.usersService.getByUsername(username);
+		const user: User = await this.usersService.updateSurname(userToUpdate.id, body.surname);
+		return { user };
 	}
 
 	@Patch('/me/birthdate')
@@ -216,10 +222,10 @@ export class UsersController
 	async updateMyBirthdate(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.UpdateMyBirthdateSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(request.user.username);
-		return this.usersService.updateBirthdate(user.id, body.birthdate);
+		const user: User = await this.usersService.updateBirthdate(request.user.id, body.birthdate);
+		return { user };
 	}
 
 	@Patch('/:username/birthdate')
@@ -228,10 +234,11 @@ export class UsersController
 	async updateBirthdate(
 		@Param('username') username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateBirthdateSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(username);
-		return this.usersService.updateBirthdate(user.id, body.birthdate);
+		const userToUpdate: User = await this.usersService.getByUsername(username);
+		const user: User = await this.usersService.updateBirthdate(userToUpdate.id, body.birthdate);
+		return { user };
 	}
 
 	@Delete('/:username')
@@ -240,9 +247,10 @@ export class UsersController
 	async deleteUser(
 		@Param('username') username: string,
 		@Body(new ValidationPipe(ValidationSchema.DeleteUserSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
-		const user: User = await this.usersService.getByUsername(username);
-		return await this.usersService.delete(user.id);
+		const userToDelete: User = await this.usersService.getByUsername(username);
+		const user: User = await this.usersService.delete(userToDelete.id);
+		return { user };
 	}
 }

@@ -3,8 +3,9 @@ import { Request, Response } from 'express';
 import { BackendError } from './backend-error';
 import { GenericErrorException } from './generic-error.exception';
 import { UnknownErrorException } from './unknown-error.exception';
-import { InvalidRequestException } from './invalid-request.exception';
+import { UnauthorizedException } from './unauthorized.exception';
 import { ForbiddenException } from './forbidden.exception';
+import { InvalidRequestException } from './invalid-request.exception';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter
@@ -14,52 +15,45 @@ export class HttpExceptionFilter implements ExceptionFilter
 		const context = host.switchToHttp();
 		const request = context.getRequest<Request>();
 		const response = context.getResponse<Response>();
-		let error: any = { };
 
 		// Http exception.
 		if( exception instanceof HttpException )
 		{
-			error = exception.getResponse();
-
-			// Unknown error.
-			if( !(error instanceof BackendError) )
+			if( !(exception.getResponse() instanceof BackendError) )
 			{
 				const status = exception.getStatus();
 				switch( status )
 				{
+					case HttpStatus.UNAUTHORIZED:
+						exception = new UnauthorizedException(exception?.message);
+						break;
 					case HttpStatus.FORBIDDEN:
-					{
-						exception = new ForbiddenException();
+						exception = new ForbiddenException(exception?.message);
 						break;
-					}
 					case HttpStatus.NOT_FOUND:
-					{
-						exception = new InvalidRequestException();
+						exception = new InvalidRequestException(exception?.message);
 						break;
-					}
 					default:
-					{
-						const message = exception.message;
-						exception = new GenericErrorException(message);
+						exception = new GenericErrorException(exception?.message);
 						break;
-					}
 				}
-
 			}
 		}
 		// Unknown exception.
 		else
 		{
 			exception = new UnknownErrorException(exception?.message);
-			error = exception.getResponse();
 		}
 
-		error.message = error.message.charAt(0).toUpperCase() + error.message.slice(1);
-		error.url = request.url;
-		error.timestamp = (new Date()).toISOString();
+		const body =
+		{
+			url: request.url,
+			timestamp: (new Date()).toISOString(),
+			error: exception.getResponse()
+		};
 
 		response
 			.status(exception.getStatus())
-			.json(error);
+			.json(body);
 	}
 }

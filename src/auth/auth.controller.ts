@@ -18,10 +18,11 @@ import { RoleEnum } from '../roles/role.enum';
 import { RolesGuard } from '../roles/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
+import { ResponseInterceptor } from '../response/response.interceptor';
 import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
 
 @Controller('')
-@UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(ClassSerializerInterceptor, ResponseInterceptor)
 export class AuthController
 {
 	constructor(
@@ -35,7 +36,7 @@ export class AuthController
 	async signup(
 		@Headers() headers,
 		@Body(new ValidationPipe(ValidationSchema.SignUpSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
 		const user: User = await this.usersService.create(
 			body.username,
@@ -57,7 +58,7 @@ export class AuthController
 			throw new MailServiceErrorException();
 		}
 
-		return user;
+		return { user };
 	}
 
 	@Post('/signdown')
@@ -66,10 +67,10 @@ export class AuthController
 	async signdown(
 		@Request() request,
 		@Body(new ValidationPipe(ValidationSchema.SignDownSchema)) body: any
-	): Promise<User>
+	): Promise<object>
 	{
 		const user: User = await this.usersService.deleteSecure(request.user.id, body.password);
-		return user;
+		return { user };
 	}
 
 	@Post('/signin')

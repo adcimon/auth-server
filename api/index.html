@@ -63,10 +63,12 @@
 			<div id="api" class="content-section">
 				<h1>🌐 API</h1>
 				<p>Auth Server is a general-purpose HTTP-based authentication and authorization server.</p>
-				<p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful registration and email verification users can request authorization to resources using their credentials. Then the server responds with an access token.</p>
+				<p>The authentication method used to make requests is <a href="https://jwt.io/" target="_blank">JSON Web Token</a>. After a successful sign up and email verification users can request authorization to resources using their credentials. Then the server responds with an access token.</p>
 				<p><code>{<br>&nbsp;&nbsp;&nbsp;sub: username<br>}</code></p>
-				<p>The client must send the token in the <span class="highlight">Authorization</span> header when making protected requests.</p>
-				<p><code>Authorization: Bearer token</code></p>
+				<p>The client must send the token in the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields" target="_blank">authorization header</a> when making protected requests.</p>
+				<p><code>Authorization: Bearer &lt;token&gt;</code></p>
+				<p>Responses and errors are encapsulated in a JSON object that adds metadata to the message.</p>
+				<p><code>{<br>&nbsp;&nbsp;&nbsp;url: &lt;url&gt;<br>&nbsp;&nbsp;&nbsp;timestamp: &lt;timestamp&gt;<br>&nbsp;&nbsp;&nbsp;&lt;response|error&gt;<br>}</code></p>
 				<br>
 			</div>
 
@@ -1764,19 +1766,11 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>error</td>
+							<td>code</td>
 							<td>string</td>
 						</tr>
 						<tr>
 							<td>message</td>
-							<td>string</td>
-						</tr>
-						<tr>
-							<td>url</td>
-							<td>string</td>
-						</tr>
-						<tr>
-							<td>timestamp</td>
 							<td>string</td>
 						</tr>
 						<tr>
@@ -1808,7 +1802,7 @@
 						</tr>
 						<tr>
 							<td>invalid_request</td>
-							<td>404</td>
+							<td>400</td>
 							<td>Invalid request.</td>
 						</tr>
 						<tr>

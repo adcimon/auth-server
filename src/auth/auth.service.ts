@@ -79,7 +79,7 @@ export class AuthService
 		{
 			payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET'));
 		}
-		catch( exception: any )
+		catch( error: any )
 		{
 			throw new InvalidTokenException();
 		}
@@ -134,7 +134,7 @@ export class AuthService
 		{
 			payload = this.jwtService.verify(token, { secret: user.password });
 		}
-		catch( exception: any )
+		catch( error: any )
 		{
 			throw new InvalidTokenException();
 		}
@@ -189,7 +189,7 @@ export class AuthService
 		{
 			payload = this.jwtService.verify(token, { secret: user.email });
 		}
-		catch( exception: any )
+		catch( error: any )
 		{
 			throw new InvalidTokenException();
 		}

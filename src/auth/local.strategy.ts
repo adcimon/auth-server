@@ -11,7 +11,7 @@ export class LocalStrategy extends PassportStrategy(Strategy)
 	{
 		// Pass a configuration object to change the strategy.
 		// Use email instead of username.
-		super({ usernameField: "email" });
+		super({ usernameField: 'email' });
 	}
 
 	async validate( email: string, password: string ): Promise<User>

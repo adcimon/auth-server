@@ -1,8 +1,6 @@
 export class BackendError
 {
-	error: string;
+	code: string;
 	message: string;
-	url?: string;
-	timestamp?: string;
 	data?: object;
 }

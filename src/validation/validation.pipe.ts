@@ -15,9 +15,9 @@ export class ValidationPipe implements PipeTransform
 			await this.schema.validate(value, { abortEarly: false });
 			return value;
 		}
-		catch( exception )
+		catch( error: any )
 		{
-			let message: any = (exception.errors.length === 0) ? 'Validation error' : exception.errors[0];
+			const message: any = (error.errors.length === 0) ? 'Validation error' : error.errors[0];
 			throw new ValidationErrorException(message);
 		}
 	}

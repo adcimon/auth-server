@@ -6,7 +6,7 @@ export class UnauthorizedException extends HttpException
 	constructor( message?: string )
 	{
 		const error : BackendError = new BackendError();
-		error.error = 'unauthorized';
+		error.code = 'unauthorized';
 		error.message = message || 'Unauthorized';
 		super(error, HttpStatus.UNAUTHORIZED);
 	}
