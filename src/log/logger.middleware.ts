@@ -19,17 +19,17 @@ const METHOD_TAG = ( method: string, url: string ): string =>
 	let color: string = BASE_COLOR;
 	switch( method )
 	{
-		case 'POST':
-			color = POST_COLOR;
-			break;
 		case 'GET':
 			color = GET_COLOR;
 			break;
-		case 'PUT':
-			color = PUT_COLOR;
+		case 'POST':
+			color = POST_COLOR;
 			break;
 		case 'PATCH':
 			color = PATCH_COLOR;
+			break;
+		case 'PUT':
+			color = PUT_COLOR;
 			break;
 		case 'DELETE':
 			color = DELETE_COLOR;
