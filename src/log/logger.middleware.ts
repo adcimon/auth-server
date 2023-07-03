@@ -8,10 +8,10 @@ const YELLOW_COLOR: string = '\x1b[33m';
 const CYAN_COLOR: string = '\x1b[36m';
 
 const BASE_COLOR: string = WHITE_COLOR;
-const POST_COLOR: string = GREEN_COLOR;
 const GET_COLOR: string = CYAN_COLOR;
-const PUT_COLOR: string = YELLOW_COLOR;
+const POST_COLOR: string = GREEN_COLOR;
 const PATCH_COLOR: string = YELLOW_COLOR;
+const PUT_COLOR: string = YELLOW_COLOR;
 const DELETE_COLOR: string = RED_COLOR;
 
 const METHOD_TAG = ( method: string, url: string ): string =>
