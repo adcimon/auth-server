@@ -21,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter
 		{
 			if( !(exception.getResponse() instanceof BackendError) )
 			{
-				const status = exception.getStatus();
+				const status: number = exception.getStatus();
 				switch( status )
 				{
 					case HttpStatus.UNAUTHORIZED:
