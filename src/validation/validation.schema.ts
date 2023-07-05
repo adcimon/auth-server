@@ -45,7 +45,7 @@ const ForgotPasswordSchema = yup.object().shape(
 	email:              yup.string().email().required('Email is required')
 });
 
-const ResetPasswordSchema = yup.object().shape(
+const ChangePasswordSchema = yup.object().shape(
 {
 	password:           yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE)
 });
@@ -122,7 +122,7 @@ export const ValidationSchema =
 	SignDownSchema,
 	SignInSchema,
 	ForgotPasswordSchema,
-	ResetPasswordSchema,
+	ChangePasswordSchema,
 	UpdateMyUsernameSchema,
 	UpdateUsernameSchema,
 	UpdateMyEmailSchema,

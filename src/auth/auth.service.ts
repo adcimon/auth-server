@@ -96,9 +96,9 @@ export class AuthService
 	}
 
 	/**
-	 * Create a reset password token for the user.
+	 * Create a change password token for the user.
 	 */
-	async createResetPasswordToken( user: User ): Promise<string>
+	async createChangePasswordToken( user: User ): Promise<string>
 	{
 		const payload: object =
 		{
@@ -110,14 +110,14 @@ export class AuthService
 		return this.jwtService.sign(payload,
 		{
 			secret: user.password,
-			expiresIn: this.configService.get('TOKEN_RESET_PASSWORD_EXPIRATION_TIME')
+			expiresIn: this.configService.get('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME')
 		});
 	}
 
 	/**
-	 * Reset the user's password.
+	 * Change the user's password.
 	 */
-	async resetPassword( token: string, password: string ): Promise<boolean>
+	async changePassword( token: string, password: string ): Promise<boolean>
 	{
 		// Get the user.
 		let payload: any = this.jwtService.decode(token);
@@ -170,9 +170,9 @@ export class AuthService
 	}
 
 	/**
-	 * Confirm the user's email change.
+	 * Change the user's email.
 	 */
-	async confirmEmailChange( token: string ): Promise<boolean>
+	async changeEmail( token: string ): Promise<boolean>
 	{
 		// Get the user.
 		let payload: any = this.jwtService.decode(token);

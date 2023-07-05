@@ -89,12 +89,12 @@ export class MailService
 	}
 
 	/**
-	 * Send a reset password mail.
+	 * Send a change password mail.
 	 */
-	async sendResetPasswordMail( user: User, link: string ): Promise<boolean>
+	async sendChangePasswordMail( user: User, link: string ): Promise<boolean>
 	{
 		const serviceName: string = await this.configService.getServiceName();
-		const expirationTime: any = await this.configService.get('TOKEN_RESET_PASSWORD_EXPIRATION_TIME');
+		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
 
 		let html: string =
@@ -107,7 +107,7 @@ export class MailService
 		</p>
 		<p style="margin: 50px 0px 50px 10px">
 			<a href="${link}" style="background-color: hsla(195, 100%, 36%, 1); border: none; border-radius: 25px; color: white; cursor: pointer; font-size: 16px; margin: 4px 2px; padding: 15px 32px; text-align: center; text-decoration: none;">
-				Reset Password
+				Change Password
 			</a>
 		</p>
 		<p style="font-size: 15px">
@@ -125,7 +125,7 @@ export class MailService
 		{
 			from: from,
 			to: user.email,
-			subject: `Reset your password on ${serviceName}`,
+			subject: `Change your password on ${serviceName}`,
 			html: html
 		};
 

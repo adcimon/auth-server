@@ -29,9 +29,10 @@
 				<li><a href="#signup">Sign Up</a></li>
 				<li><a href="#signdown">Sign Down</a></li>
 				<li><a href="#signin">Sign In</a></li>
-				<li><a href="#verify">Verify</a></li>
+				<li><a href="#verifyEmail">Verify Email</a></li>
 				<li><a href="#forgotPassword">Forgot Password</a></li>
-				<li><a href="#resetPassword">Reset Password</a></li>
+				<li><a href="#changePassword">Change Password</a></li>
+				<li><a href="#changeEmail">Change Email</a></li>
 				<li><a href="#getMyUser">Get My User</a></li>
 				<li><a href="#getUser">Get User</a></li>
 				<li><a href="#getUsers">Get Users</a></li>
@@ -40,7 +41,6 @@
 				<li><a href="#updateMyUsername">Update My Username</a></li>
 				<li><a href="#updateUsername">Update Username</a></li>
 				<li><a href="#updateMyEmail">Update My Email</a></li>
-				<li><a href="#changeEmail">Change Email</a></li>
 				<li><a href="#updateMyPassword">Update My Password</a></li>
 				<li><a href="#updateMyAvatar">Update My Avatar</a></li>
 				<li><a href="#updateAvatar">Update Avatar</a></li>
@@ -310,9 +310,9 @@
 				<br>
 			</div>
 
-			<!-- Verify -->
-			<div id="verify" class="content-section">
-				<div class="get">/verify/:token</div>
+			<!-- Verify Email -->
+			<div id="verifyEmail" class="content-section">
+				<div class="get">/verify-email/:token</div>
 				<p>Verify the user's email.<br></p>
 				<br>
 
@@ -334,9 +334,9 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>status</td>
+							<td>verified</td>
 							<td>boolean</td>
-							<td>The response status.</td>
+							<td>The email was verified.</td>
 						</tr>
 					</tbody>
 				</table>
@@ -346,7 +346,7 @@
 			<!-- Forgot Password -->
 			<div id="forgotPassword" class="content-section">
 				<div class="post">/forgot-password</div>
-				<p>Request the server an email to reset the password.<br></p>
+				<p>Request the server an email to change the password.<br></p>
 				<br>
 
 				<h3>
@@ -383,19 +383,19 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>status</td>
+							<td>sent</td>
 							<td>boolean</td>
-							<td>The response status.</td>
+							<td>The verification email was sent.</td>
 						</tr>
 					</tbody>
 				</table>
 				<br>
 			</div>
 
-			<!-- Reset Password -->
-			<div id="resetPassword" class="content-section">
-				<div class="post">/reset-password/:token</div>
-				<p>Reset the user's password.<br></p>
+			<!-- Change Password -->
+			<div id="changePassword" class="content-section">
+				<div class="post">/change-password/:token</div>
+				<p>Change the user's password.<br></p>
 				<br>
 
 				<h3>
@@ -432,9 +432,42 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>status</td>
+							<td>changed</td>
 							<td>boolean</td>
-							<td>The response status.</td>
+							<td>The password was changed.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
+			<!-- Change Email -->
+			<div id="changeEmail" class="content-section">
+				<div class="get">/change-email/:token</div>
+				<p>Change the user's email.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="public"></span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>changed</td>
+							<td>boolean</td>
+							<td>The email was changed.</td>
 						</tr>
 					</tbody>
 				</table>
@@ -907,42 +940,9 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>status</td>
+							<td>sent</td>
 							<td>boolean</td>
-							<td>The response status.</td>
-						</tr>
-					</tbody>
-				</table>
-				<br>
-			</div>
-
-			<!-- Change Email -->
-			<div id="changeEmail" class="content-section">
-				<div class="get">/change-email/:token</div>
-				<p>Change the user's email.<br></p>
-				<br>
-
-				<h3>
-					Request
-					<span class="public"></span>
-				</h3>
-				<p>This request doesn't have a body.</p>
-				<br>
-
-				<h3 class="json">Response</h3>
-				<table>
-					<thead>
-						<tr>
-							<th>Field</th>
-							<th>Type</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>status</td>
-							<td>boolean</td>
-							<td>The response status.</td>
+							<td>The verification email was sent.</td>
 						</tr>
 					</tbody>
 				</table>

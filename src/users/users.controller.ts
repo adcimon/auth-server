@@ -69,7 +69,7 @@ export class UsersController
 	): Promise<object>
 	{
 		const avatar: string = await this.usersService.getAvatarById(request.user.id);
-		return { avatar: avatar };
+		return { avatar };
 	}
 
 	@Get('/:username/avatar')
@@ -80,7 +80,7 @@ export class UsersController
 	): Promise<object>
 	{
 		const avatar: string = await this.usersService.getAvatarByUsername(username);
-		return { avatar: avatar };
+		return { avatar };
 	}
 
 	@Patch('/me/username')
@@ -128,7 +128,7 @@ export class UsersController
 			throw new MailServiceErrorException();
 		}
 
-		return { status: sent };
+		return { sent };
 	}
 
 	@Patch('/me/password')

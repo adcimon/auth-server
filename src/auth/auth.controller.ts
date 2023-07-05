@@ -84,10 +84,10 @@ export class AuthController
 	): Promise<object>
 	{
 		const token: string = await this.authService.createAccessToken(request.user);
-		return { token: token };
+		return { token };
 	}
 
-	@Get('/verify/:token')
+	@Get('/verify-email/:token')
 	async verify(
 		@Param('token') token: string,
 		@Response() response
@@ -98,7 +98,7 @@ export class AuthController
 		let link: any = this.configService.get('VERIFY_EMAIL_LINK');
 		if( !link || link === '' )
 		{
-			response.send({ status: verified });
+			response.send({ verified });
 		}
 		else
 		{
@@ -114,36 +114,36 @@ export class AuthController
 	): Promise<object>
 	{
 		const user: User = await this.usersService.getByEmail(body.email);
-		const token: string = await this.authService.createResetPasswordToken(user);
+		const token: string = await this.authService.createChangePasswordToken(user);
 
-		let link: any = this.configService.get('RESET_PASSWORD_LINK');
+		let link: any = this.configService.get('CHANGE_PASSWORD_LINK');
 		if( !link || link === '' )
 		{
-			link += 'https://' + headers.host + '/reset-password/' + token;
+			link += 'https://' + headers.host + '/change-password/' + token;
 		}
 		else
 		{
 			link += ((link.endsWith('/')) ? '' : '/') + token;
 		}
 
-		const sent: boolean = await this.mailService.sendResetPasswordMail(user, link);
+		const sent: boolean = await this.mailService.sendChangePasswordMail(user, link);
 		if( !sent )
 		{
 			throw new MailServiceErrorException();
 		}
 
-		return { status: sent };
+		return { sent };
 	}
 
-	@Post('/reset-password/:token')
+	@Post('/change-password/:token')
 	@UseInterceptors(PasswordInterceptor)
-	async resetPassword(
+	async changePassword(
 		@Param('token') token: string,
-		@Body(new ValidationPipe(ValidationSchema.ResetPasswordSchema)) body: any
+		@Body(new ValidationPipe(ValidationSchema.ChangePasswordSchema)) body: any
 	): Promise<object>
 	{
-		const reset: boolean = await this.authService.resetPassword(token, body.password);
-		return { status: reset };
+		const changed: boolean = await this.authService.changePassword(token, body.password);
+		return { changed };
 	}
 
 	@Get('/change-email/:token')
@@ -152,12 +152,12 @@ export class AuthController
 		@Response() response
 	): Promise<any>
 	{
-		const confirmed: boolean = await this.authService.confirmEmailChange(token);
+		const changed: boolean = await this.authService.changeEmail(token);
 
 		let link: any = this.configService.get('CHANGE_EMAIL_LINK');
 		if( !link || link === '' )
 		{
-			response.send({ status: confirmed });
+			response.send({ changed });
 		}
 		else
 		{
