@@ -30,9 +30,9 @@
 				<li><a href="#signdown">Sign Down</a></li>
 				<li><a href="#signin">Sign In</a></li>
 				<li><a href="#verifyEmail">Verify Email</a></li>
+				<li><a href="#changeEmail">Change Email</a></li>
 				<li><a href="#forgotPassword">Forgot Password</a></li>
 				<li><a href="#changePassword">Change Password</a></li>
-				<li><a href="#changeEmail">Change Email</a></li>
 				<li><a href="#getMyUser">Get My User</a></li>
 				<li><a href="#getUser">Get User</a></li>
 				<li><a href="#getUsers">Get Users</a></li>
@@ -343,6 +343,39 @@
 				<br>
 			</div>
 
+			<!-- Change Email -->
+			<div id="changeEmail" class="content-section">
+				<div class="get">/change-email/:token</div>
+				<p>Change the user's email.<br></p>
+				<br>
+
+				<h3>
+					Request
+					<span class="public"></span>
+				</h3>
+				<p>This request doesn't have a body.</p>
+				<br>
+
+				<h3 class="json">Response</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>changed</td>
+							<td>boolean</td>
+							<td>The email was changed.</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+
 			<!-- Forgot Password -->
 			<div id="forgotPassword" class="content-section">
 				<div class="post">/forgot-password</div>
@@ -435,39 +468,6 @@
 							<td>changed</td>
 							<td>boolean</td>
 							<td>The password was changed.</td>
-						</tr>
-					</tbody>
-				</table>
-				<br>
-			</div>
-
-			<!-- Change Email -->
-			<div id="changeEmail" class="content-section">
-				<div class="get">/change-email/:token</div>
-				<p>Change the user's email.<br></p>
-				<br>
-
-				<h3>
-					Request
-					<span class="public"></span>
-				</h3>
-				<p>This request doesn't have a body.</p>
-				<br>
-
-				<h3 class="json">Response</h3>
-				<table>
-					<thead>
-						<tr>
-							<th>Field</th>
-							<th>Type</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>changed</td>
-							<td>boolean</td>
-							<td>The email was changed.</td>
 						</tr>
 					</tbody>
 				</table>

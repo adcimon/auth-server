@@ -107,6 +107,25 @@ export class AuthController
 		}
 	}
 
+	@Get('/change-email/:token')
+	async changeEmail(
+		@Param('token') token: string,
+		@Response() response
+	): Promise<any>
+	{
+		const changed: boolean = await this.authService.changeEmail(token);
+
+		let link: any = this.configService.get('CHANGE_EMAIL_LINK');
+		if( !link || link === '' )
+		{
+			response.send({ changed });
+		}
+		else
+		{
+			response.redirect(link);
+		}
+	}
+
 	@Post('/forgot-password')
 	async forgotPassword(
 		@Headers() headers,
@@ -144,24 +163,5 @@ export class AuthController
 	{
 		const changed: boolean = await this.authService.changePassword(token, body.password);
 		return { changed };
-	}
-
-	@Get('/change-email/:token')
-	async changeEmail(
-		@Param('token') token: string,
-		@Response() response
-	): Promise<any>
-	{
-		const changed: boolean = await this.authService.changeEmail(token);
-
-		let link: any = this.configService.get('CHANGE_EMAIL_LINK');
-		if( !link || link === '' )
-		{
-			response.send({ changed });
-		}
-		else
-		{
-			response.redirect(link);
-		}
 	}
 }
