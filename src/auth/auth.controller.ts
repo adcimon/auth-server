@@ -18,7 +18,8 @@ import { RoleEnum } from '../roles/role.enum';
 import { RolesGuard } from '../roles/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
-import { ResponseInterceptor } from '../response/response.interceptor';
+import { ResponseInterceptor } from '../interceptors/response.interceptor';
+import { PasswordInterceptor } from '../interceptors/password.interceptor';
 import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
 
 @Controller('')
@@ -33,6 +34,7 @@ export class AuthController
 	) { }
 
 	@Post('/signup')
+	@UseInterceptors(PasswordInterceptor)
 	async signup(
 		@Headers() headers,
 		@Body(new ValidationPipe(ValidationSchema.SignUpSchema)) body: any
@@ -63,6 +65,7 @@ export class AuthController
 
 	@Post('/signdown')
 	@UseGuards(JwtAuthGuard, RolesGuard)
+	@UseInterceptors(PasswordInterceptor)
 	@Roles(RoleEnum.USER)
 	async signdown(
 		@Request() request,
@@ -133,6 +136,7 @@ export class AuthController
 	}
 
 	@Post('/reset-password/:token')
+	@UseInterceptors(PasswordInterceptor)
 	async resetPassword(
 		@Param('token') token: string,
 		@Body(new ValidationPipe(ValidationSchema.ResetPasswordSchema)) body: any

@@ -9,7 +9,7 @@ export class ResponseInterceptor implements NestInterceptor
 		{
 			const request: any = context.switchToHttp().getRequest();
 
-			data.url = request.url;
+			data.endpoint = `${request.protocol}://${request.get('host')}${request.originalUrl}`;
 			data.timestamp = (new Date()).toISOString();
 	
 			return data;

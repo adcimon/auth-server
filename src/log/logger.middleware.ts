@@ -73,7 +73,12 @@ export class LoggerMiddleware implements NestMiddleware
 
 			if( Object.keys(request.body).length !== 0 )
 			{
-				this.logger.log(`${BASE_COLOR}${JSON.stringify(request.body)}`);
+				const body: any = { ...request.body };
+				delete body.password;
+				delete body.currentPassword;
+				delete body.newPassword;
+
+				this.logger.log(`${BASE_COLOR}${JSON.stringify(body)}`);
 			}
 		});
 

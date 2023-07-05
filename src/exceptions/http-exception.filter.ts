@@ -47,7 +47,7 @@ export class HttpExceptionFilter implements ExceptionFilter
 
 		const body =
 		{
-			url: request.url,
+			endpoint: `${request.protocol}://${request.get('host')}${request.originalUrl}`,
 			timestamp: (new Date()).toISOString(),
 			error: exception.getResponse()
 		};

@@ -16,7 +16,8 @@ import { RoleEnum } from '../roles/role.enum';
 import { RolesGuard } from '../roles/roles.guard';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
-import { ResponseInterceptor } from '../response/response.interceptor';
+import { ResponseInterceptor } from '../interceptors/response.interceptor';
+import { PasswordInterceptor } from '../interceptors/password.interceptor';
 import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
 
 @Controller('users')
@@ -84,6 +85,7 @@ export class UsersController
 
 	@Patch('/me/username')
 	@UseGuards(JwtAuthGuard, RolesGuard)
+	@UseInterceptors(PasswordInterceptor)
 	@Roles(RoleEnum.USER)
 	async updateMyUsername(
 		@Request() request,
@@ -131,6 +133,7 @@ export class UsersController
 
 	@Patch('/me/password')
 	@UseGuards(JwtAuthGuard, RolesGuard)
+	@UseInterceptors(PasswordInterceptor)
 	@Roles(RoleEnum.USER)
 	async updateMyPassword(
 		@Request() request,
