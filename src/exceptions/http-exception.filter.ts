@@ -8,22 +8,17 @@ import { ForbiddenException } from './forbidden.exception';
 import { InvalidRequestException } from './invalid-request.exception';
 
 @Catch()
-export class HttpExceptionFilter implements ExceptionFilter
-{
-	catch( exception: any, host: ArgumentsHost )
-	{
+export class HttpExceptionFilter implements ExceptionFilter {
+	catch(exception: any, host: ArgumentsHost) {
 		const context = host.switchToHttp();
 		const request = context.getRequest<Request>();
 		const response = context.getResponse<Response>();
 
 		// Http exception.
-		if( exception instanceof HttpException )
-		{
-			if( !(exception.getResponse() instanceof BackendError) )
-			{
+		if (exception instanceof HttpException) {
+			if (!(exception.getResponse() instanceof BackendError)) {
 				const status: number = exception.getStatus();
-				switch( status )
-				{
+				switch (status) {
 					case HttpStatus.UNAUTHORIZED:
 						exception = new UnauthorizedException(exception?.message);
 						break;
@@ -40,20 +35,16 @@ export class HttpExceptionFilter implements ExceptionFilter
 			}
 		}
 		// Unknown exception.
-		else
-		{
+		else {
 			exception = new UnknownErrorException(exception?.message);
 		}
 
-		const body =
-		{
+		const body = {
 			endpoint: `${request.protocol}://${request.get('host')}${request.originalUrl}`,
-			timestamp: (new Date()).toISOString(),
-			error: exception.getResponse()
+			timestamp: new Date().toISOString(),
+			error: exception.getResponse(),
 		};
 
-		response
-			.status(exception.getStatus())
-			.json(body);
+		response.status(exception.getStatus()).json(body);
 	}
 }

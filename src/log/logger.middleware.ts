@@ -14,11 +14,9 @@ const PATCH_COLOR: string = YELLOW_COLOR;
 const PUT_COLOR: string = YELLOW_COLOR;
 const DELETE_COLOR: string = RED_COLOR;
 
-const METHOD_TAG = ( method: string, url: string ): string =>
-{
+const METHOD_TAG = (method: string, url: string): string => {
 	let color: string = BASE_COLOR;
-	switch( method )
-	{
+	switch (method) {
 		case 'GET':
 			color = GET_COLOR;
 			break;
@@ -39,11 +37,9 @@ const METHOD_TAG = ( method: string, url: string ): string =>
 	return `${color}${method} ${url}${BASE_COLOR}`;
 };
 
-const STATUS_TAG = ( code: number ): string =>
-{
+const STATUS_TAG = (code: number): string => {
 	let color = GREEN_COLOR;
-	if( code >= 400 )
-	{
+	if (code >= 400) {
 		color = RED_COLOR;
 	}
 
@@ -51,19 +47,16 @@ const STATUS_TAG = ( code: number ): string =>
 };
 
 @Injectable()
-export class LoggerMiddleware implements NestMiddleware
-{
+export class LoggerMiddleware implements NestMiddleware {
 	private logger: Logger = new Logger('API');
 
-	use( request: Request, response: Response, next: NextFunction )
-	{
+	use(request: Request, response: Response, next: NextFunction) {
 		const ip: any = request.ip;
 		const method: any = request.method;
 		const originalUrl: any = request.originalUrl;
 		const userAgent: any = request.get('user-agent') || '';
 
-		response.on('finish', () =>
-		{
+		response.on('finish', () => {
 			const statusCode: number = response.statusCode;
 
 			let message: string = METHOD_TAG(method, originalUrl);
@@ -71,8 +64,7 @@ export class LoggerMiddleware implements NestMiddleware
 			message += ` <${ip}> <${userAgent}>`;
 			this.logger.log(message);
 
-			if( Object.keys(request.body).length !== 0 )
-			{
+			if (Object.keys(request.body).length !== 0) {
 				const body: any = { ...request.body };
 				delete body.password;
 				delete body.currentPassword;

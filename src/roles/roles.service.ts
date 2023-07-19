@@ -6,43 +6,32 @@ import { RoleEnum } from './role.enum';
 import { RoleNotFoundException } from '../exceptions/role-not-found.exception';
 
 @Injectable()
-export class RolesService implements OnModuleInit
-{
-	constructor(
-		@InjectRepository(Role) private rolesRepository: Repository<Role>
-	) { }
+export class RolesService implements OnModuleInit {
+	constructor(@InjectRepository(Role) private rolesRepository: Repository<Role>) {}
 
-	async onModuleInit()
-	{
+	async onModuleInit() {
 		await this.populateRoles();
 	}
 
 	/**
 	 * Populate the database with the roles defined in the role enum.
 	 */
-	async populateRoles()
-	{
-		for( const key in RoleEnum )
-		{
+	async populateRoles() {
+		for (const key in RoleEnum) {
 			const name: any = RoleEnum[key];
 
-			try
-			{
+			try {
 				let role: Role = await this.rolesRepository.findOne({ where: { name } });
-				if( role )
-				{
+				if (role) {
 					continue;
 				}
 
-				role = this.rolesRepository.create(
-				{
-					name: name
+				role = this.rolesRepository.create({
+					name: name,
 				});
 
 				this.rolesRepository.save(role);
-			}
-			catch( exception: any )
-			{
+			} catch (exception: any) {
 				// Catch role already created.
 			}
 		}
@@ -51,21 +40,16 @@ export class RolesService implements OnModuleInit
 	/**
 	 * Get all the roles.
 	 */
-	async getAll(): Promise<Role[]>
-	{
+	async getAll(): Promise<Role[]> {
 		return await this.rolesRepository.find();
 	}
 
 	/**
 	 * Get a role by id.
 	 */
-	async getById(
-		id: number
-	): Promise<Role>
-	{
+	async getById(id: number): Promise<Role> {
 		const role: Role = await this.rolesRepository.findOne({ where: { id: id } });
-		if( !role )
-		{
+		if (!role) {
 			throw new RoleNotFoundException();
 		}
 
@@ -75,13 +59,9 @@ export class RolesService implements OnModuleInit
 	/**
 	 * Get a role by name.
 	 */
-	async getByName(
-		name: string
-	): Promise<Role>
-	{
+	async getByName(name: string): Promise<Role> {
 		const role: Role = await this.rolesRepository.findOne({ where: { name } });
-		if( !role )
-		{
+		if (!role) {
 			throw new RoleNotFoundException();
 		}
 

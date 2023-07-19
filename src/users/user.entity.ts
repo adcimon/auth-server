@@ -3,8 +3,7 @@ import { Exclude, Transform } from 'class-transformer'; // Used with ClassSerial
 import { Role } from '../roles/role.entity';
 
 @Entity()
-export class User
-{
+export class User {
 	@PrimaryGeneratedColumn()
 	@Exclude() // Exclude from responses.
 	id: number;
@@ -37,7 +36,7 @@ export class User
 
 	@ManyToMany(() => Role)
 	@JoinTable()
-	@Transform(({ value }) => value.map(x => x.name)) // Return the array of names.
+	@Transform(({ value }) => value.map((x) => x.name)) // Return the array of names.
 	roles: Role[];
 
 	@Column({ default: false })

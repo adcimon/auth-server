@@ -5,35 +5,27 @@ import { UsersService } from '../users/users.service';
 import { RoleEnum } from './role.enum';
 
 @Injectable()
-export class RolesGuard implements CanActivate
-{
-	constructor(
-		private reflector: Reflector,
-		private readonly userService: UsersService,
-	) { }
+export class RolesGuard implements CanActivate {
+	constructor(private reflector: Reflector, private readonly userService: UsersService) {}
 
-	async canActivate( context: ExecutionContext ): Promise<boolean>
-	{
-		const requiredRoles: RoleEnum[] = this.reflector.getAllAndOverride<RoleEnum[]>('roles',
-		[
+	async canActivate(context: ExecutionContext): Promise<boolean> {
+		const requiredRoles: RoleEnum[] = this.reflector.getAllAndOverride<RoleEnum[]>('roles', [
 			context.getHandler(),
-			context.getClass()
+			context.getClass(),
 		]);
 
-		if( !requiredRoles )
-		{
+		if (!requiredRoles) {
 			return true;
 		}
 
 		const request: any = context.switchToHttp().getRequest();
-		if( !request.user )
-		{
+		if (!request.user) {
 			return false;
 		}
 
 		const user: User = await this.userService.getByUsername(request.user.username);
-		const roleNames: string[] = user.roles.map(r => r.name);
-		const activate: boolean = requiredRoles.some(role => roleNames.includes(role))
+		const roleNames: string[] = user.roles.map((r) => r.name);
+		const activate: boolean = requiredRoles.some((role) => roleNames.includes(role));
 
 		return activate;
 	}

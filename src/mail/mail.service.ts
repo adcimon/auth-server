@@ -4,42 +4,33 @@ import { User } from '../users/user.entity';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
-export class MailService
-{
+export class MailService {
 	private logger = new Logger('MAIL');
 
 	private transporter: any;
 
-	constructor( private readonly configService: ConfigService )
-	{
-		this.transporter = nodemailer.createTransport(
-		{
+	constructor(private readonly configService: ConfigService) {
+		this.transporter = nodemailer.createTransport({
 			host: configService.get('MAIL_HOST'),
 			port: configService.get('MAIL_PORT'),
 			secure: configService.get('MAIL_SECURE'),
 			auth: {
 				user: configService.get('MAIL_USER'),
-				pass: configService.get('MAIL_PASSWORD')
-			}
+				pass: configService.get('MAIL_PASSWORD'),
+			},
 		});
 	}
 
 	/**
 	 * Send a mail.
 	 */
-	async sendMail( options: any ): Promise<boolean>
-	{
-		return new Promise( (resolve, reject) =>
-		{
-			this.transporter.sendMail(options, (error, info) =>
-			{
-				if( error )
-				{
+	async sendMail(options: any): Promise<boolean> {
+		return new Promise((resolve, reject) => {
+			this.transporter.sendMail(options, (error, info) => {
+				if (error) {
 					this.logger.log(`Mail from ${options.from} to ${options.to} NOT sent: ${error.message}`);
 					resolve(false);
-				}
-				else
-				{
+				} else {
 					this.logger.log(`Mail from ${options.from} to ${options.to} sent`);
 					resolve(true);
 				}
@@ -50,14 +41,12 @@ export class MailService
 	/**
 	 * Send a verification mail.
 	 */
-	async sendVerificationMail( user: User, link: string ): Promise<boolean>
-	{
+	async sendVerificationMail(user: User, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
 		const expirationTime: any = await this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
 
-		let html: string =
-		`
+		let html: string = `
 		<p style="font-size: 25px">
 			Hi ${user.name},
 		</p>
@@ -77,12 +66,11 @@ export class MailService
 		</p>
 		`;
 
-		const options: object =
-		{
+		const options: object = {
 			from: from,
 			to: user.email,
 			subject: `Thank you for signing up for ${serviceName}`,
-			html: html
+			html: html,
 		};
 
 		return await this.sendMail(options);
@@ -91,14 +79,12 @@ export class MailService
 	/**
 	 * Send a change password mail.
 	 */
-	async sendChangePasswordMail( user: User, link: string ): Promise<boolean>
-	{
+	async sendChangePasswordMail(user: User, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
 		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
 
-		let html: string =
-		`
+		let html: string = `
 		<p style="font-size: 25px">
 			Hi ${user.name},
 		</p>
@@ -121,25 +107,22 @@ export class MailService
 		</p>
 		`;
 
-		const options: object =
-		{
+		const options: object = {
 			from: from,
 			to: user.email,
 			subject: `Change your password on ${serviceName}`,
-			html: html
+			html: html,
 		};
 
 		return await this.sendMail(options);
 	}
 
-	async sendChangeEmailMail( email: string, link: string ): Promise<boolean>
-	{
+	async sendChangeEmailMail(email: string, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
 		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
 
-		let html: string =
-		`
+		let html: string = `
 		<p style="font-size: 25px">
 			Hi,
 		</p>
@@ -159,12 +142,11 @@ export class MailService
 		</p>
 		`;
 
-		const options: object =
-		{
+		const options: object = {
 			from: from,
 			to: email,
 			subject: `Change your email on ${serviceName}`,
-			html: html
+			html: html,
 		};
 
 		return await this.sendMail(options);

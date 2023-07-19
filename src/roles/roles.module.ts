@@ -4,17 +4,13 @@ import { UsersModule } from '../users/users.module';
 import { Role } from './role.entity';
 import { RolesService } from './roles.service';
 
-@Module(
-{
-	imports:
-	[
+@Module({
+	imports: [
 		TypeOrmModule.forFeature([Role]),
-		forwardRef(() => UsersModule) // Circular dependency resolved.
+		forwardRef(() => UsersModule), // Circular dependency resolved.
 	],
 	controllers: [],
 	providers: [RolesService],
-	exports: [RolesService]
+	exports: [RolesService],
 })
-export class RolesModule
-{
-}
+export class RolesModule {}

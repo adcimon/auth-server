@@ -15,20 +15,17 @@ import * as ms from 'ms';
 const fs = require('fs');
 
 @Injectable()
-export class UsersService implements OnModuleInit
-{
-	private readonly cronLogger = new Logger("CRON");
+export class UsersService implements OnModuleInit {
+	private readonly cronLogger = new Logger('CRON');
 
 	constructor(
 		@InjectRepository(User) private usersRepository: Repository<User>,
 		private readonly configService: ConfigService,
-		@Inject(forwardRef(() => RolesService)) private readonly rolesService: RolesService
-	) { }
+		@Inject(forwardRef(() => RolesService)) private readonly rolesService: RolesService,
+	) {}
 
-	async onModuleInit()
-	{
-		if( !this.configService.isProduction() )
-		{
+	async onModuleInit() {
+		if (!this.configService.isProduction()) {
 			await this.populateDummyUsers();
 		}
 	}
@@ -37,47 +34,42 @@ export class UsersService implements OnModuleInit
 	 * Create a user.
 	 */
 	async create(
-		username:   string,
-		password:   string,
-		email:      string,
-		avatar:     string,
-		name:       string,
-		surname:    string,
-		birthdate:  Date,
-		roles:      string[] = ['user']
-	): Promise<User>
-	{
+		username: string,
+		password: string,
+		email: string,
+		avatar: string,
+		name: string,
+		surname: string,
+		birthdate: Date,
+		roles: string[] = ['user'],
+	): Promise<User> {
 		const usernameTaken: User = await this.usersRepository.findOne({ where: { username } });
-		if( usernameTaken )
-		{
+		if (usernameTaken) {
 			throw new UsernameTakenException();
 		}
 
 		const emailTaken: User = await this.usersRepository.findOne({ where: { email } });
-		if( emailTaken )
-		{
+		if (emailTaken) {
 			throw new EmailTakenException();
 		}
 
 		let userRoles: any[] = [];
-		for( let i in roles )
-		{
+		for (let i in roles) {
 			const role: Role = await this.rolesService.getByName(roles[i]);
-			if( role )
-			{
+			if (role) {
 				userRoles.push(role);
 			}
 		}
 
 		const user: User = this.usersRepository.create({
-			username:   username,
-			password:   await argon2.hash(password),
-			email:      email,
-			avatar:     avatar,
-			name:       name,
-			surname:    surname,
-			birthdate:  birthdate,
-			roles:      userRoles
+			username: username,
+			password: await argon2.hash(password),
+			email: email,
+			avatar: avatar,
+			name: name,
+			surname: surname,
+			birthdate: birthdate,
+			roles: userRoles,
 		});
 
 		return this.usersRepository.save(user);
@@ -86,8 +78,7 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Get all the users.
 	 */
-	async getAll(): Promise<User[]>
-	{
+	async getAll(): Promise<User[]> {
 		return await this.usersRepository.find({ relations: ['roles'] });
 	}
 
@@ -95,21 +86,16 @@ export class UsersService implements OnModuleInit
 	 * Get all the not verified users.
 	 * Roles relation is not returned.
 	 */
-	async getNotVerified(): Promise<User[]>
-	{
+	async getNotVerified(): Promise<User[]> {
 		return await this.usersRepository.createQueryBuilder('user').select('*').where('verified = false').execute();
 	}
 
 	/**
 	 * Get a user by id.
 	 */
-	async getById(
-		id: number
-	): Promise<User>
-	{
+	async getById(id: number): Promise<User> {
 		const user: User = await this.usersRepository.findOne({ where: { id: id }, relations: ['roles'] });
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -119,13 +105,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Get a user by username.
 	 */
-	async getByUsername(
-		username: string
-	): Promise<User>
-	{
+	async getByUsername(username: string): Promise<User> {
 		const user: User = await this.usersRepository.findOne({ where: { username }, relations: ['roles'] });
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -135,13 +117,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Get a user by email.
 	 */
-	async getByEmail(
-		email: string
-	): Promise<User>
-	{
+	async getByEmail(email: string): Promise<User> {
 		const user: User = await this.usersRepository.findOne({ where: { email }, relations: ['roles'] });
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -151,13 +129,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Get the user's avatar.
 	 */
-	async getAvatarById(
-		id: number
-	): Promise<string>
-	{
+	async getAvatarById(id: number): Promise<string> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -167,13 +141,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Get the user's avatar.
 	 */
-	async getAvatarByUsername(
-		username: string
-	): Promise<string>
-	{
+	async getAvatarByUsername(username: string): Promise<string> {
 		const user: User = await this.getByUsername(username);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -184,28 +154,24 @@ export class UsersService implements OnModuleInit
 	 * Update the user.
 	 */
 	async update(
-		id:         number,
-		username:   string,
-		password:   string,
-		avatar:     string,
-		name:       string,
-		surname:    string,
-		birthdate:  Date
-	): Promise<User>
-	{
+		id: number,
+		username: string,
+		password: string,
+		avatar: string,
+		name: string,
+		surname: string,
+		birthdate: Date,
+	): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
-		if( username )
-		{
+		if (username) {
 			await this.updateUsername(id, username);
 		}
 
-		if( password )
-		{
+		if (password) {
 			await this.updatePassword(id, password);
 		}
 
@@ -220,20 +186,14 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's username.
 	 */
-	async updateUsername(
-		id:         number,
-		username:   string
-	): Promise<User>
-	{
+	async updateUsername(id: number, username: string): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
 		const usernameTaken: User = await this.getByUsername(username);
-		if( usernameTaken )
-		{
+		if (usernameTaken) {
 			throw new UsernameTakenException();
 		}
 
@@ -245,27 +205,19 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's username if the password is verified.
 	 */
-	async updateUsernameSecure(
-		id:         number,
-		username:   string,
-		password:   string
-	): Promise<User>
-	{
+	async updateUsernameSecure(id: number, username: string, password: string): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
 		const valid: boolean = await argon2.verify(user.password, password);
-		if( !valid )
-		{
+		if (!valid) {
 			throw new InvalidCredentialsException();
 		}
 
 		const usernameTaken: User = await this.getByUsername(username);
-		if( usernameTaken )
-		{
+		if (usernameTaken) {
 			throw new UsernameTakenException();
 		}
 
@@ -277,14 +229,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's email.
 	 */
-	async updateEmail(
-		id:         number,
-		email:      string
-	): Promise<User>
-	{
+	async updateEmail(id: number, email: string): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -296,14 +243,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's password.
 	 */
-	async updatePassword(
-		id:         number,
-		password:   string
-	): Promise<User>
-	{
+	async updatePassword(id: number, password: string): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -315,21 +257,14 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's password if the password is verified.
 	 */
-	async updatePasswordSecure(
-		id:                 number,
-		currentPassword:    string,
-		newPassword:        string
-	): Promise<User>
-	{
+	async updatePasswordSecure(id: number, currentPassword: string, newPassword: string): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
 		const valid: boolean = await argon2.verify(user.password, currentPassword);
-		if( !valid )
-		{
+		if (!valid) {
 			throw new InvalidCredentialsException();
 		}
 
@@ -341,14 +276,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's avatar.
 	 */
-	async updateAvatar(
-		id:         number,
-		avatar:     string = ''
-	): Promise<User>
-	{
+	async updateAvatar(id: number, avatar: string = ''): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -360,14 +290,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's name.
 	 */
-	async updateName(
-		id:     number,
-		name:   string = ''
-	): Promise<User>
-	{
+	async updateName(id: number, name: string = ''): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -379,14 +304,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's surname.
 	 */
-	async updateSurname(
-		id:         number,
-		surname:    string = ''
-	): Promise<User>
-	{
+	async updateSurname(id: number, surname: string = ''): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -398,14 +318,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's birthdate.
 	 */
-	async updateBirthdate(
-		id:         number,
-		birthdate:  Date = new Date('1900-01-01')
-	): Promise<User>
-	{
+	async updateBirthdate(id: number, birthdate: Date = new Date('1900-01-01')): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -417,14 +332,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Update the user's verified field.
 	 */
-	async updateVerified(
-		id:         number,
-		verified:   boolean
-	): Promise<User>
-	{
+	async updateVerified(id: number, verified: boolean): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -436,13 +346,9 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Delete the user.
 	 */
-	async delete(
-		id: number
-	): Promise<User>
-	{
+	async delete(id: number): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
@@ -452,20 +358,14 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Delete the user if the password is verified.
 	 */
-	async deleteSecure(
-		id:         number,
-		password:   string
-	): Promise<User>
-	{
+	async deleteSecure(id: number, password: string): Promise<User> {
 		const user: User = await this.getById(id);
-		if( !user )
-		{
+		if (!user) {
 			throw new UserNotFoundException();
 		}
 
 		const valid: boolean = await argon2.verify(user.password, password);
-		if( !valid )
-		{
+		if (!valid) {
 			throw new InvalidCredentialsException();
 		}
 
@@ -476,30 +376,23 @@ export class UsersService implements OnModuleInit
 	 * Delete the expired not verified users.
 	 */
 	@Cron('0 1 * * * *') // Every hour, at the start of the 1st minute.
-	async deleteExpiredNotVerifiedUsers()
-	{
+	async deleteExpiredNotVerifiedUsers() {
 		this.cronLogger.log('Delete expired not verified users');
 
 		const now: Date = new Date();
 		const expirationTime: any = this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
 
 		const users: User[] = await this.getNotVerified();
-		for( let i = 0; i < users.length; i++ )
-		{
+		for (let i = 0; i < users.length; i++) {
 			const user: User = users[i];
 			const createDate: Date = new Date(user.createdate);
 			const expirationDate: Date = new Date(createDate.getTime() + ms(expirationTime));
 
-			if( now > expirationDate )
-			{
-				try
-				{
+			if (now > expirationDate) {
+				try {
 					this.delete(user.id);
 					this.cronLogger.log('User ' + user.username + ' deleted');
-				}
-				catch( error: any )
-				{
-				}
+				} catch (error: any) {}
 			}
 		}
 	}
@@ -507,20 +400,15 @@ export class UsersService implements OnModuleInit
 	/**
 	 * Populate the database with dummy users.
 	 */
-	async populateDummyUsers()
-	{
-		fs.readFile('./users.json', 'utf8', (error, data) =>
-		{
-			if( error )
-			{
-				return
+	async populateDummyUsers() {
+		fs.readFile('./users.json', 'utf8', (error, data) => {
+			if (error) {
+				return;
 			}
-		
+
 			const users: any = JSON.parse(data);
-			users.records.forEach(async record =>
-			{
-				try
-				{
+			users.records.forEach(async (record) => {
+				try {
 					let user: User = await this.create(
 						record.username,
 						record.password,
@@ -529,13 +417,11 @@ export class UsersService implements OnModuleInit
 						record.name,
 						record.surname,
 						record.birthdate,
-						record.roles
+						record.roles,
 					);
 
 					await this.updateVerified(user.id, true);
-				}
-				catch( error: any )
-				{
+				} catch (error: any) {
 					// Catch user already created.
 				}
 			});
