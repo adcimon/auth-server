@@ -1,105 +1,104 @@
 {
-    "records":
-    [
-        {
-            "username": "admin",
-            "password": "admin9000",
-            "email": "admin@mail.com",
-            "avatar": "",
-            "name": "Administrator",
-            "surname": "",
-            "birthdate": "2000-01-01",
-            "roles": ["user", "admin"]
-        },
-        {
-            "username": "Frodo",
-            "password": "frodo9000",
-            "email": "frodo@mail.com",
-            "avatar": "",
-            "name": "Frodo",
-            "surname": "Baggins",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Sam",
-            "password": "sam9000",
-            "email": "sam@mail.com",
-            "avatar": "",
-            "name": "Samwise",
-            "surname": "Gamgee",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Merry",
-            "password": "merry9000",
-            "email": "merry@mail.com",
-            "avatar": "",
-            "name": "Meriadoc",
-            "surname": "Brandigamo",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Pippin",
-            "password": "pippin9000",
-            "email": "pippin@mail.com",
-            "avatar": "",
-            "name": "Peregrin",
-            "surname": "Took",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Gandalf",
-            "password": "gandalf9000",
-            "email": "gandalf@mail.com",
-            "avatar": "",
-            "name": "Gandalf",
-            "surname": "The Grey",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Aragorn",
-            "password": "aragorn9000",
-            "email": "aragorn@mail.com",
-            "avatar": "",
-            "name": "Aragorn",
-            "surname": "",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Legolas",
-            "password": "legolas9000",
-            "email": "legolas@mail.com",
-            "avatar": "",
-            "name": "Legolas",
-            "surname": "",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Gimli",
-            "password": "gimli9000",
-            "email": "gimli@mail.com",
-            "avatar": "",
-            "name": "Gimli",
-            "surname": "",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        },
-        {
-            "username": "Boromir",
-            "password": "boromir9000",
-            "email": "boromir@mail.com",
-            "avatar": "",
-            "name": "Boromir",
-            "surname": "",
-            "birthdate": "2000-01-01",
-            "roles": ["user"]
-        }
-    ]
+	"records": [
+		{
+			"username": "admin",
+			"password": "admin9000",
+			"email": "admin@mail.com",
+			"avatar": "",
+			"name": "Administrator",
+			"surname": "",
+			"birthdate": "2000-01-01",
+			"roles": ["user", "admin"]
+		},
+		{
+			"username": "Frodo",
+			"password": "frodo9000",
+			"email": "frodo@mail.com",
+			"avatar": "",
+			"name": "Frodo",
+			"surname": "Baggins",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Sam",
+			"password": "sam9000",
+			"email": "sam@mail.com",
+			"avatar": "",
+			"name": "Samwise",
+			"surname": "Gamgee",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Merry",
+			"password": "merry9000",
+			"email": "merry@mail.com",
+			"avatar": "",
+			"name": "Meriadoc",
+			"surname": "Brandigamo",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Pippin",
+			"password": "pippin9000",
+			"email": "pippin@mail.com",
+			"avatar": "",
+			"name": "Peregrin",
+			"surname": "Took",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Gandalf",
+			"password": "gandalf9000",
+			"email": "gandalf@mail.com",
+			"avatar": "",
+			"name": "Gandalf",
+			"surname": "The Grey",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Aragorn",
+			"password": "aragorn9000",
+			"email": "aragorn@mail.com",
+			"avatar": "",
+			"name": "Aragorn",
+			"surname": "",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Legolas",
+			"password": "legolas9000",
+			"email": "legolas@mail.com",
+			"avatar": "",
+			"name": "Legolas",
+			"surname": "",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Gimli",
+			"password": "gimli9000",
+			"email": "gimli@mail.com",
+			"avatar": "",
+			"name": "Gimli",
+			"surname": "",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		},
+		{
+			"username": "Boromir",
+			"password": "boromir9000",
+			"email": "boromir@mail.com",
+			"avatar": "",
+			"name": "Boromir",
+			"surname": "",
+			"birthdate": "2000-01-01",
+			"roles": ["user"]
+		}
+	]
 }

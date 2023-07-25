@@ -6,6 +6,7 @@ import { UnknownErrorException } from './unknown-error.exception';
 import { UnauthorizedException } from './unauthorized.exception';
 import { ForbiddenException } from './forbidden.exception';
 import { InvalidRequestException } from './invalid-request.exception';
+const packageJson = require('../../package.json');
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -40,6 +41,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		}
 
 		const body = {
+			version: packageJson.version,
 			endpoint: `${request.protocol}://${request.get('host')}${request.originalUrl}`,
 			timestamp: new Date().toISOString(),
 			error: exception.getResponse(),
