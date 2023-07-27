@@ -1,6 +1,6 @@
 import { Catch, HttpException, HttpStatus, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { BackendError } from './backend-error';
+import { ErrorDto } from '../dtos/error.dto';
 import { GenericErrorException } from './generic-error.exception';
 import { UnknownErrorException } from './unknown-error.exception';
 import { UnauthorizedException } from './unauthorized.exception';
@@ -17,7 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
 		// Http exception.
 		if (exception instanceof HttpException) {
-			if (!(exception.getResponse() instanceof BackendError)) {
+			if (!(exception.getResponse() instanceof ErrorDto)) {
 				const status: number = exception.getStatus();
 				switch (status) {
 					case HttpStatus.UNAUTHORIZED:

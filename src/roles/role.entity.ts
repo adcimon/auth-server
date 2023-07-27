@@ -4,7 +4,7 @@ import { Exclude } from 'class-transformer'; // Used with ClassSerializerInterce
 @Entity()
 export class Role {
 	@PrimaryGeneratedColumn()
-	@Exclude() // Exclude from responses.
+	@Exclude()
 	id: number;
 
 	@Column({ unique: true, nullable: false })

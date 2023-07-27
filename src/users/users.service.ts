@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, OnModuleInit, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { ConfigService } from '../config/config.service';
 import { RolesService } from '../roles/roles.service';

@@ -5,18 +5,18 @@ import { Role } from '../roles/role.entity';
 @Entity()
 export class User {
 	@PrimaryGeneratedColumn()
-	@Exclude() // Exclude from responses.
+	@Exclude()
 	id: number;
 
 	@CreateDateColumn()
-	@Exclude() // Exclude from responses.
+	@Exclude()
 	createdate: Date;
 
 	@Column({ unique: true, nullable: false })
 	username: string;
 
 	@Column({ nullable: false })
-	@Exclude() // Exclude from responses.
+	@Exclude()
 	password: string;
 
 	@Column({ unique: true, nullable: false })
@@ -40,6 +40,6 @@ export class User {
 	roles: Role[];
 
 	@Column({ default: false })
-	@Exclude() // Exclude from responses.
+	@Exclude()
 	verified: boolean;
 }

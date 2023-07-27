@@ -11,15 +11,14 @@ import {
 	UseInterceptors,
 	ClassSerializerInterceptor,
 } from '@nestjs/common';
-
-import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { User } from './user.entity';
 import { AuthService } from '../auth/auth.service';
 import { MailService } from '../mail/mail.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Roles } from '../roles/roles.decorator';
-import { RoleEnum } from '../roles/role.enum';
 import { RolesGuard } from '../roles/roles.guard';
+import { RoleEnum } from '../roles/role.enum';
+import { Roles } from '../roles/roles.decorator';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
 import { ResponseInterceptor } from '../interceptors/response.interceptor';
@@ -35,6 +34,14 @@ export class UsersController {
 		private readonly mailService: MailService,
 	) {}
 
+	@Get('')
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(RoleEnum.ADMIN)
+	async getUsers(): Promise<object> {
+		const users: User[] = await this.usersService.getAll();
+		return { users };
+	}
+
 	@Get('/me')
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.USER)
@@ -49,14 +56,6 @@ export class UsersController {
 	async getUser(@Param('username') username: string): Promise<object> {
 		const user: User = await this.usersService.getByUsername(username);
 		return { user };
-	}
-
-	@Get('')
-	@UseGuards(JwtAuthGuard, RolesGuard)
-	@Roles(RoleEnum.ADMIN)
-	async getUsers(): Promise<object> {
-		const users: User[] = await this.usersService.getAll();
-		return { users };
 	}
 
 	@Get('/me/avatar')

@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { BackendError } from './backend-error';
+import { ErrorDto } from '../dtos/error.dto';
 
 export class MailServiceErrorException extends HttpException {
 	constructor(message?: string) {
-		const error: BackendError = new BackendError();
+		const error: ErrorDto = new ErrorDto();
 		error.code = 'mail_service_error';
 		error.message = message || 'Mail service error';
 		super(error, HttpStatus.SERVICE_UNAVAILABLE);
