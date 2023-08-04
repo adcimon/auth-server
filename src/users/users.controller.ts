@@ -53,7 +53,9 @@ export class UsersController {
 	@Get('/:username')
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
-	async getUser(@Param('username') username: string): Promise<object> {
+	async getUser(
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
+	): Promise<object> {
 		const user: User = await this.usersService.getByUsername(username);
 		return { user };
 	}
@@ -69,7 +71,9 @@ export class UsersController {
 	@Get('/:username/avatar')
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.USER, RoleEnum.ADMIN)
-	async getAvatar(@Param('username') username: string): Promise<object> {
+	async getAvatar(
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
+	): Promise<object> {
 		const avatar: string = await this.usersService.getAvatarByUsername(username);
 		return { avatar };
 	}
@@ -90,7 +94,7 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
 	async updateUsername(
-		@Param('username') username: string,
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateUsernameSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
@@ -149,7 +153,7 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
 	async updateAvatar(
-		@Param('username') username: string,
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateAvatarSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
@@ -172,7 +176,7 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
 	async updateName(
-		@Param('username') username: string,
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateNameSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
@@ -195,7 +199,7 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
 	async updateSurname(
-		@Param('username') username: string,
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateSurnameSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
@@ -218,7 +222,7 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
 	async updateBirthdate(
-		@Param('username') username: string,
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
 		@Body(new ValidationPipe(ValidationSchema.UpdateBirthdateSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
@@ -230,7 +234,7 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(RoleEnum.ADMIN)
 	async deleteUser(
-		@Param('username') username: string,
+		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
 		@Body(new ValidationPipe(ValidationSchema.DeleteUserSchema)) body: any,
 	): Promise<object> {
 		const userToDelete: User = await this.usersService.getByUsername(username);

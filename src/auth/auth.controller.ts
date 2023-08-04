@@ -88,7 +88,10 @@ export class AuthController {
 	}
 
 	@Get('/verify-email/:token')
-	async verify(@Param('token') token: string, @Response() response): Promise<any> {
+	async verify(
+		@Param('token', new ValidationPipe(ValidationSchema.TokenSchema)) token: string,
+		@Response() response,
+	): Promise<any> {
 		const verified: boolean = await this.authService.verifyEmail(token);
 
 		let link: any = this.configService.get('VERIFY_EMAIL_LINK');
@@ -101,7 +104,10 @@ export class AuthController {
 	}
 
 	@Get('/change-email/:token')
-	async changeEmail(@Param('token') token: string, @Response() response): Promise<any> {
+	async changeEmail(
+		@Param('token', new ValidationPipe(ValidationSchema.TokenSchema)) token: string,
+		@Response() response,
+	): Promise<any> {
 		const changed: boolean = await this.authService.changeEmail(token);
 
 		let link: any = this.configService.get('CHANGE_EMAIL_LINK');
@@ -138,7 +144,7 @@ export class AuthController {
 	@Post('/change-password/:token')
 	@UseInterceptors(PasswordInterceptor)
 	async changePassword(
-		@Param('token') token: string,
+		@Param('token', new ValidationPipe(ValidationSchema.UsernameSchema)) token: string,
 		@Body(new ValidationPipe(ValidationSchema.ChangePasswordSchema)) body: any,
 	): Promise<object> {
 		const changed: boolean = await this.authService.changePassword(token, body.password);

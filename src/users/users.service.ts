@@ -409,7 +409,7 @@ export class UsersService implements OnModuleInit {
 			const users: any = JSON.parse(data);
 			users.records.forEach(async (record) => {
 				try {
-					let user: User = await this.create(
+					const user: User = await this.create(
 						record.username,
 						record.password,
 						record.email,

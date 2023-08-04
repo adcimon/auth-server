@@ -16,94 +16,97 @@ function parseDateString(value, originalValue) {
 	return parsedDate;
 }
 
+const UsernameSchema = yup.string().matches(USERNAME_REGEXP, USERNAME_MESSAGE);
+const EmailSchema = yup.string().email();
+const PasswordSchema = yup.string().matches(PASSWORD_REGEXP, PASSWORD_MESSAGE);
+const AvatarSchema = yup.string().url().max(500);
+const NameSchema = yup.string().max(15);
+const SurnameSchema = yup.string().max(15);
+const BirthdateSchema = yup.date().transform(parseDateString).typeError('Invalid birthdate format YYYY/MM/DD');
+const TokenSchema = yup.string();
+
 const SignUpSchema = yup.object().shape({
-	username: yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
-	password: yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
-	email: yup.string().email().required('Email is required'),
-	avatar: yup.string().url().max(500),
-	name: yup.string().max(15),
-	surname: yup.string().max(15),
-	birthdate: yup.date().transform(parseDateString).typeError('Invalid birthdate format YYYY/MM/DD'),
+	username: UsernameSchema.required('Username is required'),
+	password: PasswordSchema.required('Password is required'),
+	email: EmailSchema.required('Email is required'),
+	avatar: AvatarSchema,
+	name: NameSchema,
+	surname: SurnameSchema,
+	birthdate: BirthdateSchema,
 });
 
 const SignDownSchema = yup.object().shape({
-	password: yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
+	password: PasswordSchema.required('Password is required'),
 });
 
 const SignInSchema = yup.object().shape({
-	email: yup.string().email().required('Email is required'),
-	password: yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
+	email: EmailSchema.required('Email is required'),
+	password: PasswordSchema.required('Password is required'),
 });
 
 const ForgotPasswordSchema = yup.object().shape({
-	email: yup.string().email().required('Email is required'),
+	email: EmailSchema.required('Email is required'),
 });
 
 const ChangePasswordSchema = yup.object().shape({
-	password: yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
+	password: PasswordSchema.required('Password is required'),
 });
 
 const UpdateMyUsernameSchema = yup.object().shape({
-	username: yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
-	password: yup.string().required('Password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
+	username: UsernameSchema.required('Username is required'),
+	password: PasswordSchema.required('Password is required'),
 });
 
 const UpdateUsernameSchema = yup.object().shape({
-	username: yup.string().required('Username is required').matches(USERNAME_REGEXP, USERNAME_MESSAGE),
+	username: UsernameSchema.required('Username is required'),
 });
 
 const UpdateMyEmailSchema = yup.object().shape({
-	email: yup.string().email().required('Email is required'),
+	email: EmailSchema.required('Email is required'),
 });
 
 const UpdateMyPasswordSchema = yup.object().shape({
-	currentPassword: yup.string().required('Current password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
-	newPassword: yup.string().required('New password is required').matches(PASSWORD_REGEXP, PASSWORD_MESSAGE),
+	currentPassword: PasswordSchema.required('Current password is required'),
+	newPassword: PasswordSchema.required('New password is required'),
 });
 
 const UpdateMyAvatarSchema = yup.object().shape({
-	avatar: yup.string().defined('Avatar is required').url().max(500),
+	avatar: AvatarSchema.defined('Avatar is required'),
 });
 
 const UpdateAvatarSchema = yup.object().shape({
-	avatar: yup.string().defined('Avatar is required').url().max(500),
+	avatar: AvatarSchema.defined('Avatar is required'),
 });
 
 const UpdateMyNameSchema = yup.object().shape({
-	name: yup.string().defined('Name is required').max(15),
+	name: NameSchema.defined('Name is required'),
 });
 
 const UpdateNameSchema = yup.object().shape({
-	name: yup.string().defined('Name is required').max(15),
+	name: NameSchema.defined('Name is required'),
 });
 
 const UpdateMySurnameSchema = yup.object().shape({
-	surname: yup.string().defined('Name is required').max(15),
+	surname: SurnameSchema.defined('Surname is required'),
 });
 
 const UpdateSurnameSchema = yup.object().shape({
-	surname: yup.string().defined('Name is required').max(15),
+	surname: SurnameSchema.defined('Surname is required'),
 });
 
 const UpdateMyBirthdateSchema = yup.object().shape({
-	birthdate: yup
-		.date()
-		.required('Birthdate is required')
-		.transform(parseDateString)
-		.typeError('Invalid birthdate format YY/MM/DD'),
+	birthdate: BirthdateSchema.required('Birthdate is required'),
 });
 
 const UpdateBirthdateSchema = yup.object().shape({
-	birthdate: yup
-		.date()
-		.required('Birthdate is required')
-		.transform(parseDateString)
-		.typeError('Invalid birthdate format YY/MM/DD'),
+	birthdate: BirthdateSchema.required('Birthdate is required'),
 });
 
 const DeleteUserSchema = yup.object().shape({});
 
 export const ValidationSchema = {
+	UsernameSchema,
+	TokenSchema,
 	SignUpSchema,
 	SignDownSchema,
 	SignInSchema,
