@@ -21,6 +21,7 @@ import { RoleEnum } from '../roles/role.enum';
 import { Roles } from '../roles/roles.decorator';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
+import { UsersSchema } from './users.schema';
 import { ResponseInterceptor } from '../interceptors/response.interceptor';
 import { PasswordInterceptor } from '../interceptors/password.interceptor';
 import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
@@ -84,7 +85,7 @@ export class UsersController {
 	@Roles(RoleEnum.USER)
 	async updateMyUsername(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMyUsernameSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMyUsernameSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.updateUsernameSecure(request.user.id, body.username, body.password);
 		return { user };
@@ -95,7 +96,7 @@ export class UsersController {
 	@Roles(RoleEnum.ADMIN)
 	async updateUsername(
 		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
-		@Body(new ValidationPipe(ValidationSchema.UpdateUsernameSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateUsernameSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
 		const user: User = await this.usersService.updateUsername(userToUpdate.id, body.username);
@@ -108,7 +109,7 @@ export class UsersController {
 	async updateMyEmail(
 		@Request() request,
 		@Headers() headers,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMyEmailSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMyEmailSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.getById(request.user.id);
 		const token: string = await this.authService.createChangeEmailToken(user, body.email);
@@ -128,7 +129,7 @@ export class UsersController {
 	@Roles(RoleEnum.USER)
 	async updateMyPassword(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMyPasswordSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMyPasswordSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.updatePasswordSecure(
 			request.user.id,
@@ -143,7 +144,7 @@ export class UsersController {
 	@Roles(RoleEnum.USER)
 	async updateMyAvatar(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMyAvatarSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMyAvatarSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.updateAvatar(request.user.id, body.avatar);
 		return { user };
@@ -154,7 +155,7 @@ export class UsersController {
 	@Roles(RoleEnum.ADMIN)
 	async updateAvatar(
 		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
-		@Body(new ValidationPipe(ValidationSchema.UpdateAvatarSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateAvatarSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
 		const user: User = await this.usersService.updateAvatar(userToUpdate.id, body.avatar);
@@ -166,7 +167,7 @@ export class UsersController {
 	@Roles(RoleEnum.USER)
 	async updateMyName(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMyNameSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMyNameSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.updateName(request.user.id, body.name);
 		return { user };
@@ -177,7 +178,7 @@ export class UsersController {
 	@Roles(RoleEnum.ADMIN)
 	async updateName(
 		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
-		@Body(new ValidationPipe(ValidationSchema.UpdateNameSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateNameSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
 		const user: User = await this.usersService.updateName(userToUpdate.id, body.name);
@@ -189,7 +190,7 @@ export class UsersController {
 	@Roles(RoleEnum.USER)
 	async updateMySurname(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMySurnameSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMySurnameSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.updateSurname(request.user.id, body.surname);
 		return { user };
@@ -200,7 +201,7 @@ export class UsersController {
 	@Roles(RoleEnum.ADMIN)
 	async updateSurname(
 		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
-		@Body(new ValidationPipe(ValidationSchema.UpdateSurnameSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateSurnameSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
 		const user: User = await this.usersService.updateSurname(userToUpdate.id, body.surname);
@@ -212,7 +213,7 @@ export class UsersController {
 	@Roles(RoleEnum.USER)
 	async updateMyBirthdate(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.UpdateMyBirthdateSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateMyBirthdateSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.updateBirthdate(request.user.id, body.birthdate);
 		return { user };
@@ -223,7 +224,7 @@ export class UsersController {
 	@Roles(RoleEnum.ADMIN)
 	async updateBirthdate(
 		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
-		@Body(new ValidationPipe(ValidationSchema.UpdateBirthdateSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.UpdateBirthdateSchema)) body: any,
 	): Promise<object> {
 		const userToUpdate: User = await this.usersService.getByUsername(username);
 		const user: User = await this.usersService.updateBirthdate(userToUpdate.id, body.birthdate);
@@ -235,7 +236,7 @@ export class UsersController {
 	@Roles(RoleEnum.ADMIN)
 	async deleteUser(
 		@Param('username', new ValidationPipe(ValidationSchema.UsernameSchema)) username: string,
-		@Body(new ValidationPipe(ValidationSchema.DeleteUserSchema)) body: any,
+		@Body(new ValidationPipe(UsersSchema.DeleteUserSchema)) body: any,
 	): Promise<object> {
 		const userToDelete: User = await this.usersService.getByUsername(username);
 		const user: User = await this.usersService.delete(userToDelete.id);

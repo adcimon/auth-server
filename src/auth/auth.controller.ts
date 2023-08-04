@@ -23,6 +23,7 @@ import { RoleEnum } from '../roles/role.enum';
 import { Roles } from '../roles/roles.decorator';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ValidationSchema } from '../validation/validation.schema';
+import { AuthSchema } from './auth.schema';
 import { ResponseInterceptor } from '../interceptors/response.interceptor';
 import { PasswordInterceptor } from '../interceptors/password.interceptor';
 import { MailServiceErrorException } from '../exceptions/mail-service-error.exception';
@@ -39,10 +40,7 @@ export class AuthController {
 
 	@Post('/signup')
 	@UseInterceptors(PasswordInterceptor)
-	async signup(
-		@Headers() headers,
-		@Body(new ValidationPipe(ValidationSchema.SignUpSchema)) body: any,
-	): Promise<object> {
+	async signup(@Headers() headers, @Body(new ValidationPipe(AuthSchema.SignUpSchema)) body: any): Promise<object> {
 		const user: User = await this.usersService.create(
 			body.username,
 			body.password,
@@ -71,7 +69,7 @@ export class AuthController {
 	@Roles(RoleEnum.USER)
 	async signdown(
 		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.SignDownSchema)) body: any,
+		@Body(new ValidationPipe(AuthSchema.SignDownSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.deleteSecure(request.user.id, body.password);
 		return { user };
@@ -79,10 +77,7 @@ export class AuthController {
 
 	@Post('/signin')
 	@UseGuards(LocalAuthGuard)
-	async signin(
-		@Request() request,
-		@Body(new ValidationPipe(ValidationSchema.SignInSchema)) body: any,
-	): Promise<object> {
+	async signin(@Request() request, @Body(new ValidationPipe(AuthSchema.SignInSchema)) body: any): Promise<object> {
 		const token: string = await this.authService.createAccessToken(request.user);
 		return { token };
 	}
@@ -121,7 +116,7 @@ export class AuthController {
 	@Post('/forgot-password')
 	async forgotPassword(
 		@Headers() headers,
-		@Body(new ValidationPipe(ValidationSchema.ForgotPasswordSchema)) body: any,
+		@Body(new ValidationPipe(AuthSchema.ForgotPasswordSchema)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.getByEmail(body.email);
 		const token: string = await this.authService.createChangePasswordToken(user);
@@ -145,7 +140,7 @@ export class AuthController {
 	@UseInterceptors(PasswordInterceptor)
 	async changePassword(
 		@Param('token', new ValidationPipe(ValidationSchema.UsernameSchema)) token: string,
-		@Body(new ValidationPipe(ValidationSchema.ChangePasswordSchema)) body: any,
+		@Body(new ValidationPipe(AuthSchema.ChangePasswordSchema)) body: any,
 	): Promise<object> {
 		const changed: boolean = await this.authService.changePassword(token, body.password);
 		return { changed };
