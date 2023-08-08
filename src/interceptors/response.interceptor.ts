@@ -8,11 +8,13 @@ export class ResponseInterceptor implements NestInterceptor {
 			map((data) => {
 				const request: any = context.switchToHttp().getRequest();
 
-				data.version = packageJson.version;
-				data.endpoint = `${request.protocol}://${request.get('host')}${request.originalUrl}`;
-				data.timestamp = new Date().toISOString();
+				const body: any = {};
+				body.version = packageJson.version;
+				body.endpoint = `${request.protocol}://${request.get('host')}${request.originalUrl}`;
+				body.timestamp = new Date().toISOString();
+				body.data = data;
 
-				return data;
+				return body;
 			}),
 		);
 	}
