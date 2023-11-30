@@ -40,7 +40,7 @@ export class AuthController {
 
 	@Post('/signup')
 	@UseInterceptors(PasswordInterceptor)
-	async signup(@Headers() headers, @Body(new ValidationPipe(AuthSchema.SignUpSchema)) body: any): Promise<object> {
+	async signup(@Headers() headers, @Body(new ValidationPipe(AuthSchema.SignUpBody)) body: any): Promise<object> {
 		const user: User = await this.usersService.create(
 			body.username,
 			body.password,
@@ -67,17 +67,14 @@ export class AuthController {
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@UseInterceptors(PasswordInterceptor)
 	@Roles(RoleEnum.USER)
-	async signdown(
-		@Request() request,
-		@Body(new ValidationPipe(AuthSchema.SignDownSchema)) body: any,
-	): Promise<object> {
+	async signdown(@Request() request, @Body(new ValidationPipe(AuthSchema.SignDownBody)) body: any): Promise<object> {
 		const user: User = await this.usersService.deleteSecure(request.user.id, body.password);
 		return { user };
 	}
 
 	@Post('/signin')
 	@UseGuards(LocalAuthGuard)
-	async signin(@Request() request, @Body(new ValidationPipe(AuthSchema.SignInSchema)) body: any): Promise<object> {
+	async signin(@Request() request, @Body(new ValidationPipe(AuthSchema.SignInBody)) body: any): Promise<object> {
 		const token: string = await this.authService.createAccessToken(request.user);
 		return { token };
 	}
@@ -116,7 +113,7 @@ export class AuthController {
 	@Post('/forgot-password')
 	async forgotPassword(
 		@Headers() headers,
-		@Body(new ValidationPipe(AuthSchema.ForgotPasswordSchema)) body: any,
+		@Body(new ValidationPipe(AuthSchema.ForgotPasswordBody)) body: any,
 	): Promise<object> {
 		const user: User = await this.usersService.getByEmail(body.email);
 		const token: string = await this.authService.createChangePasswordToken(user);
@@ -140,7 +137,7 @@ export class AuthController {
 	@UseInterceptors(PasswordInterceptor)
 	async changePassword(
 		@Param('token', new ValidationPipe(ValidationSchema.UsernameSchema)) token: string,
-		@Body(new ValidationPipe(AuthSchema.ChangePasswordSchema)) body: any,
+		@Body(new ValidationPipe(AuthSchema.ChangePasswordBody)) body: any,
 	): Promise<object> {
 		const changed: boolean = await this.authService.changePassword(token, body.password);
 		return { changed };
