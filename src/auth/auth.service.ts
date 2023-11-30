@@ -20,7 +20,7 @@ export class AuthService {
 	/**
 	 * Validate the email and password.
 	 */
-	async validate(email: string, password: string): Promise<User> {
+	public async validate(email: string, password: string): Promise<User> {
 		const user: User = await this.usersService.getByEmail(email);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -37,7 +37,7 @@ export class AuthService {
 	/**
 	 * Create an access token for the user.
 	 */
-	async createAccessToken(user: User): Promise<string> {
+	public async createAccessToken(user: User): Promise<string> {
 		if (!user.verified) {
 			throw new EmailNotVerifiedException();
 		}
@@ -52,7 +52,7 @@ export class AuthService {
 	/**
 	 * Create a verification token for the user.
 	 */
-	async createVerificationToken(user: User): Promise<string> {
+	public async createVerificationToken(user: User): Promise<string> {
 		const payload: object = {
 			sub: user.username,
 		};
@@ -65,7 +65,7 @@ export class AuthService {
 	/**
 	 * Verify the user's email.
 	 */
-	async verifyEmail(token: string): Promise<boolean> {
+	public async verifyEmail(token: string): Promise<boolean> {
 		let payload: any;
 		try {
 			payload = this.jwtService.verify(token, this.configService.get('TOKEN_SECRET'));
@@ -86,7 +86,7 @@ export class AuthService {
 	/**
 	 * Create a change email token for the user.
 	 */
-	async createChangeEmailToken(user: User, email: string): Promise<string> {
+	public async createChangeEmailToken(user: User, email: string): Promise<string> {
 		const payload: object = {
 			sub: user.username,
 			email: email,
@@ -103,7 +103,7 @@ export class AuthService {
 	/**
 	 * Change the user's email.
 	 */
-	async changeEmail(token: string): Promise<boolean> {
+	public async changeEmail(token: string): Promise<boolean> {
 		// Get the user.
 		let payload: any = this.jwtService.decode(token);
 		const user: User = await this.usersService.getByUsername(payload.sub);
@@ -128,7 +128,7 @@ export class AuthService {
 	/**
 	 * Create a change password token for the user.
 	 */
-	async createChangePasswordToken(user: User): Promise<string> {
+	public async createChangePasswordToken(user: User): Promise<string> {
 		const payload: object = {
 			sub: user.username,
 		};
@@ -144,7 +144,7 @@ export class AuthService {
 	/**
 	 * Change the user's password.
 	 */
-	async changePassword(token: string, password: string): Promise<boolean> {
+	public async changePassword(token: string, password: string): Promise<boolean> {
 		// Get the user.
 		let payload: any = this.jwtService.decode(token);
 		const user: User = await this.usersService.getByUsername(payload.sub);

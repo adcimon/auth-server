@@ -24,7 +24,7 @@ export class MailService {
 	/**
 	 * Send a mail.
 	 */
-	async sendMail(options: any): Promise<boolean> {
+	public async sendMail(options: any): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			this.transporter.sendMail(options, (error, info) => {
 				if (error) {
@@ -41,7 +41,7 @@ export class MailService {
 	/**
 	 * Send a verification mail.
 	 */
-	async sendVerificationMail(user: User, link: string): Promise<boolean> {
+	public async sendVerificationMail(user: User, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
 		const expirationTime: any = await this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
@@ -79,7 +79,7 @@ export class MailService {
 	/**
 	 * Send a change password mail.
 	 */
-	async sendChangePasswordMail(user: User, link: string): Promise<boolean> {
+	public async sendChangePasswordMail(user: User, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
 		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
@@ -117,7 +117,7 @@ export class MailService {
 		return await this.sendMail(options);
 	}
 
-	async sendChangeEmailMail(email: string, link: string): Promise<boolean> {
+	public async sendChangeEmailMail(email: string, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
 		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME');
 		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');

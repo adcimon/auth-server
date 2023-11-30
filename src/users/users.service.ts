@@ -33,7 +33,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Create a user.
 	 */
-	async create(
+	public async create(
 		username: string,
 		password: string,
 		email: string,
@@ -78,7 +78,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Get all the users.
 	 */
-	async getAll(): Promise<User[]> {
+	public async getAll(): Promise<User[]> {
 		return await this.usersRepository.find({ relations: ['roles'] });
 	}
 
@@ -86,14 +86,14 @@ export class UsersService implements OnModuleInit {
 	 * Get all the not verified users.
 	 * Roles relation is not returned.
 	 */
-	async getNotVerified(): Promise<User[]> {
+	public async getNotVerified(): Promise<User[]> {
 		return await this.usersRepository.createQueryBuilder('user').select('*').where('verified = false').execute();
 	}
 
 	/**
 	 * Get a user by id.
 	 */
-	async getById(id: number): Promise<User> {
+	public async getById(id: number): Promise<User> {
 		const user: User = await this.usersRepository.findOne({ where: { id: id }, relations: ['roles'] });
 		if (!user) {
 			throw new UserNotFoundException();
@@ -105,7 +105,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Get a user by username.
 	 */
-	async getByUsername(username: string): Promise<User> {
+	public async getByUsername(username: string): Promise<User> {
 		const user: User = await this.usersRepository.findOne({ where: { username }, relations: ['roles'] });
 		if (!user) {
 			throw new UserNotFoundException();
@@ -117,7 +117,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Get a user by email.
 	 */
-	async getByEmail(email: string): Promise<User> {
+	public async getByEmail(email: string): Promise<User> {
 		const user: User = await this.usersRepository.findOne({ where: { email }, relations: ['roles'] });
 		if (!user) {
 			throw new UserNotFoundException();
@@ -129,7 +129,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Get the user's avatar.
 	 */
-	async getAvatarById(id: number): Promise<string> {
+	public async getAvatarById(id: number): Promise<string> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -141,7 +141,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Get the user's avatar.
 	 */
-	async getAvatarByUsername(username: string): Promise<string> {
+	public async getAvatarByUsername(username: string): Promise<string> {
 		const user: User = await this.getByUsername(username);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -153,7 +153,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user.
 	 */
-	async update(
+	public async update(
 		id: number,
 		username: string,
 		password: string,
@@ -186,7 +186,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's username.
 	 */
-	async updateUsername(id: number, username: string): Promise<User> {
+	public async updateUsername(id: number, username: string): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -205,7 +205,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's username if the password is verified.
 	 */
-	async updateUsernameSecure(id: number, username: string, password: string): Promise<User> {
+	public async updateUsernameSecure(id: number, username: string, password: string): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -229,7 +229,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's email.
 	 */
-	async updateEmail(id: number, email: string): Promise<User> {
+	public async updateEmail(id: number, email: string): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -243,7 +243,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's password.
 	 */
-	async updatePassword(id: number, password: string): Promise<User> {
+	public async updatePassword(id: number, password: string): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -257,7 +257,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's password if the password is verified.
 	 */
-	async updatePasswordSecure(id: number, currentPassword: string, newPassword: string): Promise<User> {
+	public async updatePasswordSecure(id: number, currentPassword: string, newPassword: string): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -276,7 +276,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's avatar.
 	 */
-	async updateAvatar(id: number, avatar: string = ''): Promise<User> {
+	public async updateAvatar(id: number, avatar: string = ''): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -290,7 +290,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's name.
 	 */
-	async updateName(id: number, name: string = ''): Promise<User> {
+	public async updateName(id: number, name: string = ''): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -304,7 +304,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's surname.
 	 */
-	async updateSurname(id: number, surname: string = ''): Promise<User> {
+	public async updateSurname(id: number, surname: string = ''): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -318,7 +318,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's birthdate.
 	 */
-	async updateBirthdate(id: number, birthdate: Date = new Date('1900-01-01')): Promise<User> {
+	public async updateBirthdate(id: number, birthdate: Date = new Date('1900-01-01')): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -332,7 +332,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Update the user's verified field.
 	 */
-	async updateVerified(id: number, verified: boolean): Promise<User> {
+	public async updateVerified(id: number, verified: boolean): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -346,7 +346,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Delete the user.
 	 */
-	async delete(id: number): Promise<User> {
+	public async delete(id: number): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -358,7 +358,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Delete the user if the password is verified.
 	 */
-	async deleteSecure(id: number, password: string): Promise<User> {
+	public async deleteSecure(id: number, password: string): Promise<User> {
 		const user: User = await this.getById(id);
 		if (!user) {
 			throw new UserNotFoundException();
@@ -376,7 +376,7 @@ export class UsersService implements OnModuleInit {
 	 * Delete the expired not verified users.
 	 */
 	@Cron('0 1 * * * *') // Every hour, at the start of the 1st minute.
-	async deleteExpiredNotVerifiedUsers() {
+	public async deleteExpiredNotVerifiedUsers() {
 		this.cronLogger.log('Delete expired not verified users');
 
 		const now: Date = new Date();
@@ -400,7 +400,7 @@ export class UsersService implements OnModuleInit {
 	/**
 	 * Populate the database with dummy users.
 	 */
-	async populateDummyUsers() {
+	public async populateDummyUsers() {
 		fs.readFile('./users.json', 'utf8', (error, data) => {
 			if (error) {
 				return;
