@@ -392,7 +392,9 @@ export class UsersService implements OnModuleInit {
 				try {
 					this.delete(user.id);
 					this.cronLogger.log('User ' + user.username + ' deleted');
-				} catch (error: any) {}
+				} catch (error: any) {
+					// Ignore user not found.
+				}
 			}
 		}
 	}
@@ -422,7 +424,7 @@ export class UsersService implements OnModuleInit {
 
 					await this.updateVerified(user.id, true);
 				} catch (error: any) {
-					// Catch user already created.
+					// Ignore user already created.
 				}
 			});
 		});

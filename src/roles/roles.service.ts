@@ -63,7 +63,7 @@ export class RolesService implements OnModuleInit {
 
 				this.rolesRepository.save(role);
 			} catch (error: any) {
-				// Catch role already created.
+				// Ignore role already created.
 			}
 		}
 	}
