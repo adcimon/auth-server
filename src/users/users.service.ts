@@ -24,7 +24,7 @@ export class UsersService implements OnModuleInit {
 		@Inject(forwardRef(() => RolesService)) private readonly rolesService: RolesService,
 	) {}
 
-	async onModuleInit() {
+	public async onModuleInit() {
 		if (!this.configService.isProduction()) {
 			await this.populateDummyUsers();
 		}

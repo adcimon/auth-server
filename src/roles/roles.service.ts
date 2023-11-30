@@ -9,7 +9,7 @@ import { RoleNotFoundException } from '../exceptions/role-not-found.exception';
 export class RolesService implements OnModuleInit {
 	constructor(@InjectRepository(Role) private rolesRepository: Repository<Role>) {}
 
-	async onModuleInit() {
+	public async onModuleInit() {
 		await this.populateRoles();
 	}
 
