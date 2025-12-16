@@ -11,12 +11,12 @@ export class MailService {
 
 	constructor(private readonly configService: ConfigService) {
 		this.transporter = nodemailer.createTransport({
-			host: configService.get('MAIL_HOST'),
-			port: configService.get('MAIL_PORT'),
-			secure: configService.get('MAIL_SECURE'),
+			host: configService.getEnvironmentVariable('MAIL_HOST'),
+			port: configService.getEnvironmentVariable('MAIL_PORT'),
+			secure: configService.getEnvironmentVariable('MAIL_SECURE'),
 			auth: {
-				user: configService.get('MAIL_USER'),
-				pass: configService.get('MAIL_PASSWORD'),
+				user: configService.getEnvironmentVariable('MAIL_USER'),
+				pass: configService.getEnvironmentVariable('MAIL_PASSWORD'),
 			},
 		});
 	}
@@ -43,8 +43,10 @@ export class MailService {
 	 */
 	public async sendVerificationMail(user: User, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
-		const expirationTime: any = await this.configService.get('TOKEN_VERIFICATION_EXPIRATION_TIME');
-		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
+		const expirationTime: any = await this.configService.getEnvironmentVariable(
+			'TOKEN_VERIFICATION_EXPIRATION_TIME',
+		);
+		const from: any = await this.configService.getEnvironmentVariable('MAIL_NOREPLY_FROM');
 
 		let html: string = `
 		<p style="font-size: 25px">
@@ -81,8 +83,10 @@ export class MailService {
 	 */
 	public async sendChangePasswordMail(user: User, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
-		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME');
-		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
+		const expirationTime: any = await this.configService.getEnvironmentVariable(
+			'TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME',
+		);
+		const from: any = await this.configService.getEnvironmentVariable('MAIL_NOREPLY_FROM');
 
 		let html: string = `
 		<p style="font-size: 25px">
@@ -119,8 +123,10 @@ export class MailService {
 
 	public async sendChangeEmailMail(email: string, link: string): Promise<boolean> {
 		const serviceName: string = await this.configService.getServiceName();
-		const expirationTime: any = await this.configService.get('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME');
-		const from: any = await this.configService.get('MAIL_NOREPLY_FROM');
+		const expirationTime: any = await this.configService.getEnvironmentVariable(
+			'TOKEN_CHANGE_EMAIL_EXPIRATION_TIME',
+		);
+		const from: any = await this.configService.getEnvironmentVariable('MAIL_NOREPLY_FROM');
 
 		let html: string = `
 		<p style="font-size: 25px">

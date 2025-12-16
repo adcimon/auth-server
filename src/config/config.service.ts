@@ -1,48 +1,86 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigurationErrorException } from '../exceptions/configuration-error.exception';
 import { config } from 'dotenv';
 import { join } from 'path';
 
 @Injectable()
 export class ConfigService {
+	private readonly logger = new Logger(ConfigService.name);
+
 	constructor() {}
 
 	public static config(): any {
 		config();
-
-		console.log('Environment variables:');
-		Object.keys(process.env).forEach(function (key) {
-			console.log(key + '=' + process.env[key]);
-		});
-	}
-
-	/**
-	 * Get a configuration value.
-	 */
-	public static get(key: string, defaultValue: any = null): any {
-		if (key in process.env) {
-			const value: string = process.env[key];
-			switch (value) {
-				case 'true':
-					return true;
-				case 'false':
-					return false;
-				default:
-					return value;
-			}
-		} else {
-			if (defaultValue) {
-				return defaultValue;
-			} else {
-				return null;
-			}
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('Environment variables:');
+			Object.keys(process.env).forEach((key: string) => {
+				console.log(key + '=' + process.env[key]);
+			});
 		}
 	}
 
+	private static parse(value: string): unknown {
+		if (value === '') {
+			return value;
+		}
+
+		if (value === 'true') {
+			return true;
+		}
+
+		if (value === 'false') {
+			return false;
+		}
+
+		const numeric: number = Number(value);
+		if (!isNaN(numeric)) {
+			return numeric;
+		}
+
+		try {
+			const obj: object = JSON.parse(value);
+			return obj;
+		} catch {}
+
+		const array: string[] = value.split(',');
+		if (array.length === 0) {
+			return value;
+		}
+		if (array.length === 1) {
+			return array[0];
+		}
+		if (array.length > 1) {
+			return array;
+		}
+
+		return value;
+	}
+
 	/**
-	 * Get a configuration value.
+	 * Get an environment variable.
 	 */
-	public get(key: string, defaultValue: any = null): any {
-		return ConfigService.get(key, defaultValue);
+	public static getEnvironmentVariable<T = string>(key: string, defaultValue?: T): T {
+		if (!(key in process.env)) {
+			return defaultValue;
+		}
+
+		const value: string = process.env[key];
+		const parsedValue: T = ConfigService.parse(value) as T;
+
+		return parsedValue;
+	}
+
+	/**
+	 * Get an environment variable.
+	 */
+	public getEnvironmentVariable<T = string>(key: string, defaultValue?: T): any {
+		try {
+			const value: T = ConfigService.getEnvironmentVariable<T>(key, defaultValue);
+			return value;
+		} catch (error: any) {
+			this.logger.log(error);
+			throw new ConfigurationErrorException(error.message);
+		}
 	}
 
 	/**
