@@ -19,8 +19,8 @@ import { JwtStrategy } from './jwt.strategy';
 				inject: [ConfigService],
 				useFactory: (configService: ConfigService) => {
 					return {
-						secret: configService.getEnvironmentVariable('TOKEN_SECRET'),
-						signOptions: { expiresIn: configService.getEnvironmentVariable('TOKEN_EXPIRATION_TIME') },
+						secret: configService.getVariable('TOKEN_SECRET'),
+						signOptions: { expiresIn: configService.getVariable('TOKEN_EXPIRATION_TIME') },
 					};
 				},
 			},

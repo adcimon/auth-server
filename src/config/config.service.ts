@@ -71,9 +71,9 @@ export class ConfigService {
 	}
 
 	/**
-	 * Get an environment variable.
+	 * Get a configuration variable.
 	 */
-	public getEnvironmentVariable<T = string>(key: string, defaultValue?: T): any {
+	public getVariable<T = string>(key: string, defaultValue?: T): any {
 		try {
 			const value: T = ConfigService.getEnvironmentVariable<T>(key, defaultValue);
 			return value;

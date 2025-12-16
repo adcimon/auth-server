@@ -86,7 +86,7 @@ export class AuthController {
 	): Promise<any> {
 		const verified: boolean = await this.authService.verifyEmail(token);
 
-		let link: any = this.configService.getEnvironmentVariable('VERIFY_EMAIL_LINK');
+		let link: any = this.configService.getVariable('VERIFY_EMAIL_LINK');
 		if (!link || link === '') {
 			response.send({ verified });
 		} else {
@@ -102,7 +102,7 @@ export class AuthController {
 	): Promise<any> {
 		const changed: boolean = await this.authService.changeEmail(token);
 
-		let link: any = this.configService.getEnvironmentVariable('CHANGE_EMAIL_LINK');
+		let link: any = this.configService.getVariable('CHANGE_EMAIL_LINK');
 		if (!link || link === '') {
 			response.send({ changed });
 		} else {
@@ -118,7 +118,7 @@ export class AuthController {
 		const user: User = await this.usersService.getByEmail(body.email);
 		const token: string = await this.authService.createChangePasswordToken(user);
 
-		let link: any = this.configService.getEnvironmentVariable('CHANGE_PASSWORD_LINK');
+		let link: any = this.configService.getVariable('CHANGE_PASSWORD_LINK');
 		if (!link || link === '') {
 			link += 'https://' + headers.host + '/change-password/' + token;
 		} else {

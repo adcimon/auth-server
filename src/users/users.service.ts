@@ -380,7 +380,7 @@ export class UsersService implements OnModuleInit {
 		this.cronLogger.log('Delete expired not verified users');
 
 		const now: Date = new Date();
-		const expirationTime: any = this.configService.getEnvironmentVariable('TOKEN_VERIFICATION_EXPIRATION_TIME');
+		const expirationTime: any = this.configService.getVariable('TOKEN_VERIFICATION_EXPIRATION_TIME');
 
 		const users: User[] = await this.getNotVerified();
 		for (let i = 0; i < users.length; i++) {

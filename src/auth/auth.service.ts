@@ -58,7 +58,7 @@ export class AuthService {
 		};
 
 		return this.jwtService.sign(payload, {
-			expiresIn: this.configService.getEnvironmentVariable('TOKEN_VERIFICATION_EXPIRATION_TIME'),
+			expiresIn: this.configService.getVariable('TOKEN_VERIFICATION_EXPIRATION_TIME'),
 		});
 	}
 
@@ -68,7 +68,7 @@ export class AuthService {
 	public async verifyEmail(token: string): Promise<boolean> {
 		let payload: any;
 		try {
-			payload = this.jwtService.verify(token, this.configService.getEnvironmentVariable('TOKEN_SECRET'));
+			payload = this.jwtService.verify(token, this.configService.getVariable('TOKEN_SECRET'));
 		} catch (error: any) {
 			throw new InvalidTokenException();
 		}
@@ -96,7 +96,7 @@ export class AuthService {
 		// All tokens generated before a successful email change would get invalidated.
 		return this.jwtService.sign(payload, {
 			secret: user.email,
-			expiresIn: this.configService.getEnvironmentVariable('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME'),
+			expiresIn: this.configService.getVariable('TOKEN_CHANGE_EMAIL_EXPIRATION_TIME'),
 		});
 	}
 
@@ -137,7 +137,7 @@ export class AuthService {
 		// All tokens generated before a successful password change would get invalidated.
 		return this.jwtService.sign(payload, {
 			secret: user.password,
-			expiresIn: this.configService.getEnvironmentVariable('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME'),
+			expiresIn: this.configService.getVariable('TOKEN_CHANGE_PASSWORD_EXPIRATION_TIME'),
 		});
 	}
 

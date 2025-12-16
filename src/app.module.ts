@@ -25,13 +25,13 @@ import { LoggerMiddleware } from './log/logger.middleware';
 				inject: [ConfigService],
 				useFactory: (configService: ConfigService) => {
 					return {
-						type: configService.getEnvironmentVariable('DATABASE_TYPE'),
-						host: configService.getEnvironmentVariable('DATABASE_HOST'),
-						port: configService.getEnvironmentVariable('DATABASE_PORT'),
-						username: configService.getEnvironmentVariable('DATABASE_USERNAME'),
-						password: configService.getEnvironmentVariable('DATABASE_PASSWORD'),
-						database: configService.getEnvironmentVariable('DATABASE_NAME'),
-						entities: [configService.getEnvironmentVariable('DATABASE_ENTITIES')],
+						type: configService.getVariable('DATABASE_TYPE'),
+						host: configService.getVariable('DATABASE_HOST'),
+						port: configService.getVariable('DATABASE_PORT'),
+						username: configService.getVariable('DATABASE_USERNAME'),
+						password: configService.getVariable('DATABASE_PASSWORD'),
+						database: configService.getVariable('DATABASE_NAME'),
+						entities: [configService.getVariable('DATABASE_ENTITIES')],
 						synchronize: !configService.isProduction(),
 					};
 				},
