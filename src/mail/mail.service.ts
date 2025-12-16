@@ -12,8 +12,8 @@ export class MailService {
 	constructor(private readonly configService: ConfigService) {
 		this.transporter = nodemailer.createTransport({
 			host: configService.getVariable('MAIL_HOST'),
-			port: configService.getVariable('MAIL_PORT'),
-			secure: configService.getVariable('MAIL_SECURE'),
+			port: configService.getVariable<number>('MAIL_PORT'),
+			secure: configService.getVariable<boolean>('MAIL_SECURE'),
 			auth: {
 				user: configService.getVariable('MAIL_USER'),
 				pass: configService.getVariable('MAIL_PASSWORD'),

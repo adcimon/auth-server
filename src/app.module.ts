@@ -27,7 +27,7 @@ import { LoggerMiddleware } from './log/logger.middleware';
 					return {
 						type: configService.getVariable('DATABASE_TYPE'),
 						host: configService.getVariable('DATABASE_HOST'),
-						port: configService.getVariable('DATABASE_PORT'),
+						port: configService.getVariable<number>('DATABASE_PORT'),
 						username: configService.getVariable('DATABASE_USERNAME'),
 						password: configService.getVariable('DATABASE_PASSWORD'),
 						database: configService.getVariable('DATABASE_NAME'),
