@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, OnModuleInit, forwardRef } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
@@ -403,13 +403,13 @@ export class UsersService implements OnModuleInit {
 	 * Populate the database with dummy users.
 	 */
 	public async populateDummyUsers() {
-		fs.readFile('./users.json', 'utf8', (error, data) => {
+		fs.readFile('./users.json', 'utf8', (error: any, data: any) => {
 			if (error) {
 				return;
 			}
 
 			const users: any = JSON.parse(data);
-			users.records.forEach(async (record) => {
+			users.records.forEach(async (record: any) => {
 				try {
 					const user: User = await this.create(
 						record.username,

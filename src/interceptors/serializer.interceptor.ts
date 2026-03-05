@@ -1,4 +1,4 @@
-import { Injectable, NestInterceptor, ClassSerializerInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { CallHandler, ClassSerializerInterceptor, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 @Injectable()

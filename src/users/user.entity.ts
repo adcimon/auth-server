@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude, Transform } from 'class-transformer'; // Used with ClassSerializerInterceptor to exclude from responses.
 import { Role } from '../roles/role.entity';
 
@@ -36,7 +36,7 @@ export class User {
 
 	@ManyToMany(() => Role)
 	@JoinTable()
-	@Transform(({ value }) => value.map((x) => x.name)) // Return the array of names.
+	@Transform(({ value }) => value.map((x: any) => x.name)) // Return the array of names.
 	roles: Role[];
 
 	@Column({ default: false })

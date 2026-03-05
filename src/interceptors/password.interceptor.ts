@@ -1,4 +1,4 @@
-import { NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 
 export class PasswordInterceptor implements NestInterceptor {

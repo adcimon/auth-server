@@ -12,7 +12,7 @@ export namespace ValidationSchema {
 	const PASSWORD_REGEXP = /^[a-zA-Z]+(.){7,20}$/;
 	const PASSWORD_MESSAGE = 'Password must start with an alpha character and contain from 8 to 20 characters';
 
-	const parseDateString = (value, originalValue) => {
+	const parseDateString = (value: any, originalValue: any) => {
 		const parsedDate: any = isDate(originalValue) ? originalValue : parse(originalValue, 'yyyy-MM-dd', new Date());
 		return parsedDate;
 	};
