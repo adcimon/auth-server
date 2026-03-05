@@ -1,4 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { ConfigModule } from './config/config.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -7,7 +8,10 @@ import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigService } from './config/config.service';
-import { LoggerMiddleware } from './log/logger.middleware';
+import { BodyParserMiddleware } from './middlewares/body-parser.middleware';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { SerializerInterceptor } from './interceptors/serializer.interceptor';
+import { ExceptionFilter } from './exceptions/exception.filter';
 
 @Module({
 	imports: [
@@ -18,34 +22,41 @@ import { LoggerMiddleware } from './log/logger.middleware';
 				return [{ rootPath: configService.getStaticPath() }];
 			},
 		}),
-		ScheduleModule.forRoot(), // Initializes the scheduler and registers any declarative cron jobs, timeouts and intervals that exist within the app.
-		TypeOrmModule.forRootAsync(
-			// Get the configuration settings from the config service asynchronously.
-			{
-				inject: [ConfigService],
-				useFactory: (configService: ConfigService) => {
-					return {
-						type: configService.getVariable('DATABASE_TYPE'),
-						host: configService.getVariable('DATABASE_HOST'),
-						port: configService.getVariable<number>('DATABASE_PORT'),
-						username: configService.getVariable('DATABASE_USERNAME'),
-						password: configService.getVariable('DATABASE_PASSWORD'),
-						database: configService.getVariable('DATABASE_NAME'),
-						entities: [configService.getVariable('DATABASE_ENTITIES')],
-						synchronize: !configService.isProduction(),
-					};
-				},
+		ScheduleModule.forRoot(),
+		TypeOrmModule.forRootAsync({
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => {
+				return {
+					type: configService.getVariable('DATABASE_TYPE'),
+					host: configService.getVariable('DATABASE_HOST'),
+					port: configService.getVariable<number>('DATABASE_PORT'),
+					username: configService.getVariable('DATABASE_USERNAME'),
+					password: configService.getVariable('DATABASE_PASSWORD'),
+					database: configService.getVariable('DATABASE_NAME'),
+					entities: [configService.getVariable('DATABASE_ENTITIES')],
+					synchronize: !configService.isProduction(),
+				};
 			},
-		),
+		}),
 		RolesModule,
 		UsersModule,
 		AuthModule,
 	],
 	controllers: [],
-	providers: [],
+	providers: [
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: SerializerInterceptor,
+		},
+		{
+			provide: APP_FILTER,
+			useClass: ExceptionFilter,
+		},
+	],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(BodyParserMiddleware).forRoutes('*');
 		consumer.apply(LoggerMiddleware).forRoutes('*');
 	}
 }

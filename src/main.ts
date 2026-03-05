@@ -3,9 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 import { ConfigService } from './config/config.service';
-import * as express from 'express';
 import * as fs from 'fs';
 
 async function main() {
@@ -20,7 +18,7 @@ async function main() {
 		'ALLOW_ORIGINS',
 		'*',
 	);
-	const maxRequestSize: string = ConfigService.getEnvironmentVariable('MAX_REQUEST_SIZE', '50mb');
+	const allowCredentials: boolean = ConfigService.getEnvironmentVariable<boolean>('ALLOW_CREDENTIALS', true);
 
 	let httpsOptions: HttpsOptions = null;
 	if (enableHttps) {
@@ -31,27 +29,29 @@ async function main() {
 
 	let corsOptions: CorsOptions = null;
 	if (enableCors) {
-		corsOptions = allowOrigins ? { origin: allowOrigins } : null;
+		const isAllowOriginsWildcard =
+			allowOrigins === '*' || (Array.isArray(allowOrigins) && allowOrigins.includes('*'));
+
+		if (isAllowOriginsWildcard && allowCredentials) {
+			console.error(
+				'❌ Invalid CORS configuration: Cannot use origin "*" when credentials are enabled. Please specify explicit allowed origins.',
+			);
+			process.exit(1);
+		}
+
+		corsOptions = {
+			origin: allowOrigins,
+			credentials: allowCredentials,
+		};
 	}
 
 	const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule, {
 		httpsOptions: httpsOptions,
 		cors: corsOptions,
+		bodyParser: false,
 	});
-	app.useGlobalFilters(new HttpExceptionFilter());
 
-	app.use(
-		express.json({
-			limit: maxRequestSize,
-		}),
-	);
-
-	app.use(
-		express.urlencoded({
-			limit: maxRequestSize,
-			extended: true,
-		}),
-	);
+	await app.init();
 
 	await app.listen(port);
 
